@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
-#include <list>
+#include <vector>
 #include "utilities.h"
+#include "strategies.h"
 #include <vector>
 #include <algorithm>
 #include <ctime>
@@ -17,10 +18,11 @@ int main() {
     //TODO: break this out of main so it can be threaded
     std::srand ( unsigned ( std::time(0) ) );
     std::vector<int> shoe;
-    gameObjects::card card;
 
+    gameObjects::card card;
     gameObjects::hand dealer;    
-    gameObjects::hand player;
+    gameObjects::player player;
+    int upCard = 0;
     
     for(int x = 0; x < (52*6); x++){
         shoe.push_back(x);
@@ -29,29 +31,40 @@ int main() {
     // using built-in random generator:
     std::random_shuffle( shoe.begin(), shoe.end());
     
-    //gameObjects::hand testhand;
-    //testhand.addCard(6);
-    //testhand.addCard(8);
-    //for(int x = 0;x<22;x++){
-    //    testhand.addCard(0);
-    //    std::cout << testhand.total << "\r\n";
-    //}
-    //return 69;
+
     while(shoe.size() > 76){
         
-        /*
-        std::cout << card.print(shoe.back());
-        shoe.pop_back();
-        */
-        
+        //deal cards
         for(int x = 0;x<2;x++){
             dealer.addCard(shoe.back());
+            if(x%1 == 1){
+                upCard = card.value(shoe.back());
+            }
             shoe.pop_back();
             player.addCard(shoe.back());
             shoe.pop_back();
         }
 
-        std::cout << "Dealer: ";
+        //check for dealer ace up
+        if(upCard == 1){
+            std::cout << "Dealer ace up";
+        }
+        //TODO: insurance?
+
+        //check for blackjacks
+            //dealer first
+            //players push or lose
+        //TODO: blackjacks?
+
+        //players turns
+
+        //dealer's turn
+
+        //check for winners
+
+
+        //debug print
+        std::cout << "UpCard: " << upCard <<  "\r\n" << "Dealer: ";
         for(int x = 0; x < dealer.cards.size(); x++){
             std::cout << card.print(dealer.cards[x]);
         }
@@ -67,6 +80,8 @@ int main() {
 
         dealer.discard();
         player.discard();
+        
+        
         
     }   
 
