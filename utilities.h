@@ -33,3 +33,5 @@ class hand{
 
         void addCard(int cardIndex);
 };
+
+enum class decision{HIT, STAND, DOUBLE, SPLIT, SURRENDER};
