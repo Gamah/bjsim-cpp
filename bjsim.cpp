@@ -21,6 +21,7 @@ int main() {
 
     hand dealer;    
     hand player;
+    strategies strategy;
     
     for(int x = 0; x < (52*6); x++){
         shoe.push_back(x);
@@ -29,8 +30,10 @@ int main() {
     // using built-in random generator:
     std::random_shuffle( shoe.begin(), shoe.end());
     while(shoe.size() > 76){
-        int upCard = 0;        
 
+        int upCard = 0;        
+        decisions decision;
+        
         //deal 2 cards to everyone
         for(int x = 0;x<2;x++){
             dealer.addCard(shoe.back());
@@ -49,6 +52,53 @@ int main() {
             std::cout << "Dealer has ace!\r\n";
         }
 
+        //check for dealer blackjack
+        if(dealer.total == 21 || (dealer.total == 11 && dealer.isSoft)){
+            std::cout << "Dealer has blackjack!\r\n";
+        }
+
+        //check for player blackjack
+        //TODO: implement players, pay, and delete hand...
+        if(player.total == 21 || (player.total == 11 && player.isSoft)){
+            std::cout << "Dealer has blackjack!\r\n";
+        }
+        
+        //player turns
+        decision = strategy.dealerS17(player.total);
+        while(decision != decisions::STAND){
+            if(decision == decisions::HIT){
+                player.addCard(shoe.back());
+                shoe.pop_back();
+                decision = strategy.dealerH17(player.total,player.isSoft);
+            }
+        }
+
+        //dealer turn
+        decision = strategy.dealerH17(dealer.total,dealer.isSoft);
+        while(decision != decisions::STAND){
+            if(decision == decisions::HIT){
+                dealer.addCard(shoe.back());
+                shoe.pop_back();
+                decision = strategy.dealerH17(dealer.total,dealer.isSoft);
+            }
+        }
+
+        //check for player wins
+        //escape comparisons if bust
+        if(player.total <= 21){
+            if(player.total > dealer.total || dealer.total > 21){
+                std::cout << "Player won!\r\n";
+            }
+            if(player.total == dealer.total){
+                std::cout << "Player push\r\n";
+            }
+            if(player.total < dealer.total && dealer.total <= 21){
+                std::cout << "Player lost\r\n";
+            }
+        }else{
+            std::cout << "Player BUST!\r\n";
+        }
+
         //debug print cards
         std::cout << "Dealer: ";
         for(int x = 0; x < dealer.cards.size(); x++){
@@ -63,7 +113,8 @@ int main() {
         std::cout << " Total: " << player.total << " Soft: " << player.isSoft << " Pair: " << player.isPair << "\r\n";
 
         std::cout << "Cards left: " << shoe.size() << "\r\n \r\n";
-
+        
+        
         dealer.discard();
         player.discard();
         

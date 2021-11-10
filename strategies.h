@@ -2,9 +2,8 @@
 #include "utilities.h"
 
 class strategies{
-    decision dealerH17(int total, bool isSoft);
-
-    decision dealerS17(int total);
-
-    decision playerBasic(int total, bool isSoft);
+    public:
+        decisions dealerH17(int total, bool isSoft);
+        decisions dealerS17(int total);
+        decisions playerBasic(int total, bool isSoft);
 };
