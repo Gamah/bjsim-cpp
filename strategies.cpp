@@ -1,16 +1,16 @@
 #include "utilities.h"
 #include "strategies.h"
 
-decisions strategies::dealerH17(int total, bool isSoft){
-    if(total < 17 || (total == 17 && isSoft == 1)){
+decisions strategies::dealerH17(hand hand){
+    if(hand.total < 17 || (hand.total == 17 && hand.isSoft == 1)){
         return decisions::HIT;
     }else{
         return decisions::STAND;
     }
 }
 
-decisions strategies::dealerS17(int total){
-    if(total < 17){
+decisions strategies::dealerS17(hand hand){
+    if(hand.total < 17){
         return decisions::HIT;
     }else{
         return decisions::STAND;

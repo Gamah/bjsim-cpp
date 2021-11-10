@@ -1,10 +1,8 @@
 #include <iostream>
 #include <string>
-#include <list>
 #include <vector>
 #include <algorithm>
 #include <ctime>
-#include <cstdlib>
 #include "utilities.h"
 #include "strategies.h"
 
@@ -64,22 +62,22 @@ int main() {
         }
         
         //player turns
-        decision = strategy.dealerS17(player.total);
+        decision = strategy.dealerS17(player);
         while(decision != decisions::STAND){
             if(decision == decisions::HIT){
                 player.addCard(shoe.back());
                 shoe.pop_back();
-                decision = strategy.dealerH17(player.total,player.isSoft);
+                decision = strategy.dealerH17(player);
             }
         }
 
         //dealer turn
-        decision = strategy.dealerH17(dealer.total,dealer.isSoft);
+        decision = strategy.dealerH17(dealer);
         while(decision != decisions::STAND){
             if(decision == decisions::HIT){
                 dealer.addCard(shoe.back());
                 shoe.pop_back();
-                decision = strategy.dealerH17(dealer.total,dealer.isSoft);
+                decision = strategy.dealerH17(dealer);
             }
         }
 

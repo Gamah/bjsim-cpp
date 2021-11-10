@@ -3,7 +3,7 @@
 
 class strategies{
     public:
-        decisions dealerH17(int total, bool isSoft);
-        decisions dealerS17(int total);
-        decisions playerBasic(int total, bool isSoft);
+        decisions dealerH17(hand hand);
+        decisions dealerS17(hand hand);
+        decisions playerBasic(hand hand);
 };
