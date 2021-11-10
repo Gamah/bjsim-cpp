@@ -34,4 +34,14 @@ class hand{
         void addCard(int cardIndex);
 };
 
+class player{
+    public:
+        std::vector<hand> hands;
+        double bankroll;
+        double betUnit;
+        double betMultiplier;
+
+        void addHand(hand hand);
+};
+
 enum class decisions{HIT, STAND, DOUBLE, SPLIT, SURRENDER};

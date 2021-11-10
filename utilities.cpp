@@ -70,3 +70,8 @@ void hand::addCard(int cardIndex){
     }
     return;
 }
+
+//implement player funcitons
+void player::addHand(hand hand){
+    hands.push_back(hand);
+}
