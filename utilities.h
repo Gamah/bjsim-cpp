@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <list>
 #include <vector>
@@ -33,3 +34,5 @@ class hand{
 
         void addCard(int cardIndex);
 };
+
+enum class decision{HIT, STAND, DOUBLE, SPLIT, SURRENDER};

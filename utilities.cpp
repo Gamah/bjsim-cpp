@@ -1,6 +1,3 @@
-#include <string>
-#include <list>
-#include <vector>
 #include "utilities.h"
 
 //implement card functions
@@ -36,7 +33,8 @@ void hand::discard(){
     isDoubled = 0;
     canSplit = 0;
     canDouble = 0;
-};
+    return;
+}
 
 void hand::addCard(int cardIndex){
     //add the card to the list of cards
