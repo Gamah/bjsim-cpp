@@ -1,4 +1,5 @@
 #include "utilities.h"
+#include <iostream>
 
 //implement card functions
 int card::value(int cardIndex){
@@ -37,6 +38,7 @@ void hand::discard(){
 }
 
 void hand::addCard(int cardIndex){
+    //TODO: fix ace and 21 totaling
     //add the card to the list of cards
     int cardValue = card().value(cardIndex);
     cards.push_back(cardIndex);
@@ -53,8 +55,13 @@ void hand::addCard(int cardIndex){
                 isSoft = 0;
             }
 
-        }   
-    total = total + cardValue;
+        }
+        //check for blackjack
+        if(total == 10 && cardValue == 1){
+            cardValue = cardValue + 10;
+            isSoft = 1;
+        }
+        total = total + cardValue;
     }else{
         isPair = 0;
         //if the current card is an ace and the hand total is less than 12, lets add 11 instead of 1
@@ -69,6 +76,14 @@ void hand::addCard(int cardIndex){
         }
     }
     return;
+}
+
+void hand::print(){
+    for(int x = 0; x < cards.size(); x++){
+            std::cout << card().print(cards[x]);
+        }
+        std::cout << " Total: " << total << " Soft: " << isSoft << " Pair: " << isPair << "\r\n";
+
 }
 
 //implement player funcitons

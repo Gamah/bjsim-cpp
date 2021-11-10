@@ -11,7 +11,6 @@
 int randomizer (int i) { return std::rand()%i;};
 
 int main() {
-    
     //initialize shoe
     //TODO: break this out of main so it can be threaded
     std::srand ( unsigned ( std::time(0) ) );
@@ -99,17 +98,9 @@ int main() {
 
         //debug print cards
         std::cout << "Dealer: ";
-        for(int x = 0; x < dealer.cards.size(); x++){
-            std::cout << card().print(dealer.cards[x]);
-        }
-        std::cout << " Total: " << dealer.total << " Soft: " << dealer.isSoft << " Pair: " << dealer.isPair << "\r\n";
-
+        dealer.print();
         std::cout << "Player: ";
-        for(int x = 0; x < player.cards.size(); x++){
-            std::cout << card().print(player.cards[x]);
-        }
-        std::cout << " Total: " << player.total << " Soft: " << player.isSoft << " Pair: " << player.isPair << "\r\n";
-
+        player.print();
         std::cout << "Cards left: " << shoe.size() << "\r\n \r\n";
         
         

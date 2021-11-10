@@ -32,6 +32,8 @@ class hand{
         void discard();
 
         void addCard(int cardIndex);
+
+        void print();
 };
 
 class player{
