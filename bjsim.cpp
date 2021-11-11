@@ -10,6 +10,7 @@
 int randomizer (int i) { return std::rand()%i;};
 
 int main() {
+    
     //initialize shoe
     //TODO: break this out of main so it can be threaded
     std::srand ( unsigned ( std::time(0) ) );
@@ -31,7 +32,6 @@ int main() {
     // using built-in random generator:
     std::random_shuffle( shoe.begin(), shoe.end());
     while(shoe.size() > 76){
-
         int upCard = 0;        
         
         //deal 2 cards to everyone
@@ -49,24 +49,24 @@ int main() {
         //TODO: Offer insurance
         //debug print if ace up
         if(upCard == 1){
-            std::cout << "Dealer has ace!\r\n";
+            debugPrint("Dealer has ace!\r\n");
         }
 
         //check for dealer blackjack
         //TODO: take bets or push hands, clean up hands and deal next round
         if(dealer.total == 21 || (dealer.total == 11 && dealer.isSoft)){
-            std::cout << "Dealer has blackjack!\r\n";
+            debugPrint("Dealer has blackjack!\r\n");
         //if the dealer didn't have blackjack, play the round...
         }else{
             
             
             //player turns
-            decision = strategy.playerBasic(players[0].hands[0],upCard);
+            decision = strategy.playerBasic(players[0].hands[0].total,upCard,players[0].hands[0].isPair,players[0].hands[0].isSoft,players[0].hands[0].canSplit,players[0].hands[0].canDouble,players[0].hands[0].canSurrender);
             while(decision != decisions::STAND){
                 if(decision == decisions::HIT|| decision == decisions::DOUBLE || decision == decisions::SPLIT){
                     players[0].hands[0].addCard(shoe.back());
                     shoe.pop_back();
-                    decision = strategy.playerBasic(players[0].hands[0],upCard);
+                    decision = strategy.playerBasic(players[0].hands[0].total,upCard,players[0].hands[0].isPair,players[0].hands[0].isSoft,players[0].hands[0].canSplit,players[0].hands[0].canDouble,players[0].hands[0].canSurrender);
                 }
             }
 
@@ -85,25 +85,26 @@ int main() {
             //escape comparisons if bust
             if(players[0].hands[0].total <= 21){
                 if(players[0].hands[0].total > dealer.total || dealer.total > 21){
-                    std::cout << "Player won!\r\n";
+                    debugPrint("Player won!\r\n");
                 }
                 if(players[0].hands[0].total == dealer.total){
-                    std::cout << "Player push\r\n";
+                    debugPrint("Player push\r\n");
                 }
                 if(players[0].hands[0].total < dealer.total && dealer.total <= 21){
-                    std::cout << "Player lost\r\n";
+                    debugPrint("Player lost\r\n");
                 }
             }else{
-                std::cout << "Player BUST!\r\n";
+                debugPrint("Player BUST!\r\n");
             }
         }
         //debug print cards
-        std::cout << "Dealer: ";
-        dealer.print();
-        std::cout << "Player: ";
-        players[0].hands[0].print();
-        std::cout << "Cards left: " << shoe.size() << "\r\n \r\n";
-        
+        if(config().debug){
+            debugPrint("Dealer: ");
+            dealer.print();
+            debugPrint("Player: ");
+            players[0].hands[0].print();
+            debugPrint("Cards left: " + std::to_string(shoe.size()) + "\r\n \r\n");
+        }
         
         dealer.discard();
         players[0].hands[0].discard();
@@ -111,8 +112,5 @@ int main() {
     }   
 
 
-
-
-    
     return 0;
 }

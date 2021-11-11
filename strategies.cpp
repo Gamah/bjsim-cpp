@@ -1,6 +1,7 @@
-#include "utilities.h"
-#include "strategies.h"
+#include "include/utilities.h"
+#include "include/strategies.h"
 #include <stdexcept>
+#include <map>
 
 
 //implement strategy functions
@@ -20,7 +21,7 @@ decisions strategies::dealerS17(hand hand){
     }
 }
 
-decisions strategies::playerBasic(hand hand, int upCard){
+decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int canSplit,bool canDouble,bool canSurrender){
     //Always Split Aces & 8’s
     //Never Split 10’s and 5’s
     //Split 2, 3 & 7 on 2 through 7
@@ -28,8 +29,8 @@ decisions strategies::playerBasic(hand hand, int upCard){
     //Split 6’s on 2 through 6
     //Split 9’s against 2 through 9, except 7
 
-    if(hand.canSplit == 1){
-        switch(hand.isPair){
+    if(canSplit == 1){
+        switch(isPair){
             case 1:
             case 8:
                 return decisions::SPLIT;
@@ -86,15 +87,15 @@ decisions strategies::playerBasic(hand hand, int upCard){
     //Soft 16 and Soft 15 (A, 5 and A, 4) doubles against 4-6 otherwise it hits
     //Soft 14 and soft 13 (Ace, 3 and ace, 2) doubles against 5 and 6 otherwise it hits
     
-    if(hand.isSoft == 1){
-        switch(hand.total){
+    if(isSoft == 1){
+        switch(total){
             case 20:
             case 21:
                 return decisions::STAND;
             case 19:
                 switch(upCard){
                     case 6:
-                        if(hand.canDouble ==1){
+                        if(canDouble ==1){
                             return decisions::DOUBLE;
                         }
                     default:
@@ -108,7 +109,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                     case 4:
                     case 5:
                     case 6:
-                        if(hand.canDouble ==1){
+                        if(canDouble ==1){
                             return decisions::DOUBLE;
                         }else{
                             return decisions::STAND;
@@ -128,7 +129,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                     case 4:
                     case 5:
                     case 6:
-                        if(hand.canDouble ==1){
+                        if(canDouble ==1){
                             return decisions::DOUBLE;
                         }
                     default:
@@ -141,7 +142,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                     case 4:
                     case 5:
                     case 6:
-                        if(hand.canDouble ==1){
+                        if(canDouble ==1){
                             return decisions::DOUBLE;
                         }
                     default:
@@ -153,7 +154,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                 switch(upCard){
                     case 5:
                     case 6:
-                        if(hand.canDouble ==1){
+                        if(canDouble ==1){
                             return decisions::DOUBLE;
                         }
                     default:
@@ -166,8 +167,8 @@ decisions strategies::playerBasic(hand hand, int upCard){
 
     //Surrender 16 against 9 – Ace
     //Surrender 15 against a 10
-    if(hand.canSurrender ==1){
-        switch(hand.total){
+    if(canSurrender ==1){
+        switch(total){
             case 16:
                 switch(upCard){
                     case 9:
@@ -192,10 +193,10 @@ decisions strategies::playerBasic(hand hand, int upCard){
     //Hard 9 will double against 3-6
     //Hard 8 and below will always hit
 
-    if(hand.total >= 17){
+    if(total >= 17){
         return decisions::STAND;
     }
-    switch(hand.total){
+    switch(total){
         case 16:
         case 15:
         case 14:
@@ -250,7 +251,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
             }
             break;
     }
-    if(hand.total <= 8){
+    if(total <= 8){
         return decisions::HIT;
     }
 

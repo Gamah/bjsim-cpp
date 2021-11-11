@@ -2,6 +2,12 @@
 #include <string>
 #include <vector>
 
+struct config{
+    bool debug = 1;
+};
+
+void debugPrint(std::string string);
+
 enum class decisions{HIT, STAND, DOUBLE, SPLIT, SURRENDER};
 struct rules{
     bool H17 = 0;

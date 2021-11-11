@@ -1,5 +1,12 @@
-#include "utilities.h"
+#include "include/utilities.h"
 #include <iostream>
+
+void debugPrint(std::string string){
+    if(config().debug){
+        std::cout << string;
+    }
+    return;
+}
 
 //implement card functions
 int card::value(int cardIndex){
@@ -42,7 +49,9 @@ void hand::addCard(int cardIndex){
     //TODO: fix ace and 21 totaling
     //add the card to the list of cards
     int cardValue = card().value(cardIndex);
-    cards.push_back(cardIndex);
+    if(config().debug){
+        cards.push_back(cardIndex);
+    }
     //if this is the 2nd card, we need to check for pairs
     if (cards.size() == 2){
         //check if the card doubled matches the total plus the card for a pair
