@@ -86,7 +86,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
         switch(hand.total){
             case 20:
             case 21:
-                decisions::STAND;
+                return decisions::STAND;
             case 19:
                 switch(upCard){
                     case 6:

@@ -10,54 +10,196 @@
 int randomizer (int i) { return std::rand()%i;};
 
 void test(){
-    hand hand;
-    std::cout << "Pairs:\r\n";
-    for(int x = 0; x < 13; x++){
-        hand.addCard(x);
-        hand.addCard(x);
-        hand.print();
-        hand.discard();
-    }
-
-    std::cout << "\r\n\r\n Soft Ace First:\r\n";
-    for(int x = 0; x < 13; x++){
-        hand.addCard(0);
-        hand.addCard(x);
-        hand.print();
-        hand.discard();
-    }
-
-    std::cout << "\r\n\r\n Soft Ace Second:\r\n";
-    for(int x = 0; x < 13; x++){
-        hand.addCard(x);
-        hand.addCard(0);
-        hand.print();
-        hand.discard();
-    }
-
-    std::cout << "\r\n\r\n All combinations:\r\n";
-    for(int x = 0; x < 13; x++){
-        for(int y = 0; y < 13; y++){
-        hand.addCard(x);
-        hand.addCard(y);
-        hand.print();
-        hand.discard();
+    strategies strategy;
+    card card;
+    std::cout << "Hard Totals:\r\n";
+    std::cout << "    2 3 4 5 6 7 8 9 T J Q K A";
+    for(int x=5; x<22;x++){
+        std::cout << "\r\n" << x << " ";
+        if(x < 10){std::cout << " ";}
+        for(int y = 2;y < 14;y++){
+            hand hand;
+            hand.total = x;
+            hand.isSoft = 0;
+            hand.isPair = 0;
+            hand.canDouble = 1;
+            hand.canSurrender = 1;
+            switch(strategy.playerBasic(hand,y)){
+                case decisions::HIT:
+                    std::cout << " H";
+                    break;
+                case decisions::STAND:
+                    std::cout << " S";
+                    break;
+                case decisions::DOUBLE:
+                    std::cout << " D";
+                    break;
+                case decisions::SPLIT:
+                    std::cout << " Q";
+                    break;
+                case decisions::SURRENDER:
+                    std::cout << " X";
+                    break;
+            }
+        }
+        hand hand;
+        hand.total = x;
+        hand.isSoft = 0;
+        hand.isPair = 0;
+        hand.canDouble = 1;
+        hand.canSurrender = 1;
+        switch(strategy.playerBasic(hand,1)){
+            case decisions::HIT:
+                std::cout << " H";
+                break;
+            case decisions::STAND:
+                std::cout << " S";
+                break;
+            case decisions::DOUBLE:
+                std::cout << " D";
+                break;
+            case decisions::SPLIT:
+                std::cout << " Q";
+                break;
+            case decisions::SURRENDER:
+                std::cout << " X";
+                break;
         }
     }
+    
+    std::cout << "\r\n\r\n";
+
+    std::cout << "Soft Totals:\r\n";
+    std::cout << "    2 3 4 5 6 7 8 9 T J Q K A";
+    for(int x=13; x<22;x++){
+        std::cout << "\r\n" << x << " ";
+        if(x < 10){std::cout << " ";}
+        for(int y = 2;y < 14;y++){
+            hand hand;
+            hand.total = x;
+            hand.isSoft = 1;
+            hand.canDouble = 1;
+            hand.isPair = 0;
+            switch(strategy.playerBasic(hand,y)){
+                case decisions::HIT:
+                    std::cout << " H";
+                    break;
+                case decisions::STAND:
+                    std::cout << " S";
+                    break;
+                case decisions::DOUBLE:
+                    std::cout << " D";
+                    break;
+                case decisions::SPLIT:
+                    std::cout << " Q";
+                    break;
+                case decisions::SURRENDER:
+                    std::cout << " X";
+                    break;
+            }
+        }
+        hand hand;
+        hand.total = x;
+        hand.isSoft = 1;
+        hand.canDouble = 1;
+        hand.isPair = 0;
+        switch(strategy.playerBasic(hand,1)){
+            case decisions::HIT:
+                std::cout << " H";
+                break;
+            case decisions::STAND:
+                std::cout << " S";
+                break;
+            case decisions::DOUBLE:
+                std::cout << " D";
+                break;
+            case decisions::SPLIT:
+                std::cout << " Q";
+                break;
+            case decisions::SURRENDER:
+                std::cout << " X";
+                break;
+        }
+    }
+    std::cout << "\r\n\r\n";
+
+    std::cout << "Pairs:\r\n";
+    std::cout << "    2 3 4 5 6 7 8 9 T J Q K A";
+    for(int x=0; x<10;x++){
+        std::cout << "\r\n" << x + 1 << " ";
+        if(x + 1 < 10){std::cout << " ";}
+        for(int y = 2;y < 14;y++){
+            hand hand;
+            hand.discard();
+            hand.canSplit = 1;
+            hand.canDouble = 1;
+            hand.canSurrender = 1;
+            hand.addCard(x);
+            hand.addCard(x);
+            switch(strategy.playerBasic(hand,y)){
+                case decisions::HIT:
+                    std::cout << " H";
+                    break;
+                case decisions::STAND:
+                    std::cout << " S";
+                    break;
+                case decisions::DOUBLE:
+                    std::cout << " D";
+                    break;
+                case decisions::SPLIT:
+                    std::cout << " Q";
+                    break;
+                case decisions::SURRENDER:
+                    std::cout << " X";
+                    break;
+            }
+        }
+        hand hand;
+        hand.addCard(x);
+        hand.addCard(x);
+        hand.canSplit = 1;
+        hand.canSurrender = 1;
+        hand.canDouble = 1;
+        switch(strategy.playerBasic(hand,1)){
+            case decisions::HIT:
+                std::cout << " H";
+                break;
+            case decisions::STAND:
+                std::cout << " S";
+                break;
+            case decisions::DOUBLE:
+                std::cout << " D";
+                break;
+            case decisions::SPLIT:
+                std::cout << " Q";
+                break;
+            case decisions::SURRENDER:
+                std::cout << " X";
+                break;
+        }
+    }
+    
+    std::cout << "\r\n";
+  
     return;
 }
 
 int main() {
-
+    test();
+    return 420;
     //initialize shoe
     //TODO: break this out of main so it can be threaded
     std::srand ( unsigned ( std::time(0) ) );
     std::vector<int> shoe;
 
-    hand dealer;    
-    //TODO:implement players and not a single hand
-    hand player;
+    //setup dealer and players
     strategies strategy;
+    decisions decision;
+    hand dealer;    
+    std::vector<player> players;
+    players.push_back(player());
+    players[0].addHand(hand());
+
     
     for(int x = 0; x < (52*6); x++){
         shoe.push_back(x);
@@ -68,7 +210,6 @@ int main() {
     while(shoe.size() > 76){
 
         int upCard = 0;        
-        decisions decision;
         
         //deal 2 cards to everyone
         for(int x = 0;x<2;x++){
@@ -77,7 +218,7 @@ int main() {
                 upCard = card().value(shoe.back());
             }
             shoe.pop_back();
-            player.addCard(shoe.back());
+            players[0].hands[0].addCard(shoe.back());
             shoe.pop_back();
         }
 
@@ -97,12 +238,12 @@ int main() {
             
             
             //player turns
-            decision = strategy.playerBasic(player,upCard);
+            decision = strategy.playerBasic(players[0].hands[0],upCard);
             while(decision != decisions::STAND){
                 if(decision == decisions::HIT|| decision == decisions::DOUBLE || decision == decisions::SPLIT){
-                    player.addCard(shoe.back());
+                    players[0].hands[0].addCard(shoe.back());
                     shoe.pop_back();
-                    decision = strategy.playerBasic(player,upCard);
+                    decision = strategy.playerBasic(players[0].hands[0],upCard);
                 }
             }
 
@@ -119,14 +260,14 @@ int main() {
 
             //check for player wins
             //escape comparisons if bust
-            if(player.total <= 21){
-                if(player.total > dealer.total || dealer.total > 21){
+            if(players[0].hands[0].total <= 21){
+                if(players[0].hands[0].total > dealer.total || dealer.total > 21){
                     std::cout << "Player won!\r\n";
                 }
-                if(player.total == dealer.total){
+                if(players[0].hands[0].total == dealer.total){
                     std::cout << "Player push\r\n";
                 }
-                if(player.total < dealer.total && dealer.total <= 21){
+                if(players[0].hands[0].total < dealer.total && dealer.total <= 21){
                     std::cout << "Player lost\r\n";
                 }
             }else{
@@ -137,12 +278,12 @@ int main() {
         std::cout << "Dealer: ";
         dealer.print();
         std::cout << "Player: ";
-        player.print();
+        players[0].hands[0].print();
         std::cout << "Cards left: " << shoe.size() << "\r\n \r\n";
         
         
         dealer.discard();
-        player.discard();
+        players[0].hands[0].discard();
         
     }   
 
