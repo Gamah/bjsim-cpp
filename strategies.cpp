@@ -45,12 +45,14 @@ decisions strategies::playerBasic(hand hand, int upCard){
                     case 7:
                         return decisions::SPLIT;
                 }
+                break;
             case 4:
                 switch(upCard){
                     case 5:
                     case 6:
                         return decisions::SPLIT;
                 }
+                break;
             case 6:
                 switch(upCard){
                     case 2:
@@ -60,6 +62,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                     case 6:
                         return decisions::SPLIT;
                 }
+                break;
             case 9:
                 switch(upCard){
                     case 2:
@@ -71,6 +74,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                     case 9:
                         return decisions::SPLIT;
                 }
+                break;
         }
     }
 
@@ -96,6 +100,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                     default:
                         return decisions::STAND;
                 }
+                break;
             case 18:
                 switch(upCard){
                     case 2:
@@ -105,10 +110,18 @@ decisions strategies::playerBasic(hand hand, int upCard){
                     case 6:
                         if(hand.canDouble ==1){
                             return decisions::DOUBLE;
+                        }else{
+                            return decisions::STAND;
                         }
-                    default:
+                    case 7:
+                    case 8:
                         return decisions::STAND;
+                    case 9:
+                    case 10:
+                    case 1:
+                        return decisions::HIT;
                 }
+                break;
             case 17:
                 switch(upCard){
                     case 3:
@@ -121,6 +134,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                     default:
                         return decisions::HIT;
                 }
+                break;
             case 16:
             case 15:
                 switch(upCard){
@@ -133,6 +147,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                     default:
                         return decisions::HIT;
                 }
+                break;
             case 14:
             case 13:
                 switch(upCard){
@@ -144,6 +159,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                     default:
                         return decisions::HIT;
                 }
+                break;
         }
     }
 
@@ -159,6 +175,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                     case 1:
                         return decisions::SURRENDER;
                 }
+                break;
             case 15:
                 if(upCard == 10){
                     return decisions::SURRENDER;
@@ -193,6 +210,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                 default:
                     return decisions::HIT;
             }
+            break;
         case 12:
             switch(upCard){
                 case 4:
@@ -202,6 +220,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                 default:
                     return decisions::HIT;
             }
+            break;
         case 11:
             return decisions::DOUBLE;
         case 10:
@@ -218,6 +237,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                 default:
                     return decisions::HIT;
             }
+            break;
         case 9:
             switch(upCard){
                 case 3:
@@ -228,6 +248,7 @@ decisions strategies::playerBasic(hand hand, int upCard){
                 default:
                     return decisions::HIT;
             }
+            break;
     }
     if(hand.total <= 8){
         return decisions::HIT;
