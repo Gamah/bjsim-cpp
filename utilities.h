@@ -20,14 +20,15 @@ class card{
 class hand{
     public:
         std::vector<int> cards;
-        double bet;
-        int total;
-        bool isPair;
-        bool isSoft;
-        bool isSplit;
-        bool isDoubled;
-        int canSplit;
-        bool canDouble;
+        double bet = 0;
+        int total = 0;
+        int isPair = 0;
+        bool isSoft = 0;
+        bool isSplit = 0;
+        bool isDoubled = 0;
+        int canSplit = 0;
+        bool canDouble = 0; 
+        bool canSurrender = 0;
 
         void discard();
 
@@ -47,3 +48,11 @@ class player{
 };
 
 enum class decisions{HIT, STAND, DOUBLE, SPLIT, SURRENDER};
+
+
+class rules{
+    bool H17 = 0;
+    bool DAS = 1;
+    bool RSA = 0;
+    bool Surrender = 0;
+};
