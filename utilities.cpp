@@ -8,6 +8,11 @@ void debugPrint(std::string string){
     return;
 }
 
+static constexpr int values[13] = {1,2,3,4,5,6,7,8,9,10,10,10,10};
+static const std::string suits[4] = {"H","D","S","C"};
+static const std::string faces[13] = {"A","2","3","4","5","6","7","8","9","T","J","Q","K"};
+static const std::string decks[8] = {"1","2","3","4","5","6","7","8"};
+
 //implement card functions
 int card::value(int cardIndex){
     return values[cardIndex%13];   
@@ -48,7 +53,7 @@ void hand::discard(){
 void hand::addCard(int cardIndex){
     //TODO: fix ace and 21 totaling
     //add the card to the list of cards
-    int cardValue = card().value(cardIndex);
+    int cardValue = card::value(cardIndex);
     if(config().debug){
         cards.push_back(cardIndex);
     }
@@ -78,7 +83,7 @@ void hand::addCard(int cardIndex){
 
 void hand::print(){
     for(int x = 0; x < cards.size(); x++){
-            std::cout << card().print(cards[x]);
+            std::cout << card::print(cards[x]);
         }
         std::cout << " Total: " << total << " Soft: " << isSoft << " Pair: " << isPair << "\r\n";
 

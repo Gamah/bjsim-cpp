@@ -10,7 +10,8 @@
 int randomizer (int i) { return std::rand()%i;};
 
 int main() {
-    
+    int numRounds;
+    for(int x = 0;x < 1000000; x++){
     //initialize shoe
     //TODO: break this out of main so it can be threaded
     std::srand ( unsigned ( std::time(0) ) );
@@ -32,13 +33,15 @@ int main() {
     // using built-in random generator:
     std::random_shuffle( shoe.begin(), shoe.end());
     while(shoe.size() > 76){
+
+        numRounds++;
         int upCard = 0;        
         
         //deal 2 cards to everyone
         for(int x = 0;x<2;x++){
             dealer.addCard(shoe.back());
             if(x%2 == 1){
-                upCard = card().value(shoe.back());
+                upCard = card::value(shoe.back());
             }
             shoe.pop_back();
             players[0].hands[0].addCard(shoe.back());
@@ -111,6 +114,7 @@ int main() {
         
     }   
 
-
+    }
+    std::cout << numRounds << "\r\n";
     return 0;
 }

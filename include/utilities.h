@@ -3,7 +3,7 @@
 #include <vector>
 
 struct config{
-    bool debug = 1;
+    bool debug = 0;
 };
 
 void debugPrint(std::string string);
@@ -17,19 +17,12 @@ struct rules{
     int maxSplit = 4;
 };
 
-class card{
-    private:
-        int values[13] = {1,2,3,4,5,6,7,8,9,10,10,10,10};
-        std::string suits[4] = {"H","D","S","C"};
-        std::string faces[13] = {"A","2","3","4","5","6","7","8","9","T","J","Q","K"};
-        std::string decks[8] = {"1","2","3","4","5","6","7","8"};
-
-    public: 
-        int value(int cardIndex);
-        std::string face(int cardIndex);
-        std::string suit(int cardIndex);
-        std::string deck(int cardIndex);
-        std::string print(int cardIndex);
+namespace card{    
+    int value(int cardIndex);
+    std::string face(int cardIndex);
+    std::string suit(int cardIndex);
+    std::string deck(int cardIndex);
+    std::string print(int cardIndex);
 };
 
 class hand{
