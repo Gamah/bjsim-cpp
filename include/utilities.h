@@ -3,7 +3,7 @@
 #include <vector>
 
 struct config{
-    bool debug = 0;
+    bool debug = 1;
 };
 
 void debugPrint(std::string string);

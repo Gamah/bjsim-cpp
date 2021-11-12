@@ -6,7 +6,6 @@
 
 void BStest(){
     strategies strategy;
-    card card;
     std::cout << "Hard Totals:\r\n";
     std::cout << "    2 3 4 5 6 7 8 9 T J Q K A";
     for(int x=5; x<22;x++){
@@ -18,8 +17,9 @@ void BStest(){
             hand.isSoft = 0;
             hand.isPair = 0;
             hand.canDouble = 1;
+            hand.canSplit = 1;
             hand.canSurrender = 1;
-            switch(strategy.playerBasic(hand,y)){
+            switch(strategy.playerBasic(hand.total,y,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
                 case decisions::HIT:
                     std::cout << " H";
                     break;
@@ -44,7 +44,7 @@ void BStest(){
         hand.isPair = 0;
         hand.canDouble = 1;
         hand.canSurrender = 1;
-        switch(strategy.playerBasic(hand,1)){
+        switch(strategy.playerBasic(hand.total,1,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
             case decisions::HIT:
                 std::cout << " H";
                 break;
@@ -77,7 +77,7 @@ void BStest(){
             hand.isSoft = 1;
             hand.canDouble = 1;
             hand.isPair = 0;
-            switch(strategy.playerBasic(hand,y)){
+            switch(strategy.playerBasic(hand.total,y,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
                 case decisions::HIT:
                     std::cout << " H";
                     break;
@@ -101,7 +101,7 @@ void BStest(){
         hand.isSoft = 1;
         hand.canDouble = 1;
         hand.isPair = 0;
-        switch(strategy.playerBasic(hand,1)){
+        switch(strategy.playerBasic(hand.total,1,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
             case decisions::HIT:
                 std::cout << " H";
                 break;
@@ -135,7 +135,7 @@ void BStest(){
             hand.canSurrender = 1;
             hand.addCard(x);
             hand.addCard(x);
-            switch(strategy.playerBasic(hand,y)){
+            switch(strategy.playerBasic(hand.total,y,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
                 case decisions::HIT:
                     std::cout << " H";
                     break;
@@ -160,7 +160,7 @@ void BStest(){
         hand.canSplit = 1;
         hand.canSurrender = 1;
         hand.canDouble = 1;
-        switch(strategy.playerBasic(hand,1)){
+        switch(strategy.playerBasic(hand.total,1,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
             case decisions::HIT:
                 std::cout << " H";
                 break;
@@ -183,6 +183,17 @@ void BStest(){
     std::cout << "\r\n";
   
     return;
+}
+
+void aceTest(){
+    hand hand;
+    hand.discard();
+    hand.addCard(0);
+    hand.print();
+    for(int x = 0; x < 22;x++){
+        hand.addCard(0);
+        hand.print();
+    }
 }
  int main(){
      BStest();

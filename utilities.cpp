@@ -67,17 +67,18 @@ void hand::addCard(int cardIndex){
     }else{
         isPair = 0;
     }
+
+    total = total + cardValue;
     //if the current card is an ace and the hand total is less than 12, lets add 11 instead of 1
     if(total < 12 && cardValue == 1){
         total = total + 10;
         isSoft = 1;
     }
     //if the hand was soft and goes over 21, subtract 10 and make it a hard hand
-    if(total >= 21 && isSoft == 1){
+    if(total > 21 && isSoft == 1){
         total = total - 10;
         isSoft = 0;
     }
-    total = total + cardValue;
     return;
 }
 
@@ -85,7 +86,7 @@ void hand::print(){
     for(int x = 0; x < cards.size(); x++){
             std::cout << card::print(cards[x]);
         }
-        std::cout << " Total: " << total << " Soft: " << isSoft << " Pair: " << isPair << "\r\n";
+        std::cout << "\r\n Total: " << total << " Soft: " << isSoft << " Pair: " << isPair << "\r\n";
 
 }
 

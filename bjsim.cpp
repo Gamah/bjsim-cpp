@@ -10,8 +10,6 @@
 int randomizer (int i) { return std::rand()%i;};
 
 int main() {
-    int numRounds;
-    for(int x = 0;x < 1000000; x++){
     //initialize shoe
     //TODO: break this out of main so it can be threaded
     std::srand ( unsigned ( std::time(0) ) );
@@ -34,7 +32,6 @@ int main() {
     std::random_shuffle( shoe.begin(), shoe.end());
     while(shoe.size() > 76){
 
-        numRounds++;
         int upCard = 0;        
         
         //deal 2 cards to everyone
@@ -114,7 +111,5 @@ int main() {
         
     }   
 
-    }
-    std::cout << numRounds << "\r\n";
     return 0;
 }
