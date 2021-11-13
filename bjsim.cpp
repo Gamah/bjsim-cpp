@@ -10,6 +10,7 @@
 int randomizer (int i) { return std::rand()%i;};
 
 int main() {
+
     //initialize shoe
     //TODO: break this out of main so it can be threaded
     std::srand ( unsigned ( std::time(0) ) );
@@ -21,8 +22,10 @@ int main() {
     hand dealer;    
     std::vector<player> players;
     players.push_back(player());
-    players[0].addHand(hand());
-
+    for(player p : players){
+        p.addHand(hand());
+    }
+    
     
     for(int x = 0; x < (52*6); x++){
         shoe.push_back(x);
@@ -31,7 +34,6 @@ int main() {
     // using built-in random generator:
     std::random_shuffle( shoe.begin(), shoe.end());
     while(shoe.size() > 76){
-
         int upCard = 0;        
         
         //deal 2 cards to everyone
@@ -59,14 +61,65 @@ int main() {
         //if the dealer didn't have blackjack, play the round...
         }else{
             
-            
             //player turns
-            decision = strategy.playerBasic(players[0].hands[0].total,upCard,players[0].hands[0].isPair,players[0].hands[0].isSoft,players[0].hands[0].canSplit,players[0].hands[0].canDouble,players[0].hands[0].canSurrender);
-            while(decision != decisions::STAND){
-                if(decision == decisions::HIT|| decision == decisions::DOUBLE || decision == decisions::SPLIT){
-                    players[0].hands[0].addCard(shoe.back());
-                    shoe.pop_back();
-                    decision = strategy.playerBasic(players[0].hands[0].total,upCard,players[0].hands[0].isPair,players[0].hands[0].isSoft,players[0].hands[0].canSplit,players[0].hands[0].canDouble,players[0].hands[0].canSurrender);
+            for(player p : players){
+                for(hand h : p.hands){
+                    decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
+                    while(decision != decisions::STAND){
+                        //don't play split aces
+                        if(h.canSplit == -1){
+                            break;
+                        }
+                        switch(decision){
+                            case decisions::HIT :{
+                                h.addCard(shoe.back());
+                                shoe.pop_back();
+                                decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
+                            }
+                            case decisions::SPLIT : {
+                                //new hand object for after dealing with this hand...
+                                //TODO: implement bets
+                                hand newhand = hand();
+                                //pull card off the top if debugging is on
+                                if(config::debug){
+                                    h.cards.pop_back();
+                                }                    
+                                //halve the hand total
+                                h.total == h.total / 2;
+                                //put the top card into the new hand            
+                                newhand.addCard(h.topCard);
+                                //deal to the current hand
+                                h.addCard(shoe.back());
+                                shoe.pop_back();
+                                //deal to the new hand
+                                newhand.addCard(shoe.back());
+                                shoe.pop_back();
+                                //if the hands are aces or player has 4 hands (lengh of hands + new hand not yet added) then they can't resplit
+                                if(p.hands.size() + 1 == rules::maxSplit){
+                                    h.canSplit = 0;
+                                    newhand.canSplit = 0;
+                                }
+                                //this is a dumb hack to indicate split aces because i can't read the future to prevent playing or resplitting a split ace on a future hand
+                                if(card::value(h.topCard) == 1){
+                                    h.canSplit = -1;
+                                    newhand.canSplit = -1;
+                                }else{
+                                    decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
+                                }
+                                //mark hands slpit and add to player's hands
+                                h.isSplit = 1;
+                                newhand.isSplit =1;
+                                p.addHand(newhand);
+                            }
+                            case decisions::DOUBLE :{
+                                //TODO: double the bet...
+                                h.addCard(shoe.back());
+                                shoe.pop_back();
+                                break;
+                            }
+
+                        }
+                    }
                 }
             }
 
@@ -98,7 +151,7 @@ int main() {
             }
         }
         //debug print cards
-        if(config().debug){
+        if(config::debug){
             debugPrint("Dealer: ");
             dealer.print();
             debugPrint("Player: ");

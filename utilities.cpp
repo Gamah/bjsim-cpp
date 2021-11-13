@@ -2,7 +2,7 @@
 #include <iostream>
 
 void debugPrint(std::string string){
-    if(config().debug){
+    if(config::debug){
         std::cout << string;
     }
     return;
@@ -44,9 +44,11 @@ void hand::discard(){
     isSoft = 0;  
     isSplit = 0;
     isDoubled = 0;
+    isSurrendered = 0;
+    topCard = 0;
     canSplit = 0;
     canDouble = 0;
-    canSurrender = 0;
+    canSurrender = rules::Surrender;
     return;
 }
 
@@ -54,18 +56,9 @@ void hand::addCard(int cardIndex){
     //TODO: fix ace and 21 totaling
     //add the card to the list of cards
     int cardValue = card::value(cardIndex);
-    if(config().debug){
+    topCard = cardIndex;
+    if(config::debug){
         cards.push_back(cardIndex);
-    }
-    //if this is the 2nd card, we need to check for pairs
-    if (cards.size() == 2){
-        //check if the card doubled matches the total plus the card for a pair
-        //also check if a previous soft 11 (single ace) plus the incoming card (ace) match by adding up to 12
-        if (total + cardValue == cardValue * 2 || (total + cardValue == 12 && cardValue == 1)){
-            isPair = cardValue;
-        }
-    }else{
-        isPair = 0;
     }
 
     total = total + cardValue;
@@ -78,6 +71,19 @@ void hand::addCard(int cardIndex){
     if(total > 21 && isSoft == 1){
         total = total - 10;
         isSoft = 0;
+    }
+    //if this is the 2nd card, we need to check for pairs
+    if (cards.size() == 2){
+        canDouble = 1;
+        canSplit = 1;
+        //check if the card doubled matches the total plus the card for a pair
+        //also check if a previous soft 11 (single ace) plus the incoming card (ace) match by adding up to 12
+        if (total + cardValue == cardValue * 2 || (total + cardValue == 12 && cardValue == 1)){
+            isPair = cardValue;
+        }
+    }else{
+        isPair = 0;
+        canDouble = 0;
     }
     return;
 }
@@ -93,4 +99,11 @@ void hand::print(){
 //implement player funcitons
 void player::addHand(hand hand){
     hands.push_back(hand);
+}
+
+void player::print(){
+    for(hand h : hands){
+        h.print();
+        std::cout << "Doubled: " << h.isDoubled << " Split: " << h.isSplit << " Surrendered: " << h.isSurrendered;
+    }
 }

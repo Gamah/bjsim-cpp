@@ -2,19 +2,19 @@
 #include <string>
 #include <vector>
 
-struct config{
-    bool debug = 1;
+namespace config{
+    static const bool debug = 1;
 };
 
 void debugPrint(std::string string);
 
 enum class decisions{HIT, STAND, DOUBLE, SPLIT, SURRENDER};
-struct rules{
-    bool H17 = 0;
-    bool DAS = 1;
-    bool RSA = 0;
-    bool Surrender = 0;
-    int maxSplit = 4;
+namespace rules{
+    static const bool H17 = 0;
+    static const bool DAS = 1;
+    static const bool RSA = 0;
+    static const bool Surrender = 0;
+    static const int maxSplit = 4;
 };
 
 namespace card{    
@@ -34,7 +34,9 @@ class hand{
         bool isSoft;
         bool isSplit;
         bool isDoubled;
-        int canSplit;
+        bool isSurrendered;
+        int topCard;
+        bool canSplit;
         bool canDouble; 
         bool canSurrender;
 
@@ -55,4 +57,5 @@ class player{
         //TODO: figure out constructors
         //player(double bankroll = 0, double betUnit = 0, int betMultiplier = 0);
         void addHand(hand hand);
+        void print();
 };
