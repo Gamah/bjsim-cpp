@@ -107,3 +107,7 @@ void player::print(){
         std::cout << "Doubled: " << h.isDoubled << " Split: " << h.isSplit << " Surrendered: " << h.isSurrendered;
     }
 }
+
+void  player::clearHands(){
+    hands.clear();
+}

@@ -185,6 +185,73 @@ void BStest(){
     return;
 }
 
+void soft17test(){
+    hand hand;
+    strategies strat;
+    hand.discard();
+    hand.addCard(5);
+    hand.addCard(0);
+    hand.print();
+    switch(strat.dealerH17(hand)){
+        case decisions::STAND: 
+            std::cout << "STAND\r\n";
+            break;
+        case decisions::HIT:
+            std::cout << "HIT\r\n";
+            break;
+    };
+    hand.addCard(0);
+    hand.print();
+    switch(strat.dealerH17(hand)){
+        case decisions::STAND: 
+            std::cout << "STAND\r\n";
+            break;
+        case decisions::HIT:
+            std::cout << "HIT\r\n";
+            break;
+    };
+    hand.addCard(0);
+    hand.print();
+    switch(strat.dealerH17(hand)){
+        case decisions::STAND: 
+            std::cout << "STAND\r\n";
+            break;
+        case decisions::HIT:
+            std::cout << "HIT\r\n";
+            break;
+    };
+    hand.addCard(0);
+    hand.print();
+    switch(strat.dealerH17(hand)){
+        case decisions::STAND: 
+            std::cout << "STAND\r\n";
+            break;
+        case decisions::HIT:
+            std::cout << "HIT\r\n";
+            break;
+    };
+    hand.addCard(0);
+    hand.print();
+    switch(strat.dealerH17(hand)){
+        case decisions::STAND: 
+            std::cout << "STAND\r\n";
+            break;
+        case decisions::HIT:
+            std::cout << "HIT\r\n";
+            break;
+    };
+    hand.addCard(0);
+    hand.print();
+    switch(strat.dealerH17(hand)){
+        case decisions::STAND: 
+            std::cout << "STAND\r\n";
+            break;
+        case decisions::HIT:
+            std::cout << "HIT\r\n";
+            break;
+    };
+
+}
 void aceTest(){
     hand hand;
     hand.discard();
@@ -196,6 +263,6 @@ void aceTest(){
     }
 }
  int main(){
-     BStest();
+     soft17test();
      return 69;
  }

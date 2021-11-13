@@ -3,7 +3,7 @@
 #include <vector>
 
 namespace config{
-    static const bool debug = 1;
+    static const bool debug = true;
 };
 
 void debugPrint(std::string string);
@@ -28,17 +28,17 @@ namespace card{
 class hand{
     public:
         std::vector<int> cards;
-        double bet;
-        int total;
-        int isPair;
-        bool isSoft;
-        bool isSplit;
-        bool isDoubled;
-        bool isSurrendered;
-        int topCard;
-        bool canSplit;
-        bool canDouble; 
-        bool canSurrender;
+        double bet = 0;
+        int total = 0;
+        int isPair = 0;
+        bool isSoft = false;
+        bool isSplit = false;
+        bool isDoubled = false;
+        bool isSurrendered = false;
+        int topCard = 0;
+        bool canSplit = false;
+        bool canDouble = false;  
+        bool canSurrender = false;
 
         //TODO: figure out constructors
         //hand(double bet = 0,int total = 0,int isPair = 0,bool isSoft = 0,bool isSplit = 0,bool isDoubled = 0,int canSplit = rules().maxSplit,bool canDouble = 0,bool canSurrender = 0);
@@ -58,4 +58,5 @@ class player{
         //player(double bankroll = 0, double betUnit = 0, int betMultiplier = 0);
         void addHand(hand hand);
         void print();
+        void clearHands();
 };
