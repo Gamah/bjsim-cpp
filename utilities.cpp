@@ -75,11 +75,11 @@ void hand::addCard(int cardIndex){
     //if this is the 2nd card, we need to check for pairs
     if (cards.size() == 2){
         canDouble = 1;
-        canSplit = 1;
         //check if the card doubled matches the total plus the card for a pair
         //also check if a previous soft 11 (single ace) plus the incoming card (ace) match by adding up to 12
-        if (total + cardValue == cardValue * 2 || (total + cardValue == 12 && cardValue == 1)){
+        if (total  == cardValue * 2 || (total == 12 && cardValue == 1)){
             isPair = cardValue;
+            canSplit = 1;
         }
     }else{
         isPair = 0;
@@ -92,7 +92,7 @@ void hand::print(){
     for(int x = 0; x < cards.size(); x++){
             std::cout << card::print(cards[x]);
         }
-        std::cout << "\r\n Total: " << total << " Soft: " << isSoft << " Pair: " << isPair << "\r\n";
+        std::cout << "\r\nDoubled: " << isDoubled << " Split: " << isSplit << " Surrendered: " << isSurrendered << "\r\n";
 
 }
 
@@ -104,7 +104,6 @@ void player::addHand(hand hand){
 void player::print(){
     for(hand h : hands){
         h.print();
-        std::cout << "Doubled: " << h.isDoubled << " Split: " << h.isSplit << " Surrendered: " << h.isSurrendered;
     }
 }
 

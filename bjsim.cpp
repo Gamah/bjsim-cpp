@@ -115,8 +115,8 @@ int main() {
                                         decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
                                     }
                                     //mark hands slpit and add to player's hands
-                                    h.isSplit = 1;
-                                    newhand.isSplit =1;
+                                    h.isSplit = true;
+                                    newhand.isSplit = true;
                                     p.addHand(newhand);
                                     break;
                                 }
@@ -124,6 +124,7 @@ int main() {
                                     //TODO: double the bet...
                                     h.addCard(shoe.back());
                                     shoe.pop_back();
+                                    h.isDoubled = true;
                                     decision = decisions::STAND;
                                     break;
                                 }

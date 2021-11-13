@@ -36,7 +36,7 @@ class hand{
         bool isDoubled = false;
         bool isSurrendered = false;
         int topCard = 0;
-        bool canSplit = false;
+        int canSplit = 1;
         bool canDouble = false;  
         bool canSurrender = false;
 

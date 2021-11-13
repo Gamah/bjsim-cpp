@@ -262,7 +262,34 @@ void aceTest(){
         hand.print();
     }
 }
+
+void splitTest(){
+    hand hand;
+    strategies strat;
+    hand.addCard(2);
+    hand.addCard(2);
+    hand.print();
+    std::cout << hand.canDouble << "  " << hand.canSplit << "  " << hand.canSurrender << "\r\n";
+    switch(strat.playerBasic(hand.total,5,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
+        case decisions::STAND: 
+            std::cout << "STAND\r\n";
+            break;
+        case decisions::HIT:
+            std::cout << "HIT\r\n";
+            break;
+        case decisions::DOUBLE: 
+            std::cout << "DOUBLE\r\n";
+            break;
+        case decisions::SPLIT:
+            std::cout << "SPLIT\r\n";
+            break;
+        case decisions::SURRENDER:
+            std::cout << "SURRENDER\r\n";
+            break;
+    };
+}
  int main(){
-     soft17test();
+     BStest();
+     splitTest();
      return 69;
  }
