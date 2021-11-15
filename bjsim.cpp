@@ -10,7 +10,7 @@
 int randomizer (int i) { return std::rand()%i;};
 
 int main() {
-
+    for(int x = 0;x<1000000;x++){
     //initialize shoe
     //TODO: break this out of main so it can be threaded
     std::srand ( unsigned ( std::time(0) ) );
@@ -22,22 +22,23 @@ int main() {
     hand dealer;    
     std::vector<player> players;
     players.push_back(player());
-    
-    
+
+
     for(int x = 0; x < (52*6); x++){
         shoe.push_back(x);
     }
 
     // using built-in random generator:
-    std::random_shuffle( shoe.begin(), shoe.end());
+    std::random_shuffle(shoe.begin(), shoe.end());
 
     //start a round of bj
     while(shoe.size() > 76){
+        
         for(player& p : players){
             p.addHand(hand());
         }
         int upCard = 0;        
-        
+
         //deal 2 cards to everyone
         for(int x = 0;x<2;x++){
             dealer.addCard(shoe.back());
@@ -51,7 +52,7 @@ int main() {
                     shoe.pop_back();
                 }
             }
-            
+
         }
 
         //check for dealer Ace up
@@ -67,7 +68,7 @@ int main() {
         //if the dealer didn't have blackjack, play the round...
 
         }else{
-             
+
             //player turns
             for(player& p : players){
                 for(hand& h : p.hands){
@@ -85,6 +86,7 @@ int main() {
                                     break;
                                 }
                                 case decisions::SPLIT : {
+                                    std::cout << "FUCK SPLIT FUCK\r\rn";
                                     //new hand object for after dealing with this hand...
                                     //TODO: implement bets
                                     hand newhand = hand();
@@ -111,6 +113,7 @@ int main() {
                                     if(card::value(h.topCard) == 1){
                                         h.canSplit = -1;
                                         newhand.canSplit = -1;
+                                        decision = decisions::STAND;
                                     }else{
                                         decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
                                     }
@@ -118,6 +121,7 @@ int main() {
                                     h.isSplit = true;
                                     newhand.isSplit = true;
                                     p.addHand(newhand);
+                                    decision = decisions::STAND;
                                     break;
                                 }
                                 case decisions::DOUBLE :{
@@ -127,6 +131,10 @@ int main() {
                                     h.isDoubled = true;
                                     decision = decisions::STAND;
                                     break;
+                                }
+                                case decisions::SURRENDER : {
+                                    //TODO: take half the bet.
+                                    h.isSurrendered = true;
                                 }
                             }
                         }
@@ -144,7 +152,7 @@ int main() {
                 decision = strategy.dealerH17(dealer);
             }
         }
-            
+
 
         //debug print cards
         if(config::debug){
@@ -158,7 +166,7 @@ int main() {
             for(player& p : players){
                 for(hand& h : p.hands){
                     h.print();
-                    if(h.total <= 21){
+                    if(h.total <= 21 || !h.isSurrendered){
                         if(h.total > dealer.total || dealer.total > 21){
                             debugPrint("Player won!\r\n");
                         }
@@ -169,7 +177,7 @@ int main() {
                             debugPrint("Player lost\r\n");
                         }
                     }else{
-                        debugPrint("Player BUST!\r\n");
+                        debugPrint("Player BUST/Surrender!\r\n");
                     }
                 }   
             }
@@ -180,6 +188,7 @@ int main() {
         for(player& p : players){
             p.clearHands();
         }
+    }
     }
     return 0;
 }

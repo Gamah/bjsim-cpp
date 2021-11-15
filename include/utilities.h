@@ -3,7 +3,7 @@
 #include <vector>
 
 namespace config{
-    static const bool debug = true;
+    static const bool debug = false;
 };
 
 void debugPrint(std::string string);
@@ -59,4 +59,10 @@ class player{
         void addHand(hand hand);
         void print();
         void clearHands();
+};
+
+class shoe{
+    std::vector<int> cards;
+    int runningCount;
+    int trueCount;
 };

@@ -31,7 +31,9 @@ std::string card::deck(int cardIndex){
 }
 
 std::string card::print(int cardIndex){
-    return "[" + deck(cardIndex) + face(cardIndex) + suit(cardIndex) + "]";
+    //used for deeper debugging
+    //return "[" + deck(cardIndex) + face(cardIndex) + suit(cardIndex) + "]";
+    return "[" + face(cardIndex) + "]";
 }
 
 
