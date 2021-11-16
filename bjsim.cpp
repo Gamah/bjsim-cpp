@@ -3,18 +3,20 @@
 #include <vector>
 #include <algorithm>
 #include <ctime>
+#include <chrono>
+#include <random>
+#include <cstdlib>
 #include "include/utilities.h"
 #include "include/strategies.h"
 
 // random generator function:
-int randomizer (int i) { return std::rand()%i;};
 
 int main() {
-    for(int x = 0;x<1000000;x++){
+    std::srand(time(nullptr));
     //initialize shoe
     //TODO: break this out of main so it can be threaded
     std::srand ( unsigned ( std::time(0) ) );
-    std::vector<int> shoe;
+    shoe shoe;
 
     //setup dealer and players
     strategies strategy;
@@ -23,16 +25,12 @@ int main() {
     std::vector<player> players;
     players.push_back(player());
 
-
-    for(int x = 0; x < (52*6); x++){
-        shoe.push_back(x);
-    }
-
+    for(int x = 0;x<1000000;x++){
     // using built-in random generator:
-    std::random_shuffle(shoe.begin(), shoe.end());
+    shoe.shuffleCards();
 
     //start a round of bj
-    while(shoe.size() > 76){
+    while(shoe.cards.size() > 76){
         
         for(player& p : players){
             p.addHand(hand());
@@ -41,15 +39,14 @@ int main() {
 
         //deal 2 cards to everyone
         for(int x = 0;x<2;x++){
-            dealer.addCard(shoe.back());
+            int newCard = shoe.getCard();
+            dealer.addCard(newCard);
             if(x%2 == 1){
-                upCard = card::value(shoe.back());
+                upCard = card::value(newCard);
             }
-            shoe.pop_back();
             for(player& p : players){
                 for(hand& h : p.hands){
-                    h.addCard(shoe.back());
-                    shoe.pop_back();
+                    h.addCard(shoe.getCard());
                 }
             }
 
@@ -72,16 +69,18 @@ int main() {
             //player turns
             for(player& p : players){
                 for(hand& h : p.hands){
+                    //TODO: switch this back to just passing the hand in so hand's true count can be updated.
+                    h.trueCount = shoe.trueCount;
                     decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
                     while(decision != decisions::STAND){
                         //don't play split aces
                         if(h.canSplit == -1){
                             decision = decisions::STAND;
                         }else{
+                            h.trueCount = shoe.trueCount;
                             switch(decision){
                                 case decisions::HIT : {
-                                    h.addCard(shoe.back());
-                                    shoe.pop_back();
+                                    h.addCard(shoe.getCard());
                                     decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
                                     break;
                                 }
@@ -98,11 +97,9 @@ int main() {
                                     //put the top card into the new hand            
                                     newhand.addCard(h.topCard);
                                     //deal to the current hand
-                                    h.addCard(shoe.back());
-                                    shoe.pop_back();
+                                    h.addCard(shoe.getCard());
                                     //deal to the new hand
-                                    newhand.addCard(shoe.back());
-                                    shoe.pop_back();
+                                    newhand.addCard(shoe.getCard());
                                     //if the hands are aces or player has 4 hands (lengh of hands + new hand not yet added) then they can't resplit
                                     if(p.hands.size() + 1 == rules::maxSplit){
                                         h.canSplit = 0;
@@ -125,8 +122,7 @@ int main() {
                                 }
                                 case decisions::DOUBLE :{
                                     //TODO: double the bet...
-                                    h.addCard(shoe.back());
-                                    shoe.pop_back();
+                                    h.addCard(shoe.getCard());
                                     h.isDoubled = true;
                                     decision = decisions::STAND;
                                     break;
@@ -134,6 +130,7 @@ int main() {
                                 case decisions::SURRENDER : {
                                     //TODO: take half the bet.
                                     h.isSurrendered = true;
+                                    decision = decisions::STAND;
                                 }
                             }
                         }
@@ -146,8 +143,7 @@ int main() {
         while(decision != decisions::STAND){
             if(decision == decisions::HIT){
 
-                dealer.addCard(shoe.back());
-                shoe.pop_back();
+                dealer.addCard(shoe.getCard());
                 decision = strategy.dealerH17(dealer);
             }
         }
@@ -155,39 +151,57 @@ int main() {
 
         //debug print cards
         if(config::debug){
-
-            debugPrint("Dealer: \r\n");
             dealer.print();
-            debugPrint("Players: \r\n");
-
-            //check for player wins
-            //escape comparisons if bust
-            for(player& p : players){
-                for(hand& h : p.hands){
-                    h.print();
-                    if(h.total <= 21 || !h.isSurrendered){
-                        if(h.total > dealer.total || dealer.total > 21){
-                            debugPrint("Player won!\r\n");
-                        }
-                        if(h.total == dealer.total){
-                            debugPrint("Player push\r\n");
-                        }
-                        if(h.total < dealer.total && dealer.total <= 21){
-                            debugPrint("Player lost\r\n");
-                        }
-                    }else{
-                        debugPrint("Player BUST/Surrender!\r\n");
-                    }
-                }   
-            }
-            debugPrint("\r\n\r\n");
         }
+
+        debugPrint("Dealer: \r\n");
+        debugPrint("Players: \r\n");
+        //check for player wins
+        //escape comparisons if bust
+        for(player& p : players){
+            for(hand& h : p.hands){
+                if(config::debug){
+                    h.print();
+                }
+                if(h.total <= 21 || !h.isSurrendered){
+                    if(h.total > dealer.total || dealer.total > 21){
+                        p.addResult(h.trueCount,handResults::win);
+                        debugPrint("Player won!\r\n");
+                    }
+                    if(h.total == dealer.total){
+                        p.addResult(h.trueCount,handResults::push);
+                        debugPrint("Player push\r\n");
+                    }
+                    if(h.total < dealer.total && dealer.total <= 21){
+                        p.addResult(h.trueCount,handResults::lose);
+                        debugPrint("Player lost\r\n");
+                    }
+                }else{
+                    if(h.isSurrendered){
+                        p.addResult(h.trueCount,handResults::surrender);
+                    }else{
+                        p.addResult(h.trueCount,handResults::lose);
+                    }
+                    debugPrint("Player BUST/Surrender!\r\n");
+                }
+            }   
+        }
+        debugPrint("\r\n\r\n");
 
         dealer.discard();
         for(player& p : players){
             p.clearHands();
         }
     }
+    }
+    for(player& p : players){
+        std::cout << "lose      surr        push        win     bj";
+        for(int x = -7; x < 7;x++){
+            std::cout << x << ":\r\n";
+            for(int y = 0; y < 5; y++){
+                std::cout << "    " << p.handResults[x][y] << "    ";
+            }
+        }
     }
     return 0;
 }

@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <time.h>
+#include <random>
+#include <algorithm>
 #include "../include/utilities.h"
 #include "../include/strategies.h"
 
@@ -264,32 +267,82 @@ void aceTest(){
 }
 
 void splitTest(){
-    hand hand;
     strategies strat;
-    hand.addCard(2);
-    hand.addCard(2);
-    hand.print();
-    std::cout << hand.canDouble << "  " << hand.canSplit << "  " << hand.canSurrender << "\r\n";
-    switch(strat.playerBasic(hand.total,5,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
-        case decisions::STAND: 
-            std::cout << "STAND\r\n";
-            break;
-        case decisions::HIT:
-            std::cout << "HIT\r\n";
-            break;
-        case decisions::DOUBLE: 
-            std::cout << "DOUBLE\r\n";
-            break;
-        case decisions::SPLIT:
-            std::cout << "SPLIT\r\n";
-            break;
-        case decisions::SURRENDER:
-            std::cout << "SURRENDER\r\n";
-            break;
-    };
+    std::vector<player> players;
+    players.push_back(player());
+    for(player& p : players){
+        hand firstHand;
+        firstHand.addCard(2);
+        firstHand.addCard(2);
+        p.addHand(firstHand);
+        decisions decision;
+
+        decision = strat.playerBasic(firstHand.total,5,firstHand.isPair,firstHand.isSoft,firstHand.canSplit,firstHand.canDouble,firstHand.canSurrender);
+        while(decision != decisions::STAND){
+            switch(decision){
+                case decisions::STAND: 
+                    std::cout << "STAND\r\n";
+                    break;
+                case decisions::HIT:
+                    std::cout << "HIT\r\n";
+                    break;
+                case decisions::SPLIT :{
+                    hand newHand;
+                    //pull card off the top if debugging is on
+                    if(config::debug){
+                        firstHand.cards.pop_back();
+                    }                
+                    //halve the hand total
+                    firstHand.total == firstHand.total / 2;
+                    //put the top card into the new hand            
+                    newHand.addCard(firstHand.topCard);
+                    //deal to the current hand
+                    firstHand.addCard(2);
+                    //deal to the new hand
+                    newHand.addCard(2);
+                    //if the hands are aces or player has 4 hands (lengh of hands + new hand not yet added) then they can't resplit
+                    if(p.hands.size() + 1 == rules::maxSplit){
+                        firstHand.canSplit = 0;
+                        newHand.canSplit = 0;
+                    }
+                    //this is a dumb hack to indicate split aces because i can't read the future to prevent playing or resplitting a split ace on a future hand
+                    if(card::value(firstHand.topCard) == 1){
+                        firstHand.canSplit = -1;
+                        newHand.canSplit = -1;
+                        decision = decisions::STAND;
+                    }else{
+                        decision = strat.playerBasic(firstHand.total,5,firstHand.isPair,firstHand.isSoft,firstHand.canSplit,firstHand.canDouble,firstHand.canSurrender);
+                    }
+                    //mark hands slpit and add to player's hands
+                    firstHand.isSplit = true;
+                    newHand.isSplit = true;
+                    p.addHand(newHand);
+                    break;
+                }
+                case decisions::SURRENDER:
+                    std::cout << "SURRENDER\r\n";
+                    break;
+            };
+        }
+    }
+    for(player& p : players){
+        p.print();
+    }
+}   
+
+void testCounts(){
+    shoe newShoe;
+    newShoe.shuffleCards();
+    while(newShoe.cards.size() > 25){
+        int x = newShoe.getCard();
+        std::cout << "Card: " << card::print(x) << " RunningCount: " << newShoe.runningCount << " TrueCount: " << newShoe.trueCount << " Cards left: " << newShoe.cards.size() << "\r\n";
+    }
 }
- int main(){
-     BStest();
-     splitTest();
-     return 69;
- }
+
+int main(){
+    std::srand(time(0));
+    for(int x = 0;x<10;x++){
+        testCounts();
+    }
+    return 69;
+}

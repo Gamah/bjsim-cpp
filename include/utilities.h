@@ -17,6 +17,14 @@ namespace rules{
     static const int maxSplit = 4;
 };
 
+namespace handResults{
+    static const int lose = 0;
+    static const int surrender = 1;
+    static const int push = 2;
+    static const int win = 3;
+    static const int blackjack = 4;
+}
+
 namespace card{    
     int value(int cardIndex);
     std::string face(int cardIndex);
@@ -35,6 +43,7 @@ class hand{
         bool isSplit = false;
         bool isDoubled = false;
         bool isSurrendered = false;
+        bool isInsured = false;
         int topCard = 0;
         int canSplit = 1;
         bool canDouble = false;  
@@ -51,19 +60,24 @@ class hand{
 class player{
     public:
         std::vector<hand> hands;
-        int handResults[15][4];
-        
+        //+/-7 true count totals for Losses, Pushes, Surrenders(lost insurance), Wins, and BlackJacks
+        int handResults[15][5];
+    
         //TODO: figure out constructors
         //player(double bankroll = 0, double betUnit = 0, int betMultiplier = 0);
         void addHand(hand hand);
         void print();
         void clearHands();
+        void addResult(int trueCount, int handResult);
+        player();
 };
 
 class shoe{
-    std::vector<int> cards;
-    int runningCount;
-    int trueCount;
+    public:
+        std::vector<int> cards;
+        int runningCount;
+        int trueCount;
 
-    int getCard();
+        void shuffleCards();
+        int getCard();
 };

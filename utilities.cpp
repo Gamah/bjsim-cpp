@@ -1,5 +1,7 @@
 #include "include/utilities.h"
 #include <iostream>
+#include <algorithm>
+#include <math.h>
 
 void debugPrint(std::string string){
     if(config::debug){
@@ -94,7 +96,7 @@ void hand::print(){
     for(int x = 0; x < cards.size(); x++){
             std::cout << card::print(cards[x]);
         }
-        std::cout << "\r\nDoubled: " << isDoubled << " Split: " << isSplit << " Surrendered: " << isSurrendered << "\r\n";
+        std::cout << "\r\nTotal: " << total << " Doubled: " << isDoubled << " Split: " << isSplit << " Surrendered: " << isSurrendered << "\r\n";
 
 }
 
@@ -103,6 +105,13 @@ void player::addHand(hand hand){
     hands.push_back(hand);
 }
 
+player::player(){
+    for(int x = 0;x < 15; x++){
+        for(int y = 0; y < 5; y++){
+            handResults[x][y] = 0;
+        }
+    }
+}
 void player::print(){
     for(hand h : hands){
         h.print();
@@ -113,26 +122,52 @@ void  player::clearHands(){
     hands.clear();
 }
 
+void player::addResult(int trueCount, int handResult){
+            if(trueCount < -7){
+                trueCount = -7;
+            }
+            if(trueCount > 7){
+                trueCount = 7;
+            }
+            //+8 to offset so that the 7 elements below are negative tc and 7 elements above are positive tc
+            std::cout << "TC: " << trueCount << " HR: " << handResults << "\r\n";
+            handResults[trueCount+8][handResult]++;
+        }
+
 //implement shoe funcitons
 int shoe::getCard(){
     int newCard = cards.back();
     cards.pop_back();
-    switch(newCard){
+    switch(card::value(newCard)){
         case 2:
         case 3:
         case 4:
         case 5:
         case 6:{
-            runningCount++;
+            ++runningCount;
             break;
         }
         case 1:
         case 10:{
-            runningCount--;
+            --runningCount;
             break;
         }
         default:
             break;
     }   
+    const int decksLeft = (((cards.size() - 1) / 52) + 1);
+    trueCount = runningCount / decksLeft;
     return newCard;
+}
+
+void shoe::shuffleCards(){
+    cards.clear();
+    for(int x = 0; x < 52*6; x ++){
+        cards.push_back(x);
+    }
+    
+    std::random_shuffle(cards.begin(),cards.end());
+
+    trueCount = 0;
+    runningCount = 0;
 }

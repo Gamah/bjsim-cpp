@@ -258,3 +258,21 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
     throw std::invalid_argument("Invalid hand passed to Basic Strategy function");
     
 }
+
+decisions strategies::playerH17Deviations(hand& hand,int trueCount,int upCard){
+    switch(trueCount){
+        case 6:{
+            if(upCard == 4 && hand.isPair == 4 && hand.canSplit == 1){
+                return decisions::SPLIT;
+            }
+        }
+        case 5:{
+            if(upCard == 5 && hand.isPair == 4 && hand.canSplit == 1){
+                return decisions::SPLIT;
+            }
+            if(hand.total == 15 && upCard == 1){
+                return decisions::STAND;
+            }
+        }
+    }
+}
