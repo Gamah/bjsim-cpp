@@ -112,3 +112,27 @@ void player::print(){
 void  player::clearHands(){
     hands.clear();
 }
+
+//implement shoe funcitons
+int shoe::getCard(){
+    int newCard = cards.back();
+    cards.pop_back();
+    switch(newCard){
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:{
+            runningCount++;
+            break;
+        }
+        case 1:
+        case 10:{
+            runningCount--;
+            break;
+        }
+        default:
+            break;
+    }   
+    return newCard;
+}

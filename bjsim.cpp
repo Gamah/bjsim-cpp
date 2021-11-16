@@ -86,7 +86,6 @@ int main() {
                                     break;
                                 }
                                 case decisions::SPLIT : {
-                                    std::cout << "FUCK SPLIT FUCK\r\rn";
                                     //new hand object for after dealing with this hand...
                                     //TODO: implement bets
                                     hand newhand = hand();

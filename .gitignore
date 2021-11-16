@@ -2,4 +2,5 @@ bjsim
 .vscode/
 tests/tests
 test.txt
-
+prof.txt
+gmon.out
