@@ -53,6 +53,7 @@ void hand::discard(){
     canSplit = 0;
     canDouble = 0;
     canSurrender = rules::Surrender;
+    numCards = 0;
     return;
 }
 
@@ -64,7 +65,7 @@ void hand::addCard(int cardIndex){
     if(config::debug){
         cards.push_back(cardIndex);
     }
-
+    numCards++;
     total = total + cardValue;
     //if the current card is an ace and the hand total is less than 12, lets add 11 instead of 1
     if(total < 12 && cardValue == 1){
@@ -77,7 +78,7 @@ void hand::addCard(int cardIndex){
         isSoft = 0;
     }
     //if this is the 2nd card, we need to check for pairs
-    if (cards.size() == 2){
+    if (numCards == 2){
         canDouble = 1;
         //check if the card doubled matches the total plus the card for a pair
         //also check if a previous soft 11 (single ace) plus the incoming card (ace) match by adding up to 12
@@ -129,9 +130,8 @@ void player::addResult(int trueCount, int handResult){
             if(trueCount > 7){
                 trueCount = 7;
             }
-            //+8 to offset so that the 7 elements below are negative tc and 7 elements above are positive tc
-            std::cout << "TC: " << trueCount << " HR: " << handResults << "\r\n";
-            handResults[trueCount+8][handResult]++;
+            //+7 to offset so that the 7 elements below are negative tc and 7 elements above are positive tc
+            handResults[trueCount+7][handResult]++;
         }
 
 //implement shoe funcitons

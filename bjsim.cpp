@@ -46,7 +46,9 @@ int main() {
             }
             for(player& p : players){
                 for(hand& h : p.hands){
+                    h.trueCount = shoe.trueCount;
                     h.addCard(shoe.getCard());
+                    
                 }
             }
 
@@ -57,18 +59,47 @@ int main() {
         //debug print if ace up
         if(upCard == 1){
             debugPrint("Dealer has ace!\r\n");
+            if(shoe.trueCount >= 3){
+                for(player& p : players){
+                    for(hand& h : p.hands){
+
+                        //overload surrender for insurance bets....
+                        h.isSurrendered = true;
+                    }
+                }
+            }
         }
         //check for dealer blackjack
         //TODO: take bets or push hands, clean up hands and deal next round
         if(dealer.total == 21 || (dealer.total == 11 && dealer.isSoft)){
+            for(player& p : players){
+                    for(hand& h : p.hands){
+                        h.trueCount = shoe.trueCount;
+                        if(h.total == 21 || h.isInsured == true){
+                            p.addResult(h.trueCount,handResults::push);
+                        }else{
+                            p.addResult(h.trueCount,handResults::lose);
+                        }
+                    }
+                }
             debugPrint("Dealer has blackjack!\r\n");
+        
+        
         //if the dealer didn't have blackjack, play the round...
-
         }else{
 
             //player turns
             for(player& p : players){
                 for(hand& h : p.hands){
+                    // take insurance bets and set surrender flag backt to false
+                    if(h.isInsured){
+                        h.isInsured = false;
+                        p.addResult(h.trueCount,handResults::surrender);
+                    }
+                    if(h.total == 21){
+                        //player doesn't have to play if they have blackjack...
+                        break;
+                    }
                     //TODO: switch this back to just passing the hand in so hand's true count can be updated.
                     h.trueCount = shoe.trueCount;
                     decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
@@ -163,26 +194,32 @@ int main() {
                 if(config::debug){
                     h.print();
                 }
-                if(h.total <= 21 || !h.isSurrendered){
-                    if(h.total > dealer.total || dealer.total > 21){
-                        p.addResult(h.trueCount,handResults::win);
-                        debugPrint("Player won!\r\n");
-                    }
-                    if(h.total == dealer.total){
-                        p.addResult(h.trueCount,handResults::push);
-                        debugPrint("Player push\r\n");
-                    }
-                    if(h.total < dealer.total && dealer.total <= 21){
-                        p.addResult(h.trueCount,handResults::lose);
-                        debugPrint("Player lost\r\n");
-                    }
+                if(h.total == 21 && h.numCards == 2 && dealer.total != 21 && dealer.numCards == 2){
+                    p.addResult(h.trueCount,handResults::blackjack);
+                    debugPrint("Player blackjack!\r\n");
+                    break;
                 }else{
-                    if(h.isSurrendered){
-                        p.addResult(h.trueCount,handResults::surrender);
+                    if((h.total <= 21 || !h.isSurrendered) && dealer.total != 21){
+                        if(h.total > dealer.total || dealer.total > 21){
+                            p.addResult(h.trueCount,handResults::win);
+                            debugPrint("Player won!\r\n");
+                        }
+                        if(h.total == dealer.total){
+                            p.addResult(h.trueCount,handResults::push);
+                            debugPrint("Player push\r\n");
+                        }
+                        if(h.total < dealer.total && dealer.total <= 21){
+                            p.addResult(h.trueCount,handResults::lose);
+                            debugPrint("Player lost\r\n");
+                        }
                     }else{
-                        p.addResult(h.trueCount,handResults::lose);
+                        if(h.isSurrendered){
+                            p.addResult(h.trueCount,handResults::surrender);
+                        }else{
+                            p.addResult(h.trueCount,handResults::lose);
+                        }
+                        debugPrint("Player BUST/Surrender!\r\n");
                     }
-                    debugPrint("Player BUST/Surrender!\r\n");
                 }
             }   
         }
@@ -195,13 +232,14 @@ int main() {
     }
     }
     for(player& p : players){
-        std::cout << "lose      surr        push        win     bj";
-        for(int x = -7; x < 7;x++){
-            std::cout << x << ":\r\n";
+        std::cout << "\t    lose\t    surr\t    push\t    win\t    bj";
+        for(int x = -7; x <= 7;x++){
+            std::cout << "\r\n" << x << ":\t";
             for(int y = 0; y < 5; y++){
-                std::cout << "    " << p.handResults[x][y] << "    ";
+                std::cout << "    " << p.handResults[x+7][y] << "\t";
             }
         }
+        std::cout << "\r\n\r\n";
     }
     return 0;
 }

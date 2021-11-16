@@ -49,6 +49,7 @@ class hand{
         bool canDouble = false;  
         bool canSurrender = false;
         int trueCount = 0;
+        int numCards = 0;
 
         //TODO: figure out constructors
         //hand(double bet = 0,int total = 0,int isPair = 0,bool isSoft = 0,bool isSplit = 0,bool isDoubled = 0,int canSplit = rules().maxSplit,bool canDouble = 0,bool canSurrender = 0);
