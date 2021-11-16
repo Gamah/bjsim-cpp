@@ -46,8 +46,8 @@ int main() {
             }
             for(player& p : players){
                 for(hand& h : p.hands){
-                    h.trueCount = shoe.trueCount;
                     h.addCard(shoe.getCard());
+                    h.trueCount = shoe.trueCount;
                     
                 }
             }
@@ -55,39 +55,19 @@ int main() {
         }
 
         //check for dealer Ace up
-        //TODO: Offer insurance
-        //debug print if ace up
         if(upCard == 1){
             debugPrint("Dealer has ace!\r\n");
             if(shoe.trueCount >= 3){
                 for(player& p : players){
                     for(hand& h : p.hands){
-
                         //overload surrender for insurance bets....
-                        h.isSurrendered = true;
+                        h.isInsured = true;
                     }
                 }
             }
         }
-        //check for dealer blackjack
-        //TODO: take bets or push hands, clean up hands and deal next round
-        if(dealer.total == 21 || (dealer.total == 11 && dealer.isSoft)){
-            for(player& p : players){
-                    for(hand& h : p.hands){
-                        h.trueCount = shoe.trueCount;
-                        if(h.total == 21 || h.isInsured == true){
-                            p.addResult(h.trueCount,handResults::push);
-                        }else{
-                            p.addResult(h.trueCount,handResults::lose);
-                        }
-                    }
-                }
-            debugPrint("Dealer has blackjack!\r\n");
-        
-        
-        //if the dealer didn't have blackjack, play the round...
-        }else{
-
+        //play the round if dealer doesn't have blackjack
+        if(dealer.total != 21){
             //player turns
             for(player& p : players){
                 for(hand& h : p.hands){
@@ -187,8 +167,8 @@ int main() {
 
         debugPrint("Dealer: \r\n");
         debugPrint("Players: \r\n");
-        //check for player wins
-        //escape comparisons if bust
+        //Determine outcome of hands...
+        //TODO: start this over from scratch...
         for(player& p : players){
             for(hand& h : p.hands){
                 if(config::debug){
@@ -199,8 +179,11 @@ int main() {
                     debugPrint("Player blackjack!\r\n");
                     break;
                 }else{
-                    if((h.total <= 21 || !h.isSurrendered) && dealer.total != 21){
+                    if(h.total <= 21 && !h.isSurrendered && dealer.total != 21){
                         if(h.total > dealer.total || dealer.total > 21){
+                            if(h.isDoubled){
+                                p.addResult(h.trueCount,handResults::win);
+                            }
                             p.addResult(h.trueCount,handResults::win);
                             debugPrint("Player won!\r\n");
                         }
@@ -209,16 +192,28 @@ int main() {
                             debugPrint("Player push\r\n");
                         }
                         if(h.total < dealer.total && dealer.total <= 21){
+                            if(h.isDoubled){
+                                p.addResult(h.trueCount,handResults::lose);
+                            }
                             p.addResult(h.trueCount,handResults::lose);
                             debugPrint("Player lost\r\n");
                         }
                     }else{
-                        if(h.isSurrendered){
-                            p.addResult(h.trueCount,handResults::surrender);
-                        }else{
+                        if(dealer.total == 21 && dealer.numCards == 2){
+                            debugPrint("Dealer BlackJack\r\n");
                             p.addResult(h.trueCount,handResults::lose);
+                        }else{
+                            if(h.isSurrendered){
+                                p.addResult(h.trueCount,handResults::surrender);
+                                debugPrint("Player Surrender!\r\n");
+                            }else{
+                                if(h.isDoubled){
+                                   p.addResult(h.trueCount,handResults::lose);
+                                }
+                                p.addResult(h.trueCount,handResults::lose);
+                                debugPrint("Player BUST!\r\n");
+                            }
                         }
-                        debugPrint("Player BUST/Surrender!\r\n");
                     }
                 }
             }   
