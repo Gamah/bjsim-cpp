@@ -22,7 +22,7 @@ void BStest(){
             hand.canDouble = true;
             hand.canSplit = 1;
             hand.canSurrender = true;
-            switch(strategy.playerBasic(hand.total,y,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
+            switch(strategy.playerBasic(hand.total,card::value(y),hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
                 case decisions::HIT:
                     std::cout << " H";
                     break;
@@ -80,7 +80,7 @@ void BStest(){
             hand.isSoft = true;
             hand.canDouble = true;
             hand.isPair = 0;
-            switch(strategy.playerBasic(hand.total,y,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
+            switch(strategy.playerBasic(hand.total,card::value(y),hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
                 case decisions::HIT:
                     std::cout << " H";
                     break;
@@ -138,7 +138,7 @@ void BStest(){
             hand.canSurrender = true;
             hand.addCard(x);
             hand.addCard(x);
-            switch(strategy.playerBasic(hand.total,y,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
+            switch(strategy.playerBasic(hand.total,card::value(y),hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender)){
                 case decisions::HIT:
                     std::cout << " H";
                     break;
@@ -351,7 +351,6 @@ void testBJ(){
     hand.print();
 }
 int main(){
-    testBJ();
     BStest();
     return 69;
 }
