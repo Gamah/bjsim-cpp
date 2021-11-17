@@ -6,7 +6,7 @@
 
 void debugPrint(std::string string){
     if(config::debug){
-        std::cout << string;
+        std::cout << string << "\r\n";
     }
     return;
 }
@@ -107,9 +107,10 @@ void player::addHand(hand hand){
     hands.push_back(hand);
 }
 
-player::player(){
+player::player(){  
+    //initialize array... is this necessary?
     for(int x = 0;x < 15; x++){
-        for(int y = 0; y < 5; y++){
+        for(int y = 0; y < 9; y++){
             handResults[x][y] = 0;
         }
     }
@@ -125,6 +126,7 @@ void  player::clearHands(){
 }
 
 void player::addResult(int trueCount, int handResult){
+            //clamp truecount to no more than 7 in either direction
             if(trueCount < -7){
                 trueCount = -7;
             }

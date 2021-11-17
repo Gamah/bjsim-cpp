@@ -20,11 +20,15 @@ namespace rules{
 };
 
 namespace handResults{
-    static const int lose = 0;
-    static const int surrender = 1;
-    static const int push = 2;
-    static const int win = 3;
-    static const int blackjack = 4;
+    static const int doublelose = 0;
+    static const int lose = 1;
+    static const int surrender = 2;
+    static const int insurancelose = 3;
+    static const int insurancewin = 4;
+    static const int push = 5;
+    static const int win = 6;
+    static const int blackjack = 7;
+    static const int doublewin = 8;
 }
 
 namespace card{    
@@ -62,7 +66,7 @@ class player{
     public:
         std::vector<hand> hands;
         //+/-7 true count totals for Losses, Pushes, Surrenders(lost insurance), Wins, and BlackJacks
-        unsigned int handResults[15][5];
+        unsigned int handResults[15][9];
     
         void addHand(hand hand);
         void print();

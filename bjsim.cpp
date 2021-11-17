@@ -25,12 +25,12 @@ int main() {
     std::vector<player> players;
     players.push_back(player());
 
-    for(int x = 0;x<1000000;x++){
+    for(int x = 0;x<24000000;x++){
     // using built-in random generator:
     shoe.shuffleCards();
 
     //start a round of bj
-    while(shoe.cards.size() > 76){
+    while(shoe.cards.size() > 78){
         
         for(player& p : players){
             p.addHand(hand());
@@ -60,8 +60,7 @@ int main() {
             if(shoe.trueCount >= 3){
                 for(player& p : players){
                     for(hand& h : p.hands){
-                        //overload surrender for insurance bets....
-                        h.isInsured = true;
+                        //h.isInsured = true;
                     }
                 }
             }
@@ -145,14 +144,14 @@ int main() {
                     }
                 }
             }
-        }
-        //dealer turn
-        decision = strategy.dealerH17(dealer);
-        while(decision != decisions::STAND){
-            if(decision == decisions::HIT){
+            //dealer turn
+            decision = strategy.dealerH17(dealer);
+            while(decision != decisions::STAND){
+                if(decision == decisions::HIT){
 
-                dealer.addCard(shoe.getCard());
-                decision = strategy.dealerH17(dealer);
+                    dealer.addCard(shoe.getCard());
+                    decision = strategy.dealerH17(dealer);
+                }
             }
         }
 
@@ -164,13 +163,15 @@ int main() {
                     h.print();
                 }
 
-                //if the hand was insured, it's either a push or we take the insurance bet... (which is equal to a surender)
+                //if the hand was insured, it's either a push or we take the insurance bet.
                 if(h.isInsured){
                     if(dealer.total == 21 && dealer.numCards == 2){
-                        p.addResult(h.trueCount,handResults::push);
+                        p.addResult(h.trueCount,handResults::insurancewin);
+                        debugPrint("Insurance Win");
                         break;
                     }else{
-                        p.addResult(h.trueCount,handResults::surrender);
+                        p.addResult(h.trueCount,handResults::insurancelose);
+                        debugPrint("Insurance Lose");
                     }
                 }
 
@@ -178,8 +179,10 @@ int main() {
                 if(dealer.total == 21 && dealer.numCards == 2){
                     if(h.total == 21 && h.numCards == 2){
                         p.addResult(h.trueCount,handResults::push);
+                        debugPrint("BLackjack Push");
                     }else{
                         p.addResult(h.trueCount,handResults::lose);
+                        debugPrint("Blackjack Lose");
                     }
                     break;
                 }
@@ -187,40 +190,44 @@ int main() {
                 //if player has blackjack pay and exit loop
                 if(h.total == 21 and h.numCards ==2){
                     p.addResult(h.trueCount,handResults::blackjack);
+                    debugPrint("Blackjack Win");
                     break;
                 }
 
                 //if player has surendered, take bet and exit loop
                 if(h.isSurrendered){
                     p.addResult(h.trueCount,handResults::surrender);
+                    debugPrint("Surrender Lose");
                     break;
                 }
 
                 //check for busts...
                 if(h.total > 21){
                     if(h.isDoubled){
-                        p.addResult(h.trueCount,handResults::lose);
+                        p.addResult(h.trueCount,handResults::doublelose);
                     }
                     p.addResult(h.trueCount,handResults::lose);
+                    break;
                 }
                 if(dealer.total > 21){
                     if(h.isDoubled){
-                        p.addResult(h.trueCount,handResults::win);
+                        p.addResult(h.trueCount,handResults::doublewin);
                     }
                     p.addResult(h.trueCount,handResults::win);
+                    break;
                 }
 
                 //compare the hands for win/loss/push
                 if(h.total <= 21 && dealer.total <= 21){
                     if(h.total > dealer.total){
                         if(h.isDoubled){
-                            p.addResult(h.trueCount,handResults::win);
+                            p.addResult(h.trueCount,handResults::doublewin);
                         }
                         p.addResult(h.trueCount,handResults::win);
                     }
                     if(h.total < dealer.total){
                         if(h.isDoubled){
-                            p.addResult(h.trueCount,handResults::lose);
+                            p.addResult(h.trueCount,handResults::doublelose);
                         }
                         p.addResult(h.trueCount,handResults::lose);
                     }
@@ -239,11 +246,11 @@ int main() {
     }
     }
     for(player& p : players){
-        std::cout << "\t    lose\t    surr\t    push\t    win\t    bj";
+        std::cout << "count,doublelose,lose,surrender,insurancelose,insurancewin,push,win,blackjack,doublewin";
         for(int x = -7; x <= 7;x++){
-            std::cout << "\r\n" << x << ":\t";
-            for(int y = 0; y < 5; y++){
-                std::cout << "    " << p.handResults[x+7][y] << "\t";
+            std::cout << "\r\n" << x << ",";
+            for(int y = 0; y < 9; y++){
+                std::cout << p.handResults[x+7][y] << ",";
             }
         }
         std::cout << "\r\n\r\n";
