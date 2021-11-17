@@ -167,7 +167,7 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
 
     //Surrender 16 against 9 – Ace
     //Surrender 15 against a 10
-    if(canSurrender ==1){
+    if(canSurrender){
         switch(total){
             case 16:
                 switch(upCard){

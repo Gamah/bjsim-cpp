@@ -12,10 +12,10 @@ void debugPrint(std::string string);
 
 enum class decisions{HIT, STAND, DOUBLE, SPLIT, SURRENDER};
 namespace rules{
-    static const bool H17 = 0;
-    static const bool DAS = 1;
-    static const bool RSA = 0;
-    static const bool Surrender = 0;
+    static const bool H17 = true;
+    static const bool DAS = true;
+    static const bool RSA = false;
+    static const bool Surrender = false;
     static const int maxSplit = 4;
 };
 

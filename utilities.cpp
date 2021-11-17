@@ -98,7 +98,7 @@ void hand::print(){
     for(int x = 0; x < cards.size(); x++){
             std::cout << card::print(cards[x]);
         }
-        std::cout << "\r\nTotal: " << total << " Doubled: " << isDoubled << " Split: " << isSplit << " Surrendered: " << isSurrendered << "\r\n";
+        std::cout << "\r\nTotal: " << total << " Soft: " << isSoft  << " Doubled: " << isDoubled << " Split: " << isSplit << " Surrendered: " << isSurrendered << "\r\n";
 
 }
 
