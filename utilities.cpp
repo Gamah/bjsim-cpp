@@ -1,6 +1,7 @@
 #include "include/utilities.h"
 #include <iostream>
 #include <algorithm>
+
 #include <math.h>
 
 void debugPrint(std::string string){
@@ -58,7 +59,7 @@ void hand::discard(){
 }
 
 void hand::addCard(int cardIndex){
-    //TODO: fix ace and 21 totaling
+    //TODO: fix ace and 21 totaling, blackjacks are technically a soft 11...
     //add the card to the list of cards
     int cardValue = card::value(cardIndex);
     topCard = cardIndex;
@@ -166,7 +167,7 @@ void shoe::shuffleCards(){
         cards.push_back(x);
     }
     
-    std::random_shuffle(cards.begin(),cards.end());
+    std::shuffle(cards.begin(),cards.end(),config::mt);
 
     trueCount = 0;
     runningCount = 0;

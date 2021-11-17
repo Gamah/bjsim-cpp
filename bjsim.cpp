@@ -25,7 +25,7 @@ int main() {
     std::vector<player> players;
     players.push_back(player());
 
-    for(int x = 0;x<23800000;x++){
+    for(int x = 0;x<1000000;x++){
     // using built-in random generator:
     shoe.shuffleCards();
 
