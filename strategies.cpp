@@ -275,4 +275,5 @@ decisions strategies::playerH17Deviations(hand& hand,int trueCount,int upCard){
             }
         }
     }
+    return(playerBasic(hand.total,upCard,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender));
 }

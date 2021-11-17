@@ -25,7 +25,7 @@ int main() {
     std::vector<player> players;
     players.push_back(player());
 
-    for(int x = 0;x<1000000;x++){
+    for(int x = 0;x<23800000;x++){
     // using built-in random generator:
     shoe.shuffleCards();
 
@@ -72,11 +72,7 @@ int main() {
             for(player& p : players){
                 for(hand& h : p.hands){
                     // take insurance bets and set surrender flag backt to false
-                    if(h.isInsured){
-                        h.isInsured = false;
-                        p.addResult(h.trueCount,handResults::surrender);
-                    }
-                    if(h.total == 21){
+                    if(h.total == 21 && h.numCards == 2){
                         //player doesn't have to play if they have blackjack...
                         break;
                     }
@@ -92,6 +88,7 @@ int main() {
                             switch(decision){
                                 case decisions::HIT : {
                                     h.addCard(shoe.getCard());
+                                    h.trueCount = shoe.trueCount;
                                     decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
                                     break;
                                 }
@@ -160,65 +157,80 @@ int main() {
         }
 
 
-        //debug print cards
-        if(config::debug){
-            dealer.print();
-        }
-
-        debugPrint("Dealer: \r\n");
-        debugPrint("Players: \r\n");
         //Determine outcome of hands...
-        //TODO: start this over from scratch...
         for(player& p : players){
             for(hand& h : p.hands){
                 if(config::debug){
                     h.print();
                 }
-                if(h.total == 21 && h.numCards == 2 && dealer.total != 21 && dealer.numCards == 2){
-                    p.addResult(h.trueCount,handResults::blackjack);
-                    debugPrint("Player blackjack!\r\n");
-                    break;
-                }else{
-                    if(h.total <= 21 && !h.isSurrendered && dealer.total != 21){
-                        if(h.total > dealer.total || dealer.total > 21){
-                            if(h.isDoubled){
-                                p.addResult(h.trueCount,handResults::win);
-                            }
-                            p.addResult(h.trueCount,handResults::win);
-                            debugPrint("Player won!\r\n");
-                        }
-                        if(h.total == dealer.total){
-                            p.addResult(h.trueCount,handResults::push);
-                            debugPrint("Player push\r\n");
-                        }
-                        if(h.total < dealer.total && dealer.total <= 21){
-                            if(h.isDoubled){
-                                p.addResult(h.trueCount,handResults::lose);
-                            }
-                            p.addResult(h.trueCount,handResults::lose);
-                            debugPrint("Player lost\r\n");
-                        }
+
+                //if the hand was insured, it's either a push or we take the insurance bet... (which is equal to a surender)
+                if(h.isInsured){
+                    if(dealer.total == 21 && dealer.numCards == 2){
+                        p.addResult(h.trueCount,handResults::push);
+                        break;
                     }else{
-                        if(dealer.total == 21 && dealer.numCards == 2){
-                            debugPrint("Dealer BlackJack\r\n");
-                            p.addResult(h.trueCount,handResults::lose);
-                        }else{
-                            if(h.isSurrendered){
-                                p.addResult(h.trueCount,handResults::surrender);
-                                debugPrint("Player Surrender!\r\n");
-                            }else{
-                                if(h.isDoubled){
-                                   p.addResult(h.trueCount,handResults::lose);
-                                }
-                                p.addResult(h.trueCount,handResults::lose);
-                                debugPrint("Player BUST!\r\n");
-                            }
-                        }
+                        p.addResult(h.trueCount,handResults::surrender);
                     }
                 }
+
+                //if dealer has blackjack push or take bets and exit loop
+                if(dealer.total == 21 && dealer.numCards == 2){
+                    if(h.total == 21 && h.numCards == 2){
+                        p.addResult(h.trueCount,handResults::push);
+                    }else{
+                        p.addResult(h.trueCount,handResults::lose);
+                    }
+                    break;
+                }
+
+                //if player has blackjack pay and exit loop
+                if(h.total == 21 and h.numCards ==2){
+                    p.addResult(h.trueCount,handResults::blackjack);
+                    break;
+                }
+
+                //if player has surendered, take bet and exit loop
+                if(h.isSurrendered){
+                    p.addResult(h.trueCount,handResults::surrender);
+                    break;
+                }
+
+                //check for busts...
+                if(h.total > 21){
+                    if(h.isDoubled){
+                        p.addResult(h.trueCount,handResults::lose);
+                    }
+                    p.addResult(h.trueCount,handResults::lose);
+                }
+                if(dealer.total > 21){
+                    if(h.isDoubled){
+                        p.addResult(h.trueCount,handResults::win);
+                    }
+                    p.addResult(h.trueCount,handResults::win);
+                }
+
+                //compare the hands for win/loss/push
+                if(h.total <= 21 && dealer.total <= 21){
+                    if(h.total > dealer.total){
+                        if(h.isDoubled){
+                            p.addResult(h.trueCount,handResults::win);
+                        }
+                        p.addResult(h.trueCount,handResults::win);
+                    }
+                    if(h.total < dealer.total){
+                        if(h.isDoubled){
+                            p.addResult(h.trueCount,handResults::lose);
+                        }
+                        p.addResult(h.trueCount,handResults::lose);
+                    }
+                    if(h.total == dealer.total){
+                        p.addResult(h.trueCount,handResults::push);
+                    }
+                }
+
             }   
         }
-        debugPrint("\r\n\r\n");
 
         dealer.discard();
         for(player& p : players){

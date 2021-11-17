@@ -62,7 +62,7 @@ class player{
     public:
         std::vector<hand> hands;
         //+/-7 true count totals for Losses, Pushes, Surrenders(lost insurance), Wins, and BlackJacks
-        int handResults[15][5];
+        unsigned int handResults[15][5];
     
         //TODO: figure out constructors
         //player(double bankroll = 0, double betUnit = 0, int betMultiplier = 0);
