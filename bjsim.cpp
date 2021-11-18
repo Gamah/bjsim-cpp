@@ -16,7 +16,7 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<1000000;x++){
+    for(int x = 0;x<10;x++){
 
     shoe.shuffleCards();
 
@@ -85,7 +85,7 @@ int main() {
                                         h.cards.pop_back();
                                     }                    
                                     //halve the hand total
-                                    h.total == h.total / 2;
+                                    h.total = h.total / 2;
                                     //put the top card into the new hand            
                                     newhand.addCard(h.topCard);
                                     //deal to the current hand
@@ -139,15 +139,16 @@ int main() {
 
 
         //Determine outcome of hands...
+        debugPrint("Dealer");
         if(config::debug){
             dealer.print();
         }
         for(player& p : players){
             for(hand& h : p.hands){
+                debugPrint("Player");
                 if(config::debug){
                     h.print();
                 }
-
                 //if the hand was insured, it's either a push or we take the insurance bet.
                 if(h.isInsured){
                     if(dealer.total == 21 && dealer.numCards == 2){
@@ -190,16 +191,21 @@ int main() {
                 if(h.total > 21){
                     if(h.isDoubled){
                         p.addResult(h.trueCount,handResults::doublelose);
+                        debugPrint("Player double bust");
                     }else{
                         p.addResult(h.trueCount,handResults::lose);
+                        debugPrint("Player bust");
                     }
                     break;
                 }
                 if(dealer.total > 21){
                     if(h.isDoubled){
                         p.addResult(h.trueCount,handResults::doublewin);
+                        debugPrint("Dealer bust double win");
+                        
                     }else{
                         p.addResult(h.trueCount,handResults::win);
+                        debugPrint("Dealer bust win");
                     }
                     break;
                 }
@@ -209,19 +215,24 @@ int main() {
                     if(h.total > dealer.total){
                         if(h.isDoubled){
                             p.addResult(h.trueCount,handResults::doublewin);
+                            debugPrint("Player double win");
                         }else{
                             p.addResult(h.trueCount,handResults::win);
+                            debugPrint("Player win");
                         }
                     }
                     if(h.total < dealer.total){
                         if(h.isDoubled){
                             p.addResult(h.trueCount,handResults::doublelose);
+                            debugPrint("Player double lose");
                         }else{
                             p.addResult(h.trueCount,handResults::lose);
+                            debugPrint("Player lose");
                         }
                     }
                     if(h.total == dealer.total){
                         p.addResult(h.trueCount,handResults::push);
+                        debugPrint("Player push");
                     }
                 }
 

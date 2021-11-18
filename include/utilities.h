@@ -2,9 +2,10 @@
 #include <string>
 #include <vector>
 #include <random>
+#include <list>
 
 namespace config{
-    static const bool debug = false;
+    static const bool debug = true;
     static std::mt19937_64 mt(time(nullptr));
 };
 
@@ -64,7 +65,7 @@ class hand{
 
 class player{
     public:
-        std::vector<hand> hands;
+        std::list<hand> hands;
         //+/-7 true count totals for Losses, Pushes, Surrenders(lost insurance), Wins, and BlackJacks
         unsigned int handResults[15][9];
     

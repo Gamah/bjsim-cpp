@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "../include/utilities.h"
 #include "../include/strategies.h"
+#include <list>
 
 void BStest(){
     strategies strategy;
@@ -277,64 +278,72 @@ void splitTest(){
         h.addCard(2);
         p.addHand(h);
         decisions decision;
-
-        decision = strat.playerBasic(h.total,5,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
-        while(decision != decisions::STAND){
-            std::cout << p.hands.size();
-            switch(decision){
-                case decisions::STAND: 
-                    std::cout << "STAND\r\n";
-                    break;
-                case decisions::HIT:
-                    std::cout << "HIT\r\n";
+        for(hand& h : p.hands){
+            int thishand=1;
+            decision = strat.playerBasic(h.total,5,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
+            while(decision != decisions::STAND){
+                if(h.canSplit == -1){
                     decision = decisions::STAND;
-                    break;
-                case decisions::DOUBLE:
-                    decision = decisions::STAND;
-                    break;
-                case decisions::SPLIT : {
-                    //new hand object for after dealing with this hand...
-                    hand newhand;
-                    //pull card off the top if debugging is on
-                    if(config::debug){
-                        h.cards.pop_back();
-                    }                    
-                    //halve the hand total
-                    h.total == h.total / 2;
-                    //put the top card into the new hand            
-                    newhand.addCard(h.topCard);
-                    //deal to the current hand
-                    h.addCard(2);
-                    //deal to the new hand
-                    newhand.addCard(2);
-                    //if the hands are aces or player has 4 hands (lengh of hands + new hand not yet added) then they can't resplit
-                    if(p.hands.size() + 1 == rules::maxSplit){
-                        h.canSplit = 0;
-                        newhand.canSplit = 0;
+                }else{
+                    switch(decision){
+                        case decisions::STAND: 
+                            std::cout << "STAND\r\n";
+                            break;
+                        case decisions::HIT:
+                            std::cout << "HIT\r\n";
+                            decision = decisions::STAND;
+                            break;
+                        case decisions::DOUBLE:
+                            decision = decisions::STAND;
+                            break;
+                        case decisions::SPLIT : {
+                            //new hand object for after dealing with this hand...
+                            hand newhand;
+                            //pull card off the top if debugging is on
+                            if(config::debug){
+                                h.cards.pop_back();
+                            }                    
+                            //halve the hand total
+                            h.total == h.total / 2;
+                            //put the top card into the new hand            
+                            newhand.addCard(h.topCard);
+                            //deal to the current hand
+                            h.addCard(2);
+                            //deal to the new hand
+                            newhand.addCard(1);
+                            //if the hands are aces or player has 4 hands (lengh of hands + new hand not yet added) then they can't resplit
+                            if(p.hands.size() + 1 == rules::maxSplit){
+                                h.canSplit = 0;
+                                newhand.canSplit = 0;
+                            }
+                            //this is a dumb hack to indicate split aces because i can't read the future to prevent playing or resplitting a split ace on a future hand
+                            if(card::value(h.topCard) == 1){
+                                h.canSplit = -1;
+                                newhand.canSplit = -1;
+                                decision = decisions::STAND;
+                            }else{
+                                std::cout << thishand;
+                                h.print();
+                                decision = strat.playerBasic(h.total,5,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
+                            }
+                            //mark hands slpit and add to player's hands
+                            h.isSplit = true;
+                            newhand.isSplit = true;
+                            p.addHand(newhand);
+                            break;
+                        }
+                        case decisions::SURRENDER:{   
+                            std::cout << "SURRENDER\r\n";
+                            break;
+                        }
                     }
-                    //this is a dumb hack to indicate split aces because i can't read the future to prevent playing or resplitting a split ace on a future hand
-                    if(card::value(h.topCard) == 1){
-                        h.canSplit = -1;
-                        newhand.canSplit = -1;
-                        decision = decisions::STAND;
-                    }else{
-                        decision = strat.playerBasic(h.total,5,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
-                    }
-                    //mark hands slpit and add to player's hands
-                    h.isSplit = true;
-                    newhand.isSplit = true;
-                    p.addHand(newhand);
-                    break;
                 }
-                case decisions::SURRENDER:
-                    std::cout << "SURRENDER\r\n";
-                    break;
             }
-            for(player& p : players){
-                p.print();
-            }
+            thishand++;
         }
-    std::cout << p.hands.size();
+    for(player& p : players){
+        p.print();
+    }
     }
 }   
 
@@ -358,7 +367,8 @@ void bjTest(){
     hand.addCard(0);
     hand.print();
 }
+
 int main(){
-    splitTest();
+    aceTest();
     return 69;
 }
