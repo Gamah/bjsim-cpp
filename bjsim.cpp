@@ -68,8 +68,8 @@ int main() {
                     decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
                     while(decision != decisions::STAND){
                         //don't play split aces
-                        std::cout << "FUCK\r\n";
                         if(h.canSplit == -1){
+                            std::cout << "SplitAces\r\n";
                             decision = decisions::STAND;
                         }else{
                             h.trueCount = shoe.trueCount;
@@ -89,7 +89,7 @@ int main() {
                                     if(config::debug){
                                         h.cards.pop_back();
                                     }                  
-                                    h.numCards--;  
+                                    h.numCards--;
                                     //halve the hand total
                                     h.total = h.total - card::value(topCard);
                                     //put the top card into the new hand            

@@ -377,7 +377,7 @@ void listTest(){
     mylist.push_back(5);
 
     for(int& i : mylist){
-        if(i < 5){
+        if(i == 5){
             mylist.push_back(9);
         }
         std::cout << i;

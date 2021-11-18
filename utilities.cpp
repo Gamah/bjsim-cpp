@@ -126,16 +126,16 @@ void  player::clearHands(){
 }
 
 void player::addResult(int trueCount, int handResult){
-            //clamp truecount to no more than 7 in either direction
-            if(trueCount < -7){
-                trueCount = -7;
-            }
-            if(trueCount > 7){
-                trueCount = 7;
-            }
-            //+7 to offset so that the 7 elements below are negative tc and 7 elements above are positive tc
-            handResults[trueCount+7][handResult]++;
-        }
+    //clamp truecount to no more than 7 in either direction
+    if(trueCount < -7){
+        trueCount = -7;
+    }
+    if(trueCount > 7){
+        trueCount = 7;
+    }
+    //+7 to offset so that the 7 elements below are negative tc and 7 elements above are positive tc
+    handResults[trueCount+7][handResult]++;
+}
 
 //implement shoe funcitons
 int shoe::getCard(){
@@ -160,6 +160,7 @@ int shoe::getCard(){
     }   
     const int decksLeft = (((cards.size() - 1) / 52) + 1);
     trueCount = runningCount / decksLeft;
+    std::cout << card::value(newCard) << "\r\n";
     return newCard;
 }
 
