@@ -103,7 +103,7 @@ void hand::print(){
 }
 
 //implement player funcitons
-void player::addHand(hand hand){
+void player::addHand(hand& hand){
     hands.push_back(hand);
 }
 

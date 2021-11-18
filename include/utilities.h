@@ -69,7 +69,7 @@ class player{
         //+/-7 true count totals for Losses, Pushes, Surrenders(lost insurance), Wins, and BlackJacks
         unsigned int handResults[15][9];
     
-        void addHand(hand hand);
+        void addHand(hand& hand);
         void print();
         void clearHands();
         void addResult(int trueCount, int handResult);

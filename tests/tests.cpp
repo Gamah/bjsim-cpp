@@ -368,7 +368,23 @@ void bjTest(){
     hand.print();
 }
 
+void listTest(){
+    std::list<int> mylist;
+    mylist.push_back(1);
+    mylist.push_back(2);
+    mylist.push_back(3);
+    mylist.push_back(4);
+    mylist.push_back(5);
+
+    for(int& i : mylist){
+        if(i < 5){
+            mylist.push_back(9);
+        }
+        std::cout << i;
+    }
+}
+
 int main(){
-    aceTest();
+    listTest();
     return 69;
 }

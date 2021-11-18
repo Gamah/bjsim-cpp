@@ -24,7 +24,9 @@ int main() {
     while(shoe.cards.size() > 78){
         
         for(player& p : players){
-            p.addHand(hand());
+            hand newHand;
+            newHand.discard();
+            p.addHand(newHand);
         }
         int upCard = 0;        
 
@@ -66,6 +68,7 @@ int main() {
                     decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
                     while(decision != decisions::STAND){
                         //don't play split aces
+                        std::cout << "FUCK\r\n";
                         if(h.canSplit == -1){
                             decision = decisions::STAND;
                         }else{
@@ -80,14 +83,17 @@ int main() {
                                 case decisions::SPLIT : {
                                     //new hand object for after dealing with this hand...
                                     hand newhand;
+                                    newhand.discard();
+                                    int topCard = h.topCard;
                                     //pull card off the top if debugging is on
                                     if(config::debug){
                                         h.cards.pop_back();
-                                    }                    
+                                    }                  
+                                    h.numCards--;  
                                     //halve the hand total
-                                    h.total = h.total / 2;
+                                    h.total = h.total - card::value(topCard);
                                     //put the top card into the new hand            
-                                    newhand.addCard(h.topCard);
+                                    newhand.addCard(topCard);
                                     //deal to the current hand
                                     h.addCard(shoe.getCard());
                                     //deal to the new hand
@@ -98,7 +104,7 @@ int main() {
                                         newhand.canSplit = 0;
                                     }
                                     //this is a dumb hack to indicate split aces because i can't read the future to prevent playing or resplitting a split ace on a future hand
-                                    if(card::value(h.topCard) == 1){
+                                    if(card::value(topCard) == 1){
                                         h.canSplit = -1;
                                         newhand.canSplit = -1;
                                         decision = decisions::STAND;
