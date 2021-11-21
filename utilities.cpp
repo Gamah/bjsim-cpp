@@ -160,7 +160,6 @@ int shoe::getCard(){
     }   
     const int decksLeft = (((cards.size() - 1) / 52) + 1);
     trueCount = runningCount / decksLeft;
-    std::cout << card::value(newCard) << "\r\n";
     return newCard;
 }
 
