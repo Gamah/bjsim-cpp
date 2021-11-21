@@ -385,6 +385,6 @@ void listTest(){
 }
 
 int main(){
-    listTest();
+    BStest();
     return 69;
 }

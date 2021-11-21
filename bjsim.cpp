@@ -16,7 +16,7 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<1000000;x++){
+    for(int x = 0;x<40000000;x++){
 
     shoe.shuffleCards();
     debugPrint("Shuffle!");
@@ -45,7 +45,6 @@ int main() {
                     
                 }
             }
-
         }
 
         //check for dealer Ace up
@@ -58,6 +57,7 @@ int main() {
                 }
             }
         }
+
         //play the round if dealer doesn't have blackjack
         if(dealer.total != 21){
             bool dealerPlays = false;

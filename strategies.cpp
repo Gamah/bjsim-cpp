@@ -94,7 +94,7 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
             case 19:
                 switch(upCard){
                     case 6:
-                        if(canDouble ==1){
+                        if(canDouble){
                             return decisions::DOUBLE;
                         }
                     default:
@@ -108,7 +108,7 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
                     case 4:
                     case 5:
                     case 6:
-                        if(canDouble ==1){
+                        if(canDouble){
                             return decisions::DOUBLE;
                         }else{
                             return decisions::STAND;
@@ -128,7 +128,7 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
                     case 4:
                     case 5:
                     case 6:
-                        if(canDouble ==1){
+                        if(canDouble){
                             return decisions::DOUBLE;
                         }
                     default:
@@ -141,7 +141,7 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
                     case 4:
                     case 5:
                     case 6:
-                        if(canDouble ==1){
+                        if(canDouble){
                             return decisions::DOUBLE;
                         }
                     default:
@@ -153,7 +153,7 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
                 switch(upCard){
                     case 5:
                     case 6:
-                        if(canDouble ==1){
+                        if(canDouble){
                             return decisions::DOUBLE;
                         }
                     default:
@@ -222,7 +222,11 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
             }
             break;
         case 11:
-            return decisions::DOUBLE;
+            if(canDouble){
+                return decisions::DOUBLE;
+            }
+            default:
+                return decisions::HIT;
         case 10:
             switch(upCard){
                 case 2:
@@ -233,7 +237,9 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
                 case 7:
                 case 8:
                 case 9:
-                    return decisions::DOUBLE;
+                    if(canDouble){
+                        return decisions::DOUBLE;
+                    }
                 default:
                     return decisions::HIT;
             }
@@ -244,7 +250,9 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
                 case 4:
                 case 5:
                 case 6:
-                    return decisions::DOUBLE;
+                    if(canDouble){
+                        return decisions::DOUBLE;
+                    }
                 default:
                     return decisions::HIT;
             }
