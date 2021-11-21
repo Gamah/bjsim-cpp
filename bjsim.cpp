@@ -100,7 +100,10 @@ int main() {
                                     //deal to the new hand
                                     newhand.addCard(shoe.getCard());
                                     //if the hands are aces or player has 4 hands (lengh of hands + new hand not yet added) then they can't resplit
-                                    if(p.hands.size() + 1 == rules::maxSplit){
+                                    if(p.hands.size() + 1 >= rules::maxSplit){
+                                        for(hand& h2 : p.hands){
+                                            h2.canSplit = 0;
+                                        }
                                         h.canSplit = 0;
                                         newhand.canSplit = 0;
                                     }
@@ -258,7 +261,7 @@ int main() {
 
             }   
         }
-
+        
         dealer.discard();
         for(player& p : players){
             p.clearHands();
