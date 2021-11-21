@@ -5,7 +5,7 @@
 #include <list>
 
 namespace config{
-    static const bool debug = true;
+    static const bool debug = false;
     static std::mt19937_64 mt(time(nullptr));
 };
 
@@ -43,7 +43,6 @@ namespace card{
 class hand{
     public:
         std::vector<int> cards;
-        double bet = 0;
         int total = 0;
         int isPair = 0;
         bool isSoft = false;

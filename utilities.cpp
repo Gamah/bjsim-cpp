@@ -43,7 +43,6 @@ std::string card::print(int cardIndex){
 //implement hand functions
 void hand::discard(){
     cards.clear();
-    bet = 0;
     total = 0;
     isPair = 0;
     isSoft = 0;  
@@ -158,6 +157,7 @@ int shoe::getCard(){
         default:
             break;
     }   
+    //TODO: move truecount out of getCard()... it's slow
     const int decksLeft = (((cards.size() - 1) / 52) + 1);
     trueCount = runningCount / decksLeft;
     return newCard;
@@ -167,7 +167,7 @@ void shoe::shuffleCards(){
     cards.clear();
     for(int x = 0; x < 52*6; x ++){
         cards.push_back(x);
-    }
+    }   
     
     std::shuffle(cards.begin(),cards.end(),config::mt);
 

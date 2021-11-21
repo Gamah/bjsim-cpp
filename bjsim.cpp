@@ -16,9 +16,10 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<10;x++){
+    for(int x = 0;x<40000000;x++){
 
     shoe.shuffleCards();
+    debugPrint("Shuffle!");
 
     //start a round of bj
     while(shoe.cards.size() > 78){
@@ -49,7 +50,6 @@ int main() {
 
         //check for dealer Ace up
         if(upCard == 1){
-            debugPrint("Dealer has ace!\r\n");
             if(shoe.trueCount >= 3){
                 for(player& p : players){
                     for(hand& h : p.hands){
@@ -60,6 +60,7 @@ int main() {
         }
         //play the round if dealer doesn't have blackjack
         if(dealer.total != 21){
+            bool dealerPlays = false;
             //player turns
             for(player& p : players){
                 for(hand& h : p.hands){
@@ -134,11 +135,24 @@ int main() {
                 }
             }
             //dealer turn
-            decision = strategy.dealerH17(dealer);
-            while(decision != decisions::STAND){
-                if(decision == decisions::HIT){
-                    dealer.addCard(shoe.getCard());
-                    decision = strategy.dealerH17(dealer);
+            for(player& p :players){
+                if(dealerPlays){
+                    break;
+                }
+                for(hand& h : p.hands){
+                    if(h.total <=21){
+                        dealerPlays = true;
+                        break;
+                    }
+                }
+            }
+            if(dealerPlays){
+                decision = strategy.dealerH17(dealer);
+                while(decision != decisions::STAND){
+                    if(decision == decisions::HIT){
+                        dealer.addCard(shoe.getCard());
+                        decision = strategy.dealerH17(dealer);
+                    }
                 }
             }
         }

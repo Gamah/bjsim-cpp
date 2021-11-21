@@ -1,7 +1,6 @@
 #include "include/utilities.h"
 #include "include/strategies.h"
 #include <stdexcept>
-#include <map>
 
 
 //implement strategy functions
