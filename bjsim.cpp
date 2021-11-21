@@ -90,6 +90,7 @@ int main() {
                                         h.cards.pop_back();
                                     }                  
                                     h.numCards--;
+                                    h.isPair = 0;
                                     //halve the hand total
                                     h.total = h.total - card::value(topCard);
                                     //put the top card into the new hand            
@@ -160,7 +161,7 @@ int main() {
                     if(dealer.total == 21 && dealer.numCards == 2){
                         p.addResult(h.trueCount,handResults::insurancewin);
                         debugPrint("Insurance Win");
-                        break;
+                        //break;
                     }else{
                         p.addResult(h.trueCount,handResults::insurancelose);
                         debugPrint("Insurance Lose");
@@ -176,21 +177,21 @@ int main() {
                         p.addResult(h.trueCount,handResults::lose);
                         debugPrint("Blackjack Lose");
                     }
-                    break;
+                    //break;
                 }
 
                 //if player has blackjack pay and exit loop
                 if(h.total == 21 and h.numCards ==2){
                     p.addResult(h.trueCount,handResults::blackjack);
                     debugPrint("Blackjack Win");
-                    break;
+                    //break;
                 }
 
                 //if player has surendered, take bet and exit loop
                 if(h.isSurrendered){
                     p.addResult(h.trueCount,handResults::surrender);
                     debugPrint("Surrender Lose");
-                    break;
+                    //break;
                 }
 
                 //check for busts...
@@ -202,7 +203,7 @@ int main() {
                         p.addResult(h.trueCount,handResults::lose);
                         debugPrint("Player bust");
                     }
-                    break;
+                    //break;
                 }
                 if(dealer.total > 21){
                     if(h.isDoubled){
@@ -213,7 +214,7 @@ int main() {
                         p.addResult(h.trueCount,handResults::win);
                         debugPrint("Dealer bust win");
                     }
-                    break;
+                    //break;
                 }
 
                 //compare the hands for win/loss/push
