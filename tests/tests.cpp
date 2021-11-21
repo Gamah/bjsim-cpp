@@ -15,7 +15,7 @@ void BStest(){
     for(int x=5; x<22;x++){
         std::cout << "\r\n" << x << " ";
         if(x < 10){std::cout << " ";}
-        for(int y = 2;y < 14;y++){
+        for(int y = 1;y < 13;y++){
             hand hand;
             hand.total = x;
             hand.isSoft = false;
@@ -75,7 +75,7 @@ void BStest(){
     for(int x=13; x<22;x++){
         std::cout << "\r\n" << x << " ";
         if(x < 10){std::cout << " ";}
-        for(int y = 2;y < 14;y++){
+        for(int y = 1;y < 13;y++){
             hand hand;
             hand.total = x;
             hand.isSoft = true;
@@ -131,7 +131,7 @@ void BStest(){
     for(int x=0; x<10;x++){
         std::cout << "\r\n" << x + 1 << " ";
         if(x + 1 < 10){std::cout << " ";}
-        for(int y = 2;y < 14;y++){
+        for(int y = 1;y < 13;y++){
             hand hand;
             hand.discard();
             hand.canSplit = 1;
