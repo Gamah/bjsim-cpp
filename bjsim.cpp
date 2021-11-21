@@ -16,7 +16,7 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<40000000;x++){
+    for(int x = 0;x<1000000;x++){
 
     shoe.shuffleCards();
     debugPrint("Shuffle!");
@@ -194,7 +194,7 @@ int main() {
                 }
 
                 //if player has blackjack pay and exit loop
-                if(h.total == 21 and h.numCards ==2){
+                if(h.total == 21 and h.numCards ==2 && h.isSplit == false){
                     p.addResult(h.trueCount,handResults::blackjack);
                     debugPrint("Blackjack Win");
                     continue;
