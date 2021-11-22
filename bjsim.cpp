@@ -16,7 +16,7 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<1000;x++){
+    for(int x = 0;x<10000000;x++){
 
     shoe.shuffleCards();
     debugPrint("Shuffle!");
@@ -45,6 +45,7 @@ int main() {
                     
                 }
             }
+
         }
 
         //check for dealer Ace up
@@ -57,7 +58,6 @@ int main() {
                 }
             }
         }
-
         //play the round if dealer doesn't have blackjack
         if(dealer.total != 21){
             bool dealerPlays = false;
@@ -91,6 +91,12 @@ int main() {
                                     }                  
                                     h.numCards--;
                                     h.isPair = 0;
+                                    //mark hands slpit
+                                    h.isSplit = true;
+                                    newhand.isSplit = true;
+                                    h.canSurrender = false;
+                                    newhand.canSurrender = false;
+                                    
                                     //halve the hand total
                                     h.total = h.total - card::value(topCard);
                                     //put the top card into the new hand            
@@ -100,10 +106,7 @@ int main() {
                                     //deal to the new hand
                                     newhand.addCard(shoe.getCard());
                                     //if the hands are aces or player has 4 hands (lengh of hands + new hand not yet added) then they can't resplit
-                                    if(p.hands.size() + 1 >= rules::maxSplit){
-                                        for(hand& h2 : p.hands){
-                                            h2.canSplit = 0;
-                                        }
+                                    if(p.hands.size() + 1 == rules::maxSplit){
                                         h.canSplit = 0;
                                         newhand.canSplit = 0;
                                     }
@@ -115,9 +118,7 @@ int main() {
                                     }else{
                                         decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
                                     }
-                                    //mark hands slpit and add to player's hands
-                                    h.isSplit = true;
-                                    newhand.isSplit = true;
+                                    //add to player's hands
                                     p.addHand(newhand);
                                     break;
                                 }
@@ -137,19 +138,18 @@ int main() {
                     }
                 }
             }
-            //if players hands are all bust or surrender, dealer doesn't need to play
+            //dealer turn
             for(player& p :players){
                 if(dealerPlays){
                     break;
                 }
                 for(hand& h : p.hands){
-                    if(h.total <=21 && !h.isSurrendered){
+                    if(h.total <=21){
                         dealerPlays = true;
                         break;
                     }
                 }
             }
-            //dealer turn
             if(dealerPlays){
                 decision = strategy.dealerS17(dealer);
                 while(decision != decisions::STAND){
@@ -262,7 +262,7 @@ int main() {
 
             }   
         }
-        
+
         dealer.discard();
         for(player& p : players){
             p.clearHands();

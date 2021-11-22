@@ -80,16 +80,16 @@ void hand::addCard(int cardIndex){
     //if this is the 2nd card, we need to check for pairs
     if (numCards == 2){
         canDouble = true;
+        if(!isSplit && rules::Surrender){
+            canSurrender = true;
+        }else{
+            canSurrender = false;
+        }
         //check if the card doubled matches the total plus the card for a pair
         //also check if a previous soft 11 (single ace) plus the incoming card (ace) match by adding up to 12
         if (total  == cardValue * 2 || (total == 12 && cardValue == 1)){
             isPair = cardValue;
             canSplit = 1;
-            if(!isSplit && rules::Surrender){
-                canSurrender = true;
-            }else{
-                canSurrender = false;
-            }
         }
     }else{
         isPair = 0;
