@@ -52,7 +52,7 @@ void hand::discard(){
     topCard = 0;
     canSplit = 0;
     canDouble = 0;
-    canSurrender = rules::Surrender;
+    canSurrender = false;
     numCards = 0;
     return;
 }
@@ -70,25 +70,31 @@ void hand::addCard(int cardIndex){
     //if the current card is an ace and the hand total is less than 12, lets add 11 instead of 1
     if(total < 12 && cardValue == 1){
         total = total + 10;
-        isSoft = 1;
+        isSoft = true;
     }
     //if the hand was soft and goes over 21, subtract 10 and make it a hard hand
-    if(total > 21 && isSoft == 1){
+    if(total > 21 && isSoft){
         total = total - 10;
-        isSoft = 0;
+        isSoft = false;
     }
     //if this is the 2nd card, we need to check for pairs
     if (numCards == 2){
-        canDouble = 1;
+        canDouble = true;
         //check if the card doubled matches the total plus the card for a pair
         //also check if a previous soft 11 (single ace) plus the incoming card (ace) match by adding up to 12
         if (total  == cardValue * 2 || (total == 12 && cardValue == 1)){
             isPair = cardValue;
             canSplit = 1;
+            if(!isSplit && rules::Surrender){
+                canSurrender = true;
+            }else{
+                canSurrender = false;
+            }
         }
     }else{
         isPair = 0;
-        canDouble = 0;
+        canDouble = false;
+        canSurrender = false;
     }
     return;
 }

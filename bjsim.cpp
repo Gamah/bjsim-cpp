@@ -16,7 +16,7 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<40000000;x++){
+    for(int x = 0;x<1000;x++){
 
     shoe.shuffleCards();
     debugPrint("Shuffle!");
@@ -137,24 +137,25 @@ int main() {
                     }
                 }
             }
-            //dealer turn
+            //if players hands are all bust or surrender, dealer doesn't need to play
             for(player& p :players){
                 if(dealerPlays){
                     break;
                 }
                 for(hand& h : p.hands){
-                    if(h.total <=21){
+                    if(h.total <=21 && !h.isSurrendered){
                         dealerPlays = true;
                         break;
                     }
                 }
             }
+            //dealer turn
             if(dealerPlays){
-                decision = strategy.dealerH17(dealer);
+                decision = strategy.dealerS17(dealer);
                 while(decision != decisions::STAND){
                     if(decision == decisions::HIT){
                         dealer.addCard(shoe.getCard());
-                        decision = strategy.dealerH17(dealer);
+                        decision = strategy.dealerS17(dealer);
                     }
                 }
             }

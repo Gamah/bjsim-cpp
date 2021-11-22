@@ -86,7 +86,7 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
     //Soft 16 and Soft 15 (A, 5 and A, 4) doubles against 4-6 otherwise it hits
     //Soft 14 and soft 13 (Ace, 3 and ace, 2) doubles against 5 and 6 otherwise it hits
     
-    if(isSoft == 1){
+    if(isSoft){
         switch(total){
             case 20:
             case 21:
@@ -180,6 +180,7 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
                 if(upCard == 10){
                     return decisions::SURRENDER;
                 }
+            break;
         }
     }
 
@@ -227,6 +228,7 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
             }
             default:
                 return decisions::HIT;
+            break;
         case 10:
             switch(upCard){
                 case 2:

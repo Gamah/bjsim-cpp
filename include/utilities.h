@@ -5,7 +5,7 @@
 #include <list>
 
 namespace config{
-    static const bool debug = false;
+    static const bool debug = true;
     static std::mt19937_64 mt(time(nullptr));
 };
 
@@ -16,7 +16,7 @@ namespace rules{
     static const bool H17 = true;
     static const bool DAS = true;
     static const bool RSA = false;
-    static const bool Surrender = false;
+    static const bool Surrender = true;
     static const int maxSplit = 4;
 };
 
