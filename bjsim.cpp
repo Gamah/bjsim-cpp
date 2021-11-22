@@ -16,13 +16,13 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<10000000;x++){
+    for(int x = 0;x<50000000;x++){
 
     shoe.shuffleCards();
     debugPrint("Shuffle!");
 
     //start a round of bj
-    while(shoe.cards.size() > 78){
+    while(shoe.cards.size() >= 78){
         
         for(player& p : players){
             hand newHand;
@@ -151,11 +151,11 @@ int main() {
                 }
             }
             if(dealerPlays){
-                decision = strategy.dealerS17(dealer);
+                decision = strategy.dealerH17(dealer);
                 while(decision != decisions::STAND){
                     if(decision == decisions::HIT){
                         dealer.addCard(shoe.getCard());
-                        decision = strategy.dealerS17(dealer);
+                        decision = strategy.dealerH17(dealer);
                     }
                 }
             }

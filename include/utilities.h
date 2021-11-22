@@ -16,7 +16,7 @@ namespace rules{
     static const bool H17 = true;
     static const bool DAS = true;
     static const bool RSA = false;
-    static const bool Surrender = true;
+    static const bool Surrender = false;
     static const int maxSplit = 4;
 };
 
