@@ -268,21 +268,43 @@ decisions strategies::playerBasic(int total,int upCard,int isPair,int isSoft,int
     
 }
 
-decisions strategies::playerH17Deviations(hand& hand,int trueCount,int upCard){
-    switch(trueCount){
-        case 6:{
-            if(upCard == 4 && hand.isPair == 4 && hand.canSplit == 1){
-                return decisions::SPLIT;
-            }
-        }
-        case 5:{
-            if(upCard == 5 && hand.isPair == 4 && hand.canSplit == 1){
-                return decisions::SPLIT;
-            }
-            if(hand.total == 15 && upCard == 1){
-                return decisions::STAND;
-            }
-        }
-    }
+decisions playerH17Deviations(hand& hand, int upCard,  int trueCount, int runningCount){
+    
+    //Pair Splitting
+    //A pair of tens splits vs. 4 at a true count of 6 and above.
+    //A pair of tens splits vs. 5 at a true count of 5 and above.
+    //A pair of tens splits vs. 6 at a true count of 4 and above.
+
+    //Soft Totals
+    //A soft 19 doubles vs. 4 at a true count of 3 and above.
+    //A soft 19 doubles vs. 5 at a true count of 1 and above.
+    //A soft 19 stands vs. 6 at any running count below 0.
+    //A soft 17 doubles vs. 2 at a true count of 1 and above.
+    
+    //Hard Totals
+    //16 stands vs. 9 at a true count of 4 and above (Unless you can surrender).
+    //16 stands vs. 10 at any positive count (Unless you can surrender).
+    //16 stands vs. Ace at a true count of 3 and above. (Unless you can surr).
+    //15 stands vs. 10 at a true count of 4 and above (Unless you can surr).
+    //15 stands vs. Ace at a true count of 5 and above. (Unless you can surr).
+    //13 hits vs. 2 at a true count of -1 and below.
+    //12 stands vs. 2 at a true count of 3 and above.
+    //12 stands vs. 3 at a true count of 2 and above.
+    //12 hits vs. 4 at any count below 0.
+    //10 doubles vs. 10 at a true count of 4 and above.
+    //10 doubles vs. Ace at a true count of 3 and above.
+    //9 doubles vs. 2 at a true count of 1 and above.
+    //9 doubles vs. 7 at a true count of 3 and above.
+    //8 doubles vs. 6 at a true count of 2 and above.
+    
+    //Hard Totals- Surrender
+    //17 always surrenders against a dealer Ace in an H17 game.
+    //16 surrenders vs. 8 at a true count of 4 and above.
+    //16 hits vs. 9 at a true count of -1 and below.
+    //16 always surrenders against 10 and Ace in an H17 game.
+    //15 surrenders vs. 9 at a true count of 2 and above.
+    //15 hits vs. 10 at any count below 0.
+    //15 surrenders vs. Ace at a true -1 and above.
+
     return(playerBasic(hand.total,upCard,hand.isPair,hand.isSoft,hand.canSplit,hand.canDouble,hand.canSurrender));
 }
