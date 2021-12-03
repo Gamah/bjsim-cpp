@@ -16,13 +16,13 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<10;x++){
+    for(int x = 0;x<1000000;x++){
 
     shoe.shuffleCards();
     debugPrint("Shuffle!");
 
     //start a round of bj
-    while(shoe.cards.size() >= 78){
+    while(shoe.cards.size() >= 52){
         
         for(player& p : players){
             hand newHand;
@@ -66,7 +66,7 @@ int main() {
                 for(hand& h : p.hands){
                     //TODO: switch this back to just passing the hand in so hand's true count can be updated.
                     h.trueCount = shoe.trueCount;
-                    decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
+                    decision = strategy.playerBasic(h,upCard);
                     while(decision != decisions::STAND){
                         //don't play split aces
                         if(h.canSplit == -1){
@@ -77,7 +77,7 @@ int main() {
                                 case decisions::HIT : {
                                     h.addCard(shoe.getCard());
                                     h.trueCount = shoe.trueCount;
-                                    decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
+                                    decision = strategy.playerBasic(h,upCard);
                                     break;
                                 }
                                 case decisions::SPLIT : {
@@ -116,7 +116,7 @@ int main() {
                                         newhand.canSplit = -1;
                                         decision = decisions::STAND;
                                     }else{
-                                        decision = strategy.playerBasic(h.total,upCard,h.isPair,h.isSoft,h.canSplit,h.canDouble,h.canSurrender);
+                                        decision = strategy.playerBasic(h,upCard);
                                     }
                                     //add to player's hands
                                     p.addHand(newhand);
