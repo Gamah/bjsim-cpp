@@ -318,6 +318,7 @@ decisions strategies::playerH17Deviations(hand& hand, int upCard,  int trueCount
     }
     
     //Hard Totals
+    //TODO: don't double when not allowed.
     if(!hand.isSoft || (hand.isPair != 0 && hand.canSplit == 0)){
         //16 stands vs. 9 at a true count of 4 and above (Unless you can surrender).
         //16 stands vs. 10 at any positive count (Unless you can surrender).
@@ -394,6 +395,15 @@ decisions strategies::playerH17Deviations(hand& hand, int upCard,  int trueCount
 
         //9 doubles vs. 2 at a true count of 1 and above.
         //9 doubles vs. 7 at a true count of 3 and above.
+        if(hand.total == 9){
+            if(upCard == 2 && trueCount >= 1){
+                return decisions::DOUBLE;
+            }
+            if(upCard == 7 && trueCount >= 3){
+                return decisions::DOUBLE;
+            }
+        }
+
         //8 doubles vs. 6 at a true count of 2 and above.
         
         //Hard Totals- Surrender
