@@ -65,18 +65,15 @@ int main() {
             for(player& p : players){
                 for(hand& h : p.hands){
                     //TODO: switch this back to just passing the hand in so hand's true count can be updated.
-                    h.trueCount = shoe.trueCount;
                     decision = strategy.playerBasic(h,upCard);
                     while(decision != decisions::STAND){
                         //don't play split aces
                         if(h.canSplit == -1){
                             decision = decisions::STAND;
                         }else{
-                            h.trueCount = shoe.trueCount;
                             switch(decision){
                                 case decisions::HIT : {
                                     h.addCard(shoe.getCard());
-                                    h.trueCount = shoe.trueCount;
                                     decision = strategy.playerBasic(h,upCard);
                                     break;
                                 }
