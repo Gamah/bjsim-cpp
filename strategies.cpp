@@ -277,19 +277,19 @@ decisions strategies::playerH17Deviations(hand& hand, int upCard,  int trueCount
     if(hand.isPair == 10){
         switch(upCard){
             case 4:{
-                if(trueCount >= 6){
+                if(trueCount >= 6 && hand.canSplit == 1){
                     return decisions::SPLIT;
                 }
                 break;
             }
             case 5:{
-                if(trueCount >= 5){
+                if(trueCount >= 5 && hand.canSplit == 1){
                     return decisions::SPLIT;
                 }
                 break;
             }
             case 6:{
-                if(trueCount >= 4){
+                if(trueCount >= 4 && hand.canSplit == 1){
                     return decisions::SPLIT;
                 }
             }
@@ -301,10 +301,10 @@ decisions strategies::playerH17Deviations(hand& hand, int upCard,  int trueCount
     //A soft 19 doubles vs. 5 at a true count of 1 and above.
     //A soft 19 stands vs. 6 at any running count below 0.
     if(hand.isSoft && hand.total == 19){
-        if(upCard == 4 && trueCount >= 3){
+        if(upCard == 4 && trueCount >= 3 && hand.canDouble){
             return decisions::DOUBLE;
         }
-        if(upCard == 5 && trueCount >= 1){
+        if(upCard == 5 && trueCount >= 1 && hand.canDouble){
             return decisions::DOUBLE;
         }
         if(upCard == 6 && runningCount < 0){
@@ -313,7 +313,7 @@ decisions strategies::playerH17Deviations(hand& hand, int upCard,  int trueCount
     }
 
     //A soft 17 doubles vs. 2 at a true count of 1 and above.
-    if(hand.isSoft && hand.total == 17 && upCard == 2 && true >= 1){
+    if(hand.isSoft && hand.total == 17 && upCard == 2 && true >= 1 && hand.canDouble){
         return decisions::DOUBLE;
     }
     
@@ -385,10 +385,10 @@ decisions strategies::playerH17Deviations(hand& hand, int upCard,  int trueCount
         //10 doubles vs. 10 at a true count of 4 and above.
         //10 doubles vs. Ace at a true count of 3 and above.
         if(hand.total == 10){
-            if(upCard == 10 && trueCount >= 4){
+            if(upCard == 10 && trueCount >= 4 && hand.canDouble){
                 return decisions::DOUBLE;
             }
-            if(upCard == 1 && trueCount >= 3){
+            if(upCard == 1 && trueCount >= 3 && hand.canDouble){
                 return decisions::DOUBLE;
             }
         }
@@ -396,25 +396,54 @@ decisions strategies::playerH17Deviations(hand& hand, int upCard,  int trueCount
         //9 doubles vs. 2 at a true count of 1 and above.
         //9 doubles vs. 7 at a true count of 3 and above.
         if(hand.total == 9){
-            if(upCard == 2 && trueCount >= 1){
+            if(upCard == 2 && trueCount >= 1 && hand.canDouble){
                 return decisions::DOUBLE;
             }
-            if(upCard == 7 && trueCount >= 3){
+            if(upCard == 7 && trueCount >= 3 && hand.canDouble){
                 return decisions::DOUBLE;
             }
         }
 
         //8 doubles vs. 6 at a true count of 2 and above.
+        if(hand.total == 8){
+            if(upCard == 6 && trueCount >= 2 && hand.canDouble){
+                return decisions::DOUBLE;
+            }
+        }
         
         //Hard Totals- Surrender
         //17 always surrenders against a dealer Ace in an H17 game.
+        if(rules::H17 && hand.total == 17 && upCard == 1 && hand.canSurrender){
+            return decisions::SURRENDER;
+        }
         //16 surrenders vs. 8 at a true count of 4 and above.
         //16 hits vs. 9 at a true count of -1 and below.
         //16 always surrenders against 10 and Ace in an H17 game.
+        if(hand.total == 16){
+            if(upCard == 8 && trueCount >= 4 && hand.canSurrender){
+                return decisions::SURRENDER;
+            }
+            if(upCard == 9 && trueCount <= -1){
+                return decisions::HIT;
+            }
+            if(rules::H17 && (upCard == 10 || upCard == 1) && hand.canSurrender){
+                return decisions::SURRENDER;
+            }
+        }
         //15 surrenders vs. 9 at a true count of 2 and above.
         //15 hits vs. 10 at any count below 0.
         //15 surrenders vs. Ace at a true -1 and above.
-
+        if(hand.total == 15){
+            if(hand.canSurrender && upCard == 9 && trueCount >= 2){
+                return decisions::SURRENDER;
+            }
+            if(upCard == 10 && runningCount < 0){
+                return decisions::HIT;
+            }
+            if(hand.canSurrender && upCard == 1 && trueCount <= -1){
+                return decisions::SURRENDER;
+            }
+        }
     }
     return(playerBasic(hand,upCard));
 }
