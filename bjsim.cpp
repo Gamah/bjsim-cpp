@@ -27,9 +27,11 @@ int main() {
         for(player& p : players){
             hand newHand;
             newHand.discard();
+            //imagine the bets are set out here, this is the TC the hand will belong to in the final out.
+            newHand.trueCount = shoe.trueCount;
             p.addHand(newHand);
         }
-        int upCard = 0;        
+        int upCard = 0;
 
         //deal 2 cards to everyone
         for(int x = 0;x<2;x++){
@@ -41,8 +43,6 @@ int main() {
             for(player& p : players){
                 for(hand& h : p.hands){
                     h.addCard(shoe.getCard());
-                    h.trueCount = shoe.trueCount;
-                    
                 }
             }
 
@@ -53,7 +53,7 @@ int main() {
             if(shoe.trueCount >= 3){
                 for(player& p : players){
                     for(hand& h : p.hands){
-                        //h.isInsured = true;
+                        h.isInsured = true;
                     }
                 }
             }
@@ -65,7 +65,7 @@ int main() {
             for(player& p : players){
                 for(hand& h : p.hands){
                     //TODO: switch this back to just passing the hand in so hand's true count can be updated.
-                    decision = strategy.playerBasic(h,upCard);
+                    decision = strategy.playerDeviations(h,upCard,shoe.trueCount,shoe.runningCount);
                     while(decision != decisions::STAND){
                         //don't play split aces
                         if(h.canSplit == -1){
@@ -74,7 +74,7 @@ int main() {
                             switch(decision){
                                 case decisions::HIT : {
                                     h.addCard(shoe.getCard());
-                                    decision = strategy.playerBasic(h,upCard);
+                                    decision = strategy.playerDeviations(h,upCard,shoe.trueCount,shoe.runningCount);
                                     break;
                                 }
                                 case decisions::SPLIT : {
@@ -113,7 +113,7 @@ int main() {
                                         newhand.canSplit = -1;
                                         decision = decisions::STAND;
                                     }else{
-                                        decision = strategy.playerBasic(h,upCard);
+                                        decision = strategy.playerDeviations(h,upCard,shoe.trueCount,shoe.runningCount);
                                     }
                                     //add to player's hands
                                     p.addHand(newhand);

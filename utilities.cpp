@@ -79,7 +79,9 @@ void hand::addCard(int cardIndex){
     }
     //if this is the 2nd card, we need to check for pairs
     if (numCards == 2){
-        canDouble = true;
+        if(!isSplit || rules::DAS){
+            canDouble = true;
+        }
         if(!isSplit && rules::Surrender){
             canSurrender = true;
         }else{

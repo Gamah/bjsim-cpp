@@ -35,6 +35,20 @@ decisions strategies::playerBasic(hand& hand,int upCard){
                 return decisions::SPLIT;
             case 2:
             case 3:
+                switch(upCard){
+                    case 2:
+                    case 3:
+                        if(rules::DAS){
+                            return decisions::SPLIT;
+                        }
+                        break;
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                        return decisions::SPLIT;
+                }
+                break;
             case 7:
                 switch(upCard){
                     case 2:
@@ -50,12 +64,19 @@ decisions strategies::playerBasic(hand& hand,int upCard){
                 switch(upCard){
                     case 5:
                     case 6:
-                        return decisions::SPLIT;
+                        if(rules::DAS){
+                            return decisions::SPLIT;
+                        }
+                        break;
                 }
                 break;
             case 6:
                 switch(upCard){
                     case 2:
+                        if(rules::DAS){
+                            return decisions::SPLIT;;
+                        }
+                        break;
                     case 3:
                     case 4:
                     case 5:
@@ -268,7 +289,7 @@ decisions strategies::playerBasic(hand& hand,int upCard){
     
 }
 
-decisions strategies::playerH17Deviations(hand& hand, int upCard,  int trueCount, int runningCount){
+decisions strategies::playerDeviations(hand& hand, int upCard,  int trueCount, int runningCount){
     
     //Pair Splitting
     //A pair of tens splits vs. 4 at a true count of 6 and above.

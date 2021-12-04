@@ -7,5 +7,5 @@ class strategies{
         decisions dealerH17(hand hand);
         decisions dealerS17(hand hand);
         decisions playerBasic(hand& hand, int upCard);      
-        decisions playerH17Deviations(hand& hand, int upCard, int trueCount, int runningCount);  
+        decisions playerDeviations(hand& hand, int upCard, int trueCount, int runningCount);  
 };
