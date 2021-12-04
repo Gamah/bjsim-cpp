@@ -44,15 +44,15 @@ int main() {
 
         //deal 2 cards to everyone
         for(int x = 0;x<2;x++){
-            int newCard = shoe.getCard();
-            dealer.addCard(newCard);
-            if(x%2 == 1){
-                upCard = card::value(newCard);
-            }
             for(player& p : players){
                 for(hand& h : p.hands){
                     h.addCard(shoe.getCard());
                 }
+            }
+            int newCard = shoe.getCard();
+            dealer.addCard(newCard);
+            if(x%2 == 1){
+                upCard = card::value(newCard);
             }
 
         }
