@@ -16,7 +16,7 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<1000000;x++){
+    for(int x = 0;x<5;x++){
 
     shoe.shuffleCards();
     debugPrint("Shuffle!");
@@ -32,7 +32,8 @@ int main() {
             p.addHand(newHand);
         }
         int upCard = 0;
-
+        debugPrint("RunningCount: " + std::to_string(shoe.runningCount));
+        debugPrint("TrueCount: " + std::to_string(shoe.trueCount));
         //deal 2 cards to everyone
         for(int x = 0;x<2;x++){
             int newCard = shoe.getCard();
