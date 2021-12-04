@@ -21,6 +21,12 @@ int main() {
     shoe.shuffleCards();
     debugPrint("Shuffle!");
 
+    if(config::debug){
+        for(int & c :shoe.cards){
+            std::cout << card::print(c) << ",";
+        }
+    }
+
     //start a round of bj
     while(shoe.cards.size() >= 52){
         
@@ -34,6 +40,7 @@ int main() {
         int upCard = 0;
         debugPrint("RunningCount: " + std::to_string(shoe.runningCount));
         debugPrint("TrueCount: " + std::to_string(shoe.trueCount));
+
         //deal 2 cards to everyone
         for(int x = 0;x<2;x++){
             int newCard = shoe.getCard();
