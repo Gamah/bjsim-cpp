@@ -25,6 +25,7 @@ int main() {
         for(int & c :shoe.cards){
             std::cout << card::print(c) << ",";
         }
+        std::cout << "\r\n";
     }
 
     //start a round of bj
