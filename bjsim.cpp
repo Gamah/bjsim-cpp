@@ -16,10 +16,13 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<5;x++){
+    for(int x = 0;x<25000000;x++){
 
     shoe.shuffleCards();
     debugPrint("Shuffle!");
+
+    //burn a card...
+    shoe.getCard();
 
     if(config::debug){
         for(int & c :shoe.cards){
@@ -73,7 +76,6 @@ int main() {
             //player turns
             for(player& p : players){
                 for(hand& h : p.hands){
-                    //TODO: switch this back to just passing the hand in so hand's true count can be updated.
                     decision = strategy.playerDeviations(h,upCard,shoe.trueCount,shoe.runningCount);
                     while(decision != decisions::STAND){
                         //don't play split aces
