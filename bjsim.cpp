@@ -16,7 +16,7 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<10000;x++){
+    for(int x = 0;x<1000000;x++){
 
     shoe.shuffleCards();
     debugPrint("Shuffle!");
@@ -38,12 +38,12 @@ int main() {
             hand newHand;
             newHand.discard();
             //imagine the bets are set out here, this is the TC the hand will belong to in the final out.
-            newHand.trueCount = shoe.trueCount;
+            newHand.trueCount = shoe.trueCount();
             p.addHand(newHand);
         }
         int upCard = 0;
         debugPrint("RunningCount: " + std::to_string(shoe.runningCount));
-        debugPrint("TrueCount: " + std::to_string(shoe.trueCount));
+        debugPrint("TrueCount: " + std::to_string(shoe.trueCount()));
 
         //deal 2 cards to everyone
         for(int x = 0;x<2;x++){
@@ -62,7 +62,7 @@ int main() {
 
         //check for dealer Ace up
         if(upCard == 1){
-            if(shoe.trueCount >= 3){
+            if(shoe.trueCount() >= 3){
                 for(player& p : players){
                     for(hand& h : p.hands){
                         h.isInsured = true;
@@ -76,7 +76,7 @@ int main() {
             //player turns
             for(player& p : players){
                 for(hand& h : p.hands){
-                    decision = strategy.playerDeviations(h,upCard,shoe.trueCount,shoe.runningCount);
+                    decision = strategy.playerDeviations(h,upCard,shoe.trueCount(),shoe.runningCount);
                     while(decision != decisions::STAND){
                         //don't play split aces
                         if(h.canSplit == -1){
@@ -92,7 +92,7 @@ int main() {
                             switch(decision){
                                 case decisions::HIT : {
                                     h.addCard(shoe.getCard());
-                                    decision = strategy.playerDeviations(h,upCard,shoe.trueCount,shoe.runningCount);
+                                    decision = strategy.playerDeviations(h,upCard,shoe.trueCount(),shoe.runningCount);
                                     break;
                                 }
                                 case decisions::SPLIT : {
@@ -136,7 +136,7 @@ int main() {
                                             decision = decisions::STAND;
                                         }
                                     }else{
-                                        decision = strategy.playerDeviations(h,upCard,shoe.trueCount,shoe.runningCount);
+                                        decision = strategy.playerDeviations(h,upCard,shoe.trueCount(),shoe.runningCount);
                                     }
                                     //add to player's hands
                                     p.addHand(newhand);

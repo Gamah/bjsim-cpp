@@ -5,8 +5,8 @@
 #include <list>
 
 namespace config{
-    static const bool debug = true;
-    static std::mt19937_64 mt(time(nullptr));
+    static const bool debug = false;
+    static std::mt19937 mt(time(nullptr));
 };
 
 void debugPrint(std::string string);
@@ -79,7 +79,7 @@ class shoe{
     public:
         std::vector<int> cards;
         int runningCount;
-        int trueCount;
+        int trueCount();
 
         void shuffleCards();
         int getCard();

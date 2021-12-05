@@ -165,10 +165,12 @@ int shoe::getCard(){
         default:
             break;
     }   
-    //TODO: move truecount out of getCard()... it's slow
-    const int decksLeft = (((cards.size() - 1) / 52) + 1);
-    trueCount = runningCount / decksLeft;
     return newCard;
+}
+
+int shoe::trueCount(){
+    int decksLeft = (((cards.size() - 1) / 52) + 1);
+    return(runningCount / decksLeft);
 }
 
 void shoe::shuffleCards(){
@@ -179,6 +181,5 @@ void shoe::shuffleCards(){
     
     std::shuffle(cards.begin(),cards.end(),config::mt);
 
-    trueCount = 0;
     runningCount = 0;
 }
