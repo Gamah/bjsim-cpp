@@ -16,7 +16,7 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<25000000;x++){
+    for(int x = 0;x<10000;x++){
 
     shoe.shuffleCards();
     debugPrint("Shuffle!");
@@ -80,7 +80,14 @@ int main() {
                     while(decision != decisions::STAND){
                         //don't play split aces
                         if(h.canSplit == -1){
-                            decision = decisions::STAND;
+                            //unless it's a pair of aces and resplitting is allowed and max hands is not hit
+                            if(card::value(h.topCard) == 1 && rules::RSA && p.hands.size() + 1 <= rules::maxSplit){
+                                h.canSplit = 1;
+                                decision = decisions::SPLIT;
+                                debugPrint("RSA1");
+                            }else{
+                                decision = decisions::STAND;
+                            }
                         }else{
                             switch(decision){
                                 case decisions::HIT : {
@@ -122,7 +129,12 @@ int main() {
                                     if(card::value(topCard) == 1){
                                         h.canSplit = -1;
                                         newhand.canSplit = -1;
-                                        decision = decisions::STAND;
+                                        if(card::value(h.topCard) == 1 && rules::RSA && p.hands.size() + 1 <= rules::maxSplit){
+                                            decision = decisions::SPLIT;
+                                            debugPrint("RSA2");
+                                        }else{
+                                            decision = decisions::STAND;
+                                        }
                                     }else{
                                         decision = strategy.playerDeviations(h,upCard,shoe.trueCount,shoe.runningCount);
                                     }

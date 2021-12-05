@@ -5,7 +5,7 @@
 #include <list>
 
 namespace config{
-    static const bool debug = false;
+    static const bool debug = true;
     static std::mt19937_64 mt(time(nullptr));
 };
 
