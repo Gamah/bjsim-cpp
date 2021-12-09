@@ -180,7 +180,7 @@ int shoe::getDownCard(){
 }
 
 void shoe::flipDownCard(){
-    updateRunningCount(downCard);
+    updateRunningCount(card::value(downCard));
     downCard = 0;
     return;
 }
