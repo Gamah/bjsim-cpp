@@ -79,8 +79,12 @@ class shoe{
     public:
         std::vector<int> cards;
         int runningCount;
-        int trueCount();
+        int downCard;
 
         void shuffleCards();
+        void updateRunningCount(int cardValue);
         int getCard();
+        int getDownCard();
+        void flipDownCard();
+        int trueCount();
 };

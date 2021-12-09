@@ -53,9 +53,11 @@ int main() {
                 }
             }
             int newCard = shoe.getCard();
-            dealer.addCard(newCard);
             if(x%2 == 1){
+                dealer.addCard(newCard);
                 upCard = card::value(newCard);
+            }else{
+                dealer.addCard(shoe.getDownCard());
             }
 
         }
@@ -171,6 +173,7 @@ int main() {
                 }
             }
             if(dealerPlays){
+                shoe.flipDownCard();
                 decision = strategy.dealerH17(dealer);
                 while(decision != decisions::STAND){
                     if(decision == decisions::HIT){

@@ -145,10 +145,8 @@ void player::addResult(int trueCount, int handResult){
 }
 
 //implement shoe funcitons
-int shoe::getCard(){
-    int newCard = cards.back();
-    cards.pop_back();
-    switch(card::value(newCard)){
+void shoe::updateRunningCount(int cardValue){
+    switch(cardValue){
         case 2:
         case 3:
         case 4:
@@ -164,9 +162,30 @@ int shoe::getCard(){
         }
         default:
             break;
-    }   
+    }
+    return;
+}
+
+int shoe::getCard(){
+    int newCard = cards.back();
+    cards.pop_back();
+    updateRunningCount(card::value(newCard));
     return newCard;
 }
+
+int shoe::getDownCard(){
+    downCard = cards.back();
+    cards.pop_back();
+    return(downCard);
+}
+
+void shoe::flipDownCard(){
+    updateRunningCount(downCard);
+    downCard = 0;
+    return;
+}
+
+
 
 int shoe::trueCount(){
     int decksLeft = (((cards.size() - 1) / 52) + 1);
