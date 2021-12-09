@@ -16,7 +16,7 @@ int main() {
 
     
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<1000000;x++){
+    for(int x = 0;x<5000000;x++){
 
     shoe.shuffleCards();
     debugPrint("Shuffle!");
@@ -52,8 +52,8 @@ int main() {
                     h.addCard(shoe.getCard());
                 }
             }
-            int newCard = shoe.getCard();
             if(x%2 == 1){
+                int newCard = shoe.getCard();
                 dealer.addCard(newCard);
                 upCard = card::value(newCard);
             }else{
@@ -172,8 +172,9 @@ int main() {
                     }
                 }
             }
+            //flip over the down card even if the dealer doesn't have to play
+            shoe.flipDownCard();
             if(dealerPlays){
-                shoe.flipDownCard();
                 decision = strategy.dealerH17(dealer);
                 while(decision != decisions::STAND){
                     if(decision == decisions::HIT){
@@ -182,6 +183,10 @@ int main() {
                     }
                 }
             }
+        }else{
+            //flip the card to 'show' a dealer blackjack
+            //TODO: just move this outside of the current scope... that should be safe?
+            shoe.flipDownCard();
         }
 
 
