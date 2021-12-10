@@ -14,9 +14,8 @@ int main() {
     //TODO: implement mulitple players...
     players.push_back(player());
 
-    
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<1000;x++){
+    for(int x = 0;x<1000000;x++){
 
         shoe.shuffleCards();
         debugPrint("Shuffle!");
@@ -33,7 +32,6 @@ int main() {
 
         //start a round of bj
         while(shoe.cards.size() >= 74){
-
             for(player& p : players){
                 hand newHand;
                 newHand.discard();
@@ -116,6 +114,7 @@ int main() {
                                         newhand.isSplit = true;
                                         h.canSurrender = false;
                                         newhand.canSurrender = false;
+                                        newhand.trueCount = h.trueCount;
 
                                         //halve the hand total
                                         h.total = h.total - card::value(topCard);
@@ -201,6 +200,7 @@ int main() {
             }
             for(player& p : players){
                 for(hand& h : p.hands){
+                    roundCount++;
                     debugPrint("Player");
                     if(config::debug){
                         h.print();
