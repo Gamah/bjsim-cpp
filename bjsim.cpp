@@ -200,7 +200,6 @@ int main() {
             }
             for(player& p : players){
                 for(hand& h : p.hands){
-                    roundCount++;
                     debugPrint("Player");
                     if(config::debug){
                         h.print();
