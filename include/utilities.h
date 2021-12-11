@@ -7,6 +7,7 @@
 namespace config{
     static const bool debug = false;
     static std::mt19937 mt(time(nullptr));
+    static const int numShoes = 10000000;
 };
 
 void debugPrint(std::string string);
@@ -18,6 +19,7 @@ namespace rules{
     static const bool RSA = false;
     static const bool Surrender = false;
     static const int maxSplit = 4;
+    static const int deckPen = 74;
 };
 
 namespace handResults{
@@ -30,6 +32,7 @@ namespace handResults{
     static const int win = 6;
     static const int blackjack = 7;
     static const int doublewin = 8;
+    static const int roudsplayed = 9;
 }
 
 namespace card{    
@@ -66,7 +69,7 @@ class player{
     public:
         std::list<hand> hands;
         //+/-7 true count totals for Losses, Pushes, Surrenders(lost insurance), Wins, and BlackJacks
-        unsigned int handResults[15][9];
+        unsigned int handResults[15][10];
     
         void addHand(hand& hand);
         void print();

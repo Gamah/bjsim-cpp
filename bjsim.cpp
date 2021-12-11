@@ -15,7 +15,7 @@ int main() {
     players.push_back(player());
 
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<1000000;x++){
+    for(int x = 0;x<config::numShoes;x++){
 
         shoe.shuffleCards();
         debugPrint("Shuffle!");
@@ -31,12 +31,13 @@ int main() {
         }
 
         //start a round of bj
-        while(shoe.cards.size() >= 74){
+        while(shoe.cards.size() >= rules::deckPen){
             for(player& p : players){
                 hand newHand;
                 newHand.discard();
                 //imagine the bets are set out here, this is the TC the hand will belong to in the final out.
                 newHand.trueCount = shoe.trueCount();
+                p.addResult(newHand.trueCount,handResults::roudsplayed);
                 p.addHand(newHand);
             }
             int upCard = 0;
@@ -178,11 +179,11 @@ int main() {
                 //flip over the down card even if the dealer doesn't have to play
                 shoe.flipDownCard();
                 if(dealerPlays){
-                    decision = strategy.dealerH17(dealer);
+                    decision = strategy.dealer(dealer);
                     while(decision != decisions::STAND){
                         if(decision == decisions::HIT){
                             dealer.addCard(shoe.getCard());
-                            decision = strategy.dealerH17(dealer);
+                            decision = strategy.dealer(dealer);
                         }
                     }
                 }
@@ -307,10 +308,10 @@ int main() {
         }
     }
         for(player& p : players){
-            std::cout << "count,doublelose,lose,surrender,insurancelose,insurancewin,push,win,blackjack,doublewin";
+            std::cout << "count,doublelose,lose,surrender,insurancelose,insurancewin,push,win,blackjack,doublewin,roundsplayed";
             for(int x = -7; x <= 7;x++){
                 std::cout << "\r\n" << x << ",";
-                for(int y = 0; y < 9; y++){
+                for(int y = 0; y < 10; y++){
                     std::cout << p.handResults[x+7][y] << ",";
                 }
             }

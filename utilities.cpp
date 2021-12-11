@@ -117,7 +117,7 @@ void player::addHand(hand& hand){
 player::player(){  
     //initialize array... is this necessary?
     for(int x = 0;x < 15; x++){
-        for(int y = 0; y < 9; y++){
+        for(int y = 0; y < 10; y++){
             handResults[x][y] = 0;
         }
     }
