@@ -21,7 +21,7 @@ int main() {
         debugPrint("Shuffle!");
 
         //burn a card...
-        shoe.getCard();
+        shoe.getDownCard();
 
         if(config::debug){
             for(int & c :shoe.cards){

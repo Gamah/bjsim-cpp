@@ -19,7 +19,7 @@ namespace rules{
     static const bool RSA = false;
     static const bool Surrender = false;
     static const int maxSplit = 4;
-    static const int deckPen = 74;
+    static const int deckPen = 78;
 };
 
 namespace handResults{
