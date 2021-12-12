@@ -78,8 +78,8 @@ int main() {
                 //player turns
                 for(player& p : players){
                     for(hand& h : p.hands){            
-                        //decision = strategy.playerDeviations(h,upCard,shoe.trueCount(),shoe.runningCount);
-                        decision = strategy.playerBasic(h,upCard);
+                        decision = strategy.playerDeviations(h,upCard,shoe.trueCount(),shoe.runningCount);
+                        //decision = strategy.playerBasic(h,upCard);
                         while(decision != decisions::STAND){
                             //don't play split aces
                             if(h.canSplit == -1){
@@ -87,7 +87,6 @@ int main() {
                                 if(card::value(h.topCard) == 1 && rules::RSA && p.hands.size() + 1 <= rules::maxSplit){
                                     h.canSplit = 1;
                                     decision = decisions::SPLIT;
-                                    debugPrint("RSA1");
                                 }else{
                                     decision = decisions::STAND;
                                 }
@@ -95,8 +94,8 @@ int main() {
                                 switch(decision){
                                     case decisions::HIT : {
                                         h.addCard(shoe.getCard());
-                                        //decision = strategy.playerDeviations(h,upCard,shoe.trueCount(),shoe.runningCount);
-                                        decision = strategy.playerBasic(h,upCard);
+                                        decision = strategy.playerDeviations(h,upCard,shoe.trueCount(),shoe.runningCount);
+                                        //decision = strategy.playerBasic(h,upCard);
                                         break;
                                     }
                                     case decisions::SPLIT : {
@@ -136,13 +135,12 @@ int main() {
                                             newhand.canSplit = -1;
                                             if(card::value(h.topCard) == 1 && rules::RSA && p.hands.size() + 1 <= rules::maxSplit){
                                                 decision = decisions::SPLIT;
-                                                debugPrint("RSA2");
                                             }else{
                                                 decision = decisions::STAND;
                                             }
                                         }else{
-                                            //decision = strategy.playerDeviations(h,upCard,shoe.trueCount(),shoe.runningCount);
-                                            decision = strategy.playerBasic(h,upCard);
+                                            decision = strategy.playerDeviations(h,upCard,shoe.trueCount(),shoe.runningCount);
+                                            //decision = strategy.playerBasic(h,upCard);
                                         }
                                         //add to player's hands
                                         p.addHand(newhand);
