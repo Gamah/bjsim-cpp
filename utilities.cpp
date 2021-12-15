@@ -144,6 +144,17 @@ void player::addResult(int trueCount, int handResult){
     handResults[trueCount+7][handResult]++;
 }
 
+void player::printResults(){
+    std::cout << "count,doublelose,lose,surrender,insurancelose,insurancewin,push,win,blackjack,doublewin,roundsplayed";
+            for(int x = -7; x <= 7;x++){
+                std::cout << "\r\n" << x << ",";
+                for(int y = 0; y < 10; y++){
+                    std::cout << handResults[x+7][y] << ",";
+                }
+            }
+            std::cout << "\r\n\r\n";
+}
+
 //implement shoe funcitons
 void shoe::updateRunningCount(int cardValue){
     switch(cardValue){

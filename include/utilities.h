@@ -5,9 +5,9 @@
 #include <list>
 
 namespace config{
-    static const bool debug = false;
+    static const bool debug = true;
     static std::mt19937 mt(time(nullptr));
-    static const int numShoes = 10000000;
+    static const int numShoes = 5;
 };
 
 void debugPrint(std::string string);
@@ -75,6 +75,7 @@ class player{
         void print();
         void clearHands();
         void addResult(int trueCount, int handResult);
+        void printResults();
         player();
 };
 

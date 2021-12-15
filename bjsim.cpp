@@ -293,7 +293,10 @@ int main() {
                         }
                     }
 
-                }   
+                }  
+                if(config::debug){
+                    p.printResults(); 
+                }
             }
 
             dealer.discard();
@@ -306,14 +309,7 @@ int main() {
         }
     }
         for(player& p : players){
-            std::cout << "count,doublelose,lose,surrender,insurancelose,insurancewin,push,win,blackjack,doublewin,roundsplayed";
-            for(int x = -7; x <= 7;x++){
-                std::cout << "\r\n" << x << ",";
-                for(int y = 0; y < 10; y++){
-                    std::cout << p.handResults[x+7][y] << ",";
-                }
-            }
-            std::cout << "\r\n\r\n";
+            p.printResults();
         }
         return 0;
 }   
