@@ -315,6 +315,7 @@ int runGame(std::mt19937 rengine, std::mutex& processResults) {
     }   
         processResults.lock();
         for(player& p : players){
+            //TODO: make a main result object to be added to here, and print that later...
             p.printResults();
         }
         processResults.unlock();
