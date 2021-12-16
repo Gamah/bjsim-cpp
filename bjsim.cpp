@@ -8,13 +8,13 @@
 #include "include/utilities.h"
 #include "include/strategies.h"
 
-int runGame(std::mt19937 rengine) {
+int runGame(std::mt19937 rengine, std::mutex& processResults) {
     //initialize sgame
     shoe shoe;
     strategies strategy;
     decisions decision;
     hand dealer;    
-    std::mutex processResults;
+    
     std::vector<player> players;
     //TODO: implement mulitple players...
     players.push_back(player());
@@ -323,10 +323,11 @@ int runGame(std::mt19937 rengine) {
 
 int main(){
     std::vector<std::thread> threads;
+    std::mutex processResults;
 
     for(int x=0;x<config::numThreads;x++){
         std::mt19937 newRengine(time(nullptr) + x);
-        threads.push_back(std::thread(runGame,(newRengine)));
+        threads.push_back(std::thread(runGame,newRengine,std::ref(processResults)));
     }
 
     for(std::thread& t : threads){
