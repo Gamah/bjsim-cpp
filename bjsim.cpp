@@ -325,11 +325,7 @@ int main(){
     std::vector<std::thread> threads;
 
     for(int x=0;x<config::numThreads;x++){
-        std::vector<unsigned int> random_data(624);
-        std::random_device source;
-        std::generate(begin(random_data), end(random_data), [&](){return source();});
-        std::seed_seq seeds(begin(random_data), end(random_data));
-        std::mt19937 newRengine(seeds);
+        std::mt19937 newRengine(time(nullptr) + x);
         threads.push_back(std::thread(runGame,newRengine));
     }
 
