@@ -6,9 +6,8 @@
 
 namespace config{
     static const bool debug = false;
-    static const int numThreads = 4;
-    static std::vector<std::mt19937> rengines;
-    static const int numShoes = 500000;
+    static const int numThreads = 3;
+    static const int numShoes = 100;
 };
 
 void debugPrint(std::string string);
@@ -86,7 +85,7 @@ class shoe{
         int runningCount;
         int downCard;
 
-        void shuffleCards(std::mt19937 rengine);
+        void shuffleCards(std::mt19937& rengine);
         void updateRunningCount(int cardValue);
         int getCard();
         int getDownCard();

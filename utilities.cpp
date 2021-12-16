@@ -203,7 +203,7 @@ int shoe::trueCount(){
     return(runningCount / decksLeft);
 }
 
-void shoe::shuffleCards(std::mt19937 rengine){
+void shoe::shuffleCards(std::mt19937& rengine){
     cards.clear();
     for(int x = 0; x < 52*6; x ++){
         cards.push_back(x);
