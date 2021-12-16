@@ -152,7 +152,8 @@ void player::printResults(){
                     std::cout << handResults[x+7][y] << ",";
                 }
             }
-            std::cout << "\r\n\r\n";
+            std::cout << "\r\n\r\n" << std::endl;
+            
 }
 
 //implement shoe funcitons
