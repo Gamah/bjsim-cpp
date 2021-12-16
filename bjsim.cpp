@@ -326,7 +326,7 @@ int main(){
 
     for(int x=0;x<config::numThreads;x++){
         std::mt19937 newRengine(time(nullptr) + x);
-        threads.push_back(std::thread(runGame,newRengine));
+        threads.push_back(std::thread(runGame,(newRengine)));
     }
 
     for(std::thread& t : threads){
