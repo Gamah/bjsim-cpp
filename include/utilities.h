@@ -8,7 +8,7 @@ namespace config{
     static const bool debug = false;
     static const int numThreads = 4;
     static std::vector<std::mt19937> rengines;
-    static const int numShoes = 100000;
+    static const int numShoes = 500000;
 };
 
 void debugPrint(std::string string);
