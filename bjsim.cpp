@@ -1,15 +1,20 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <random>
+#include <algorithm>
+#include <mutex>
+#include <thread>
 #include "include/utilities.h"
 #include "include/strategies.h"
 
-int main() {
+int runGame(std::mt19937 rengine) {
     //initialize sgame
     shoe shoe;
     strategies strategy;
     decisions decision;
     hand dealer;    
+    std::mutex processResults;
     std::vector<player> players;
     //TODO: implement mulitple players...
     players.push_back(player());
@@ -17,7 +22,7 @@ int main() {
     //TODO: break this out of main so it can be threaded
     for(int x = 0;x<config::numShoes;x++){
 
-        shoe.shuffleCards();
+        shoe.shuffleCards(rengine);
         debugPrint("Shuffle!");
 
         //burn a card...
@@ -307,9 +312,30 @@ int main() {
                 std::cout << "\r\n\r\n";
             }
         }
-    }
+    }   
+        processResults.lock();
         for(player& p : players){
             p.printResults();
         }
+        processResults.unlock();
         return 0;
 }   
+
+int main(){
+    std::vector<std::thread> threads;
+
+    for(int x=0;x<config::numThreads;x++){
+        std::vector<unsigned int> random_data(624);
+        std::random_device source;
+        std::generate(begin(random_data), end(random_data), [&](){return source();});
+        std::seed_seq seeds(begin(random_data), end(random_data));
+        std::mt19937 newRengine(seeds);
+        threads.push_back(std::thread(runGame,newRengine));
+    }
+
+    for(std::thread& t : threads){
+        t.join();
+    }
+
+    return 0;
+}
