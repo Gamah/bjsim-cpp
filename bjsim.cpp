@@ -8,7 +8,7 @@
 #include "include/utilities.h"
 #include "include/strategies.h"
 
-int runGame(std::mt19937 rengine, std::mutex& processResults) {
+int runGame(std::mt19937 rengine, std::mutex& processResults, std::vector<player>& playersPlayed) {
     //initialize sgame
     shoe shoe;
     strategies strategy;
@@ -315,7 +315,7 @@ int runGame(std::mt19937 rengine, std::mutex& processResults) {
     }   
         processResults.lock();
         for(player& p : players){
-            p.printResults();
+            playersPlayed.push_back(p);
         }
         processResults.unlock();
         return 0;
@@ -324,15 +324,28 @@ int runGame(std::mt19937 rengine, std::mutex& processResults) {
 int main(){
     std::vector<std::thread> threads;
     std::mutex processResults;
+    std::vector<player> playersPlayed;
+
+    player finalPlayer;
 
     for(int x=0;x<config::numThreads;x++){
         std::mt19937 newRengine(time(nullptr) + x);
-        threads.push_back(std::thread(runGame,newRengine,std::ref(processResults)));
+        threads.push_back(std::thread(runGame,newRengine,std::ref(processResults),std::ref(playersPlayed)));
     }
 
     for(std::thread& t : threads){
         t.join();
     }
+
+    for(player& p : playersPlayed){
+        for(int x=0;x<15;x++){
+            for(int y=0;y<10;y++){
+                finalPlayer.handResults[x][y] += p.handResults[x][y];
+            }
+        }
+    }
+
+    finalPlayer.printResults();
 
     return 0;
 }
