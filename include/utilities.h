@@ -7,7 +7,7 @@
 namespace config{
     static const bool debug = false;
     static const int numThreads = 4;
-    static const int numShoes = 11000000;
+    static const int numShoes = 1000;
 };
 
 void debugPrint(std::string string);
