@@ -326,7 +326,7 @@ decisions strategies::playerDeviations(hand& hand, int upCard,  int trueCount, i
     }
 
     //A soft 17 doubles vs. 2 at a true count of 1 and above.
-    if(hand.isSoft && hand.total == 17 && upCard == 2 && true >= 1 && hand.canDouble){
+    if(hand.isSoft && hand.total == 17 && upCard == 2 && trueCount >= 1 && hand.canDouble){
         return decisions::DOUBLE;
     }
     
