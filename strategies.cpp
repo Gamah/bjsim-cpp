@@ -291,42 +291,49 @@ decisions strategies::playerDeviations(hand& hand, int upCard,  int trueCount, i
         switch(upCard){
             case 4:{
                 if(trueCount >= 6 && hand.canSplit == 1){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Split 10s TC 6+");
                     return decisions::SPLIT;
                 }
                 break;
             }
             case 5:{
                 if(trueCount >= 5 && hand.canSplit == 1){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Split 10s TC 5+");
                     return decisions::SPLIT;
                 }
                 break;
             }
             case 6:{
                 if(trueCount >= 4 && hand.canSplit == 1){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Split 10s TC 4+");
                     return decisions::SPLIT;
                 }
             }
         }
     }
-
+    
     //Soft Totals
     //A soft 19 doubles vs. 4 at a true count of 3 and above.
     //A soft 19 doubles vs. 5 at a true count of 1 and above.
     //A soft 19 stands vs. 6 at any running count below 0.
     if(hand.isSoft && hand.total == 19){
         if(upCard == 4 && trueCount >= 3 && hand.canDouble){
+            debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Double soft 19 vs 4 TC3+");
             return decisions::DOUBLE;
         }
         if(upCard == 5 && trueCount >= 1 && hand.canDouble){
+            debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Double soft 19 vs 5 tc1+");
             return decisions::DOUBLE;
         }
         if(upCard == 6 && runningCount < 0){
+            debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Double soft 19 vs 6 positive count");
             return decisions::STAND;
         }
     }
 
     //A soft 17 doubles vs. 2 at a true count of 1 and above.
-    if(hand.isSoft && hand.total == 17 && upCard == 2 && true >= 1 && hand.canDouble){
+    if(hand.isSoft && hand.total == 17 && upCard == 2 && trueCount >= 1 && hand.canDouble){
+        debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Double soft 17 vs 2 TC1+");
         return decisions::DOUBLE;
     }
     
@@ -338,23 +345,20 @@ decisions strategies::playerDeviations(hand& hand, int upCard,  int trueCount, i
         //16 stands vs. Ace at a true count of 3 and above. (Unless you can surr).
         if(hand.total == 16){
             if(upCard == 9 && trueCount >= 4){
-                if(hand.canSurrender){
-                    return decisions::SURRENDER;
-                }else{
+                if(!hand.canSurrender){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Hard 16 stands vs 9 TC4+");
                     return decisions::STAND;
                 }
             }
             if(upCard == 10 && runningCount >= 0){
-                if(hand.canSurrender){
-                    return decisions::SURRENDER;
-                }else{
+                if(!hand.canSurrender){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Hard 16 stands vs 10 positive count");
                     return decisions::STAND;
                 }
             }
             if(upCard == 1 && trueCount >= 3){
-                if(hand.canSurrender){
-                    return decisions::SURRENDER;
-                }else{
+                if(!hand.canSurrender){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Hard 16 stands vs Ace TC3+");
                     return decisions::STAND;
                 }
             }
@@ -363,22 +367,21 @@ decisions strategies::playerDeviations(hand& hand, int upCard,  int trueCount, i
         //15 stands vs. Ace at a true count of 5 and above. (Unless you can surr).
         if(hand.total == 15){
             if(upCard == 10 && trueCount >= 4){
-                if(hand.canSurrender){
-                    return decisions::SURRENDER;
-                }else{
+                if(!hand.canSurrender){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Hard 15 stands vs 10 TC4+");
                     return decisions::STAND;
                 }
             }
             if(upCard == 1 && trueCount >= 5){
-                if(hand.canSurrender){
-                    return decisions::SURRENDER;
-                }else{
+                if(!hand.canSurrender){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Hard 15 stands vs Ace TC5+");
                     return decisions::STAND;
                 }
             }
         }
         //13 hits vs. 2 at a true count of -1 and below.
-        if(hand.total == 13 && trueCount <= -1){
+        if(hand.total == 13 && upCard == 2 && trueCount <= -1){
+            debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Hard 13 hits vs 2 TC -1 and less");
             return decisions::HIT;
         }
         //12 stands vs. 2 at a true count of 3 and above.
@@ -386,12 +389,15 @@ decisions strategies::playerDeviations(hand& hand, int upCard,  int trueCount, i
         //12 hits vs. 4 at any count below 0.
         if(hand.total == 12){
             if(upCard == 2 && trueCount >= 3){
+                debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Hard 12 stands vs 2 TC 3+");
                 return decisions::STAND;
             }
             if(upCard == 3 && trueCount >= 2){
+                debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Hard 12 stands vs 3 TC2+");
                 return decisions::STAND;
             }
             if(upCard == 4 && runningCount < 0){
+                debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " Hard 12 hits vs 4 negative count");
                 return decisions::HIT;
             }
         }
@@ -399,9 +405,11 @@ decisions strategies::playerDeviations(hand& hand, int upCard,  int trueCount, i
         //10 doubles vs. Ace at a true count of 3 and above.
         if(hand.total == 10){
             if(upCard == 10 && trueCount >= 4 && hand.canDouble){
+                debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 10 doubles vs 10 TC4+");
                 return decisions::DOUBLE;
             }
             if(upCard == 1 && trueCount >= 3 && hand.canDouble){
+                debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 10 doubles vs Ace TC3+");
                 return decisions::DOUBLE;
             }
         }
@@ -410,9 +418,11 @@ decisions strategies::playerDeviations(hand& hand, int upCard,  int trueCount, i
         //9 doubles vs. 7 at a true count of 3 and above.
         if(hand.total == 9){
             if(upCard == 2 && trueCount >= 1 && hand.canDouble){
+                debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 9 doubles vs 2 TC1+");
                 return decisions::DOUBLE;
             }
             if(upCard == 7 && trueCount >= 3 && hand.canDouble){
+                debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 9 doubles vs 7 TC3+");
                 return decisions::DOUBLE;
             }
         }
@@ -420,41 +430,52 @@ decisions strategies::playerDeviations(hand& hand, int upCard,  int trueCount, i
         //8 doubles vs. 6 at a true count of 2 and above.
         if(hand.total == 8){
             if(upCard == 6 && trueCount >= 2 && hand.canDouble){
+                debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 8 doubles vs 6 TC2+");
                 return decisions::DOUBLE;
             }
         }
         
         //Hard Totals- Surrender
-        //17 always surrenders against a dealer Ace in an H17 game.
-        if(rules::H17 && hand.total == 17 && upCard == 1 && hand.canSurrender){
-            return decisions::SURRENDER;
-        }
-        //16 surrenders vs. 8 at a true count of 4 and above.
-        //16 hits vs. 9 at a true count of -1 and below.
-        //16 always surrenders against 10 and Ace in an H17 game.
-        if(hand.total == 16){
-            if(upCard == 8 && trueCount >= 4 && hand.canSurrender){
+        if(hand.canSurrender){
+            
+            //17 always surrenders against a dealer Ace in an H17 game.
+            if(rules::H17 && hand.total == 17 && upCard == 1 && hand.canSurrender){
+                debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 17 always surrenders vs Ace in H17");
                 return decisions::SURRENDER;
             }
-            if(upCard == 9 && trueCount <= -1){
-                return decisions::HIT;
+            //16 surrenders vs. 8 at a true count of 4 and above.
+            //16 hits vs. 9 at a true count of -1 and below.
+            //16 always surrenders against 10 and Ace in an H17 game.
+            if(hand.total == 16){
+                if(upCard == 8 && trueCount >= 4 && hand.canSurrender){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 16 surrenders vs 8 TC4+");
+                    return decisions::SURRENDER;
+                }
+                if(upCard == 9 && trueCount <= -1){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 16 vs 9 hits TC -1 and less");
+                    return decisions::HIT;
+                }
+                if(rules::H17 && (upCard == 10 || upCard == 1) && hand.canSurrender){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 16 always surrender vs 10 and ace in H17");
+                    return decisions::SURRENDER;
+                }
             }
-            if(rules::H17 && (upCard == 10 || upCard == 1) && hand.canSurrender){
-                return decisions::SURRENDER;
-            }
-        }
-        //15 surrenders vs. 9 at a true count of 2 and above.
-        //15 hits vs. 10 at any count below 0.
-        //15 surrenders vs. Ace at a true -1 and above.
-        if(hand.total == 15){
-            if(hand.canSurrender && upCard == 9 && trueCount >= 2){
-                return decisions::SURRENDER;
-            }
-            if(upCard == 10 && runningCount < 0){
-                return decisions::HIT;
-            }
-            if(hand.canSurrender && upCard == 1 && trueCount <= -1){
-                return decisions::SURRENDER;
+            //15 surrenders vs. 9 at a true count of 2 and above.
+            //15 hits vs. 10 at any count below 0.
+            //15 surrenders vs. Ace at a true -1 and above.
+            if(hand.total == 15){
+                if(hand.canSurrender && upCard == 9 && trueCount >= 2){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 15 surrenders vs 9 at TC2+");
+                    return decisions::SURRENDER;
+                }
+                if(upCard == 10 && runningCount < 0){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 15 hits vs 10 any negative  count");
+                    return decisions::HIT;
+                }
+                if(hand.canSurrender && upCard == 1 && trueCount <= -1){
+                    debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 15 surrenders ace TC-1 and above");
+                    return decisions::SURRENDER;
+                }
             }
         }
     }
