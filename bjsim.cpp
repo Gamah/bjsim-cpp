@@ -72,7 +72,7 @@ int runGame(std::mt19937 rengine, std::mutex& processResults, std::vector<player
                 if(shoe.trueCount() >= 3){
                     for(player& p : players){
                         for(hand& h : p.hands){
-                            //h.isInsured = true;
+                            h.isInsured = true;
                         }
                     }
                 }
