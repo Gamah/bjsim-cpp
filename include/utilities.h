@@ -5,9 +5,9 @@
 #include <list>
 
 namespace config{
-    static const bool debug = false;
-    static const int numThreads = 4;
-    static const int numShoes = 3000000;
+    static const bool debug = true;
+    static const int numThreads = 1;
+    static const int numShoes = 10;
 };
 
 void debugPrint(std::string string);

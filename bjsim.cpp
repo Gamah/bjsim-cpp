@@ -25,15 +25,15 @@ int runGame(std::mt19937 rengine, std::mutex& processResults, std::vector<player
         shoe.shuffleCards(rengine);
         debugPrint("Shuffle!");
 
-        //burn a card...
-        shoe.getDownCard();
-
         if(config::debug){
             for(int & c :shoe.cards){
                 std::cout << card::print(c) << ",";
             }
             std::cout << "\r\n";
         }
+        //burn a card...
+        shoe.getCard();
+
 
         //start a round of bj
         while(shoe.cards.size() >= rules::deckPen){
@@ -299,9 +299,6 @@ int runGame(std::mt19937 rengine, std::mutex& processResults, std::vector<player
                     }
 
                 }  
-                if(config::debug){
-                    p.printResults(); 
-                }
             }
 
             dealer.discard();
