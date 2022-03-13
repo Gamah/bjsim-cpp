@@ -3,11 +3,12 @@
 #include <vector>
 #include <random>
 #include <list>
+#include <chrono>
 
 namespace config{
-    static const bool debug = true;
-    static const int numThreads = 1;
-    static const int numShoes = 10;
+    static const bool debug = false;
+    static const int numThreads = 4;
+    static const int numShoes = 50000;
 };
 
 void debugPrint(std::string string);

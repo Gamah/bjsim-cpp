@@ -8,7 +8,7 @@
 #include "include/utilities.h"
 #include "include/strategies.h"
 
-int runGame(std::mt19937 rengine, std::mutex& processResults, std::vector<player>& playersPlayed) {
+int runGame(std::mt19937 rengine, int& shoesPlayed, std::mutex& processResults, std::vector<player>& playersPlayed) {
     //initialize sgame
     shoe shoe;
     strategies strategy;
@@ -308,6 +308,8 @@ int runGame(std::mt19937 rengine, std::mutex& processResults, std::vector<player
             if(config::debug){
                 std::cout << "\r\n\r\n";
             }
+
+            shoesPlayed = x + 1;
         }
     }   
         processResults.lock();
@@ -324,16 +326,39 @@ int main(){
     std::vector<player> playersPlayed;
 
     player finalPlayer;
+    std::vector<int> shoesPlayed;
+
+    for(int x = 0;x<config::numThreads;x++){
+        shoesPlayed.push_back(0);
+    }
 
     for(int x=0;x<config::numThreads;x++){
         std::mt19937 newRengine(time(nullptr) + x);
-        threads.push_back(std::thread(runGame,newRengine,std::ref(processResults),std::ref(playersPlayed)));
+        threads.push_back(std::thread(runGame,newRengine,std::ref(shoesPlayed[x]),std::ref(processResults),std::ref(playersPlayed)));
     }
-
+    
     for(std::thread& t : threads){
-        t.join();
+        t.detach();
     }
-
+    
+    bool threadsRunning = true;
+    while(threadsRunning){
+        threadsRunning = false;
+        for(int& i : shoesPlayed){
+            if(i < config::numShoes){
+                threadsRunning = true;
+                /*
+                //this causes segfaults, why?
+                processResults.lock();
+                std::cout << shoesPlayed[i] << std::endl;
+                processResults.unlock();
+                */
+            }
+        }
+        std::cout << "Working..." << std::endl;
+        std::this_thread::sleep_for (std::chrono::seconds(1));
+    }
+    
     for(player& p : playersPlayed){
         for(int x=0;x<15;x++){
             for(int y=0;y<10;y++){
