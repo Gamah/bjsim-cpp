@@ -343,20 +343,22 @@ int main(){
     
     bool threadsRunning = true;
     while(threadsRunning){
+        
         threadsRunning = false;
+        int x = 0;
+        std::string message;
         for(int& i : shoesPlayed){
+            
             if(i < config::numShoes){
                 threadsRunning = true;
-                /*
-                //this causes segfaults, why?
-                processResults.lock();
-                std::cout << shoesPlayed[i] << std::endl;
-                processResults.unlock();
-                */
+                message += "Thread: " + std::to_string(x) + "   Shoe: " + std::to_string(i) + "/" + std::to_string(config::numShoes) + "\r\n";
+              
             }
+            x++;
         }
-        std::cout << "Working..." << std::endl;
-        std::this_thread::sleep_for (std::chrono::seconds(1));
+        std::this_thread::sleep_for (std::chrono::milliseconds(100));
+        system("clear");
+        std::cout << message;
     }
     
     for(player& p : playersPlayed){
