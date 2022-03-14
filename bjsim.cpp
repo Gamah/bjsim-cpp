@@ -233,7 +233,7 @@ int runGame(std::mt19937 rengine, int& shoesPlayed, std::mutex& processResults, 
                     }
 
                     //if player has blackjack pay and exit loop
-                    if(h.total == 21 and h.numCards ==2 && h.isSplit == false){
+                    if(h.total == 21 && h.numCards ==2 && h.isSplit == false){
                         p.addResult(h.trueCount,handResults::blackjack);
                         debugPrint("Blackjack Win");
                         continue;
@@ -340,27 +340,38 @@ int main(){
     for(std::thread& t : threads){
         t.detach();
     }
-    
+    std::cout << "Sim started!" << std::endl << std::endl;
     bool threadsRunning = true;
     while(threadsRunning){
         
+        int currentProgress = 0;
         threadsRunning = false;
-        int x = 0;
-        std::string message;
         for(int& i : shoesPlayed){
             
             if(i < config::numShoes){
                 threadsRunning = true;
-                message += "Thread: " + std::to_string(x) + "   Shoe: " + std::to_string(i) + "/" + std::to_string(config::numShoes) + "\r\n";
-              
+                currentProgress += i;
             }
-            x++;
         }
+        int totalProgress = config::numShoes * config::numThreads;
+        int percentProgress = (currentProgress*100/totalProgress);
         std::this_thread::sleep_for (std::chrono::milliseconds(100));
-        system("clear");
-        std::cout << message;
+        if(threadsRunning){
+            std::cout << "\rWorking... [";
+            for(int x = 0;x < 50; x++){
+                if(x < percentProgress/2){
+                    std::cout << "=";
+                }else{
+                    std::cout << " ";
+                }
+            }
+            std::cout << "] " << percentProgress << "%" << std::flush;
+        }
     }
+    //i'm lazy, this works...
+    std::cout << "\rWorking... [==================================================] 100%" << std::endl << std::endl;
     
+    //combine results from players
     for(player& p : playersPlayed){
         for(int x=0;x<15;x++){
             for(int y=0;y<10;y++){
