@@ -22,6 +22,7 @@ void player::print(){
 
 void  player::clearHands(){
     hands.clear();
+    hands.reserve(rules::maxSplit);
 }
 
 void player::addResult(int trueCount, int handResult){

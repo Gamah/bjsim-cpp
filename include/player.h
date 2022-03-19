@@ -1,11 +1,11 @@
 #pragma once
 #include "hand.h"
-#include <list>
+#include <vector>
 #include <iostream>
 
 class player{
     public:
-        std::list<hand> hands;
+        std::vector<hand> hands;
         //+/-7 true count totals for Losses, Pushes, Surrenders(lost insurance), Wins, and BlackJacks
         unsigned int handResults[15][10];
     
