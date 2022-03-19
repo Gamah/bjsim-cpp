@@ -340,40 +340,46 @@ int main(){
         std::mt19937 newRengine(time(nullptr) + x);
         threads.push_back(std::thread(runGame,newRengine,std::ref(shoesPlayed[x]),std::ref(processResults),std::ref(playersPlayed)));
     }
-    
-    for(std::thread& t : threads){
-        t.detach();
-    }
-    std::cout << "Sim started!" << std::endl << std::endl;
-    bool threadsRunning = true;
-    while(threadsRunning){
-        
-        int currentProgress = 0;
-        threadsRunning = false;
-        for(int& i : shoesPlayed){
-            
-            if(i < config::numShoes){
-                threadsRunning = true;
-                currentProgress += i;
-            }
+    if(config::numThreads == 1 && config::debug){
+        for(std::thread& t : threads){
+        t.join();
+        }    
+    }else{
+        for(std::thread& t : threads){
+            t.detach();
         }
-        int totalProgress = config::numShoes * config::numThreads;
-        int percentProgress = (currentProgress*100/totalProgress);
-        std::this_thread::sleep_for (std::chrono::milliseconds(100));
-        if(threadsRunning){
-            std::cout << "\rWorking... [";
-            for(int x = 0;x < 50; x++){
-                if(x < percentProgress/2){
-                    std::cout << "=";
-                }else{
-                    std::cout << " ";
+
+        std::cout << "Sim started!" << std::endl << std::endl;
+        bool threadsRunning = true;
+        while(threadsRunning){
+
+            int currentProgress = 0;
+            threadsRunning = false;
+            for(int& i : shoesPlayed){
+
+                if(i < config::numShoes){
+                    threadsRunning = true;
+                    currentProgress += i;
                 }
             }
-            std::cout << "] " << percentProgress << "%" << std::flush;
+            int totalProgress = config::numShoes * config::numThreads;
+            int percentProgress = (currentProgress*100/totalProgress);
+            std::this_thread::sleep_for (std::chrono::milliseconds(100));
+            if(threadsRunning){
+                std::cout << "\rWorking... [";
+                for(int x = 0;x < 50; x++){
+                    if(x < percentProgress/2){
+                        std::cout << "=";
+                    }else{
+                        std::cout << " ";
+                    }
+                }
+                std::cout << "] " << percentProgress << "%" << std::flush;
+            }
         }
+        //i'm lazy, this works...
+        std::cout << "\rWorking... [==================================================] 100%" << std::endl << std::endl;
     }
-    //i'm lazy, this works...
-    std::cout << "\rWorking... [==================================================] 100%" << std::endl << std::endl;
     
     //combine results from players
     for(player& p : playersPlayed){
