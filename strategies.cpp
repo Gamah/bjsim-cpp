@@ -1,6 +1,9 @@
-#include "include/utilities.h"
 #include "include/strategies.h"
+#include "include/utilities.h"
+#include "include/hand.h"
+#include "include/card.h"
 #include <stdexcept>
+#include <iostream>
 
 
 //implement strategy functions

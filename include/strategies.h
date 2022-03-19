@@ -1,6 +1,6 @@
 #pragma once
 #include "utilities.h"
-#include <map>
+#include "hand.h"
 
 class strategies{
     public:

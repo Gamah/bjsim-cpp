@@ -5,8 +5,12 @@
 #include <algorithm>
 #include <mutex>
 #include <thread>
-#include "include/utilities.h"
 #include "include/strategies.h"
+#include "include/utilities.h"
+#include "include/hand.h"
+#include "include/player.h"
+#include "include/shoe.h"
+#include "include/card.h"
 
 int runGame(std::mt19937 rengine, int& shoesPlayed, std::mutex& processResults, std::vector<player>& playersPlayed) {
     //initialize sgame

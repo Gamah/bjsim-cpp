@@ -1,0 +1,1744 @@
+Sim started!
+
+Shuffle!
+[K],[8],[Q],[9],[A],[T],[4],[T],[2],[J],[J],[7],[3],[3],[6],[2],[J],[6],[J],[5],[5],[9],[8],[4],[T],[Q],[J],[A],[A],[J],[6],[6],[J],[Q],[3],[Q],[A],[6],[8],[7],[2],[5],[K],[A],[5],[9],[3],[5],[9],[8],[4],[4],[3],[3],[8],[Q],[5],[8],[J],[A],[4],[9],[9],[4],[A],[8],[A],[7],[K],[K],[A],[A],[8],[6],[A],[7],[7],[K],[7],[8],[3],[3],[A],[9],[T],[5],[T],[3],[3],[5],[J],[9],[9],[3],[3],[3],[8],[T],[8],[7],[J],[9],[T],[7],[J],[T],[2],[6],[Q],[K],[4],[5],[K],[7],[6],[Q],[K],[Q],[T],[7],[4],[4],[7],[2],[9],[A],[4],[A],[5],[2],[J],[2],[2],[9],[T],[2],[7],[5],[6],[6],[5],[7],[K],[T],[Q],[4],[5],[T],[K],[8],[2],[9],[Q],[9],[J],[K],[5],[K],[Q],[A],[T],[6],[T],[3],[T],[7],[4],[8],[3],[K],[5],[4],[8],[K],[Q],[6],[K],[J],[3],[Q],[2],[8],[4],[5],[J],[7],[K],[J],[2],[Q],[Q],[6],[7],[4],[6],[A],[Q],[9],[6],[9],[4],[7],[T],[T],[6],[A],[J],[J],[5],[9],[3],[A],[2],[K],[Q],[Q],[T],[5],[2],[6],[A],[6],[5],[T],[6],[T],[7],[6],[4],[K],[2],[3],[4],[A],[4],[Q],[3],[A],[8],[8],[K],[Q],[4],[2],[6],[8],[T],[T],[7],[8],[5],[5],[9],[3],[8],[3],[2],[4],[K],[6],[J],[9],[2],[2],[J],[6],[7],[4],[7],[J],[T],[9],[3],[8],[9],[Q],[Q],[3],[7],[K],[Q],[T],[J],[5],[A],[J],[4],[9],[4],[9],[K],[2],[A],[5],[8],[K],[K],[Q],[J],[6],[5],[2],[8],[9],[2],[2],[7],[2],[A],[3],[7],[8],
+RunningCount: 0
+TrueCount: 0
+Card Left: 311
+
+Dealer
+[3][2][2][2][9]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[7][A][7]
+Total: 15 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Player double lose
+
+
+RunningCount: 3
+TrueCount: 0
+Card Left: 303
+
+Dealer
+[2][6][J]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[8][5]
+Total: 13 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 5
+TrueCount: 0
+Card Left: 298
+
+Dealer
+[K][8]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[Q][K]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: 2
+TrueCount: 0
+Card Left: 294
+
+Dealer
+[A][K]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[5][2]
+Total: 7 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Blackjack Lose
+
+
+RunningCount: 2
+TrueCount: 0
+Card Left: 290
+
+Dealer
+[4][4][5][J]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[9][J]
+Total: 19 Soft: 0 Doubled: 0 Split: 1 Surrendered: 0
+Dealer bust win
+Player
+[9][A]
+Total: 20 Soft: 1 Doubled: 0 Split: 1 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 2
+TrueCount: 0
+Card Left: 282
+
+Dealer
+[Q][7]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][K]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: -1
+TrueCount: 0
+Card Left: 278
+
+Dealer
+[Q][9]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][Q][8]
+Total: 21 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: -2
+TrueCount: 0
+Card Left: 273
+
+Dealer
+[9][J]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][T][7]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: -3
+TrueCount: 0
+Card Left: 268
+
+Dealer
+[7][J]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[4][6][2][2][9]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 0
+TrueCount: 0
+Card Left: 261
+
+Dealer
+[6][4][2][3][8]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[J][K]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 2
+TrueCount: 0
+Card Left: 254
+
+Dealer
+[9][5][7]
+Total: 21 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][5][8]
+Total: 16 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 5
+TrueCount: 1
+Card Left: 248
+
+Dealer
+[T][6][2]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][8]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player push
+
+
+RunningCount: 5
+TrueCount: 1
+Card Left: 243
+
+Dealer
+[Q][8]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[4][K][8]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 4
+TrueCount: 0
+Card Left: 238
+
+Dealer
+[3][4][A]
+Total: 18 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[A][Q]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Blackjack Win
+
+
+RunningCount: 3
+TrueCount: 0
+Card Left: 233
+
+DEVIATION: TC:1 Hard 16 stands vs 10 positive count
+Dealer
+[3][K][7]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[4][2][4][6]
+Total: 16 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 7
+TrueCount: 1
+Card Left: 226
+
+Dealer
+[6][5][6]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][T]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: 8
+TrueCount: 1
+Card Left: 221
+
+Dealer
+[6][5][Q]
+Total: 21 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[A][2][T]
+Total: 13 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Player double lose
+
+
+RunningCount: 8
+TrueCount: 1
+Card Left: 215
+
+Dealer
+[K][A]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[Q][2]
+Total: 12 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Blackjack Lose
+
+
+RunningCount: 6
+TrueCount: 1
+Card Left: 211
+
+Dealer
+[9][J]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][5][J]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 6
+TrueCount: 1
+Card Left: 206
+
+Dealer
+[6][T][7]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[A][T]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Blackjack Win
+
+
+RunningCount: 4
+TrueCount: 1
+Card Left: 201
+
+Dealer
+[9][9]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[4][6][Q]
+Total: 20 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Player double win
+
+
+RunningCount: 5
+TrueCount: 1
+Card Left: 196
+
+Dealer
+[6][7][Q]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[A][4][6]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 6
+TrueCount: 1
+Card Left: 190
+
+Dealer
+[2][K][7]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[Q][J]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: 4
+TrueCount: 1
+Card Left: 185
+
+Dealer
+[5][8]
+Total: 13 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[J][4][2][Q]
+Total: 26 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 5
+TrueCount: 1
+Card Left: 179
+
+Dealer
+[J][6][Q]
+Total: 26 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][K]
+Total: 13 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 4
+TrueCount: 1
+Card Left: 174
+
+Dealer
+[8][5][K]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[K][4]
+Total: 14 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 4
+TrueCount: 1
+Card Left: 169
+
+Dealer
+[8][7][3]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][4][T]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 6
+TrueCount: 1
+Card Left: 163
+
+Dealer
+[6][A][Q]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][T]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: 3
+TrueCount: 0
+Card Left: 158
+
+Dealer
+[5][J][9]
+Total: 24 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[K][K]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 153
+
+Dealer
+[9][8]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[Q][2][K]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 0
+TrueCount: 0
+Card Left: 148
+
+Dealer
+[5][Q]
+Total: 15 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][4][T]
+Total: 24 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: -1
+TrueCount: 0
+Card Left: 143
+
+Dealer
+[7][6][6]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[K][5]
+Total: 15 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 138
+
+DEVIATION: TC:0 Hard 16 stands vs 10 positive count
+Dealer
+[7][T]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[5][2][9]
+Total: 16 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 2
+TrueCount: 0
+Card Left: 133
+
+Dealer
+[2][2][A][4]
+Total: 19 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[2][J][5]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 5
+TrueCount: 1
+Card Left: 126
+
+Dealer
+[9][7][7]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[A][2][4][4]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 7
+TrueCount: 2
+Card Left: 119
+
+Dealer
+[Q][Q]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][K]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player push
+
+
+RunningCount: 3
+TrueCount: 1
+Card Left: 115
+
+Dealer
+[7][5][4][K]
+Total: 26 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[6][K]
+Total: 16 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 4
+TrueCount: 1
+Card Left: 109
+
+Dealer
+[6][T]
+Total: 16 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[Q][2][J]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 3
+TrueCount: 1
+Card Left: 104
+
+DEVIATION: TC:1 Hard 16 stands vs 10 positive count
+Dealer
+[T][J]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[7][9]
+Total: 16 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 100
+
+Dealer
+[8][8][3]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[7][T]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 95
+
+Dealer
+[3][9]
+Total: 12 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][9][J]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 2
+TrueCount: 1
+Card Left: 90
+
+Dealer
+[3][T]
+Total: 13 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[5][3][5][T]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 4
+TrueCount: 2
+Card Left: 84
+
+DEVIATION: TC:3 Hard 12 stands vs 3 TC2+
+Dealer
+[A][3][8][7]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[9][3]
+Total: 12 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 5
+TrueCount: 2
+Card Left: 78
+
+Dealer
+[7][A]
+Total: 18 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[K][7]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+Shuffle!
+[K],[3],[6],[6],[3],[T],[K],[7],[J],[A],[9],[J],[7],[J],[6],[8],[Q],[Q],[2],[5],[A],[2],[3],[7],[A],[4],[3],[K],[Q],[T],[Q],[7],[5],[2],[4],[2],[7],[5],[4],[T],[2],[2],[K],[5],[9],[Q],[K],[2],[K],[9],[2],[A],[5],[T],[3],[3],[Q],[2],[J],[2],[5],[Q],[3],[J],[9],[9],[9],[A],[6],[5],[9],[Q],[8],[K],[J],[7],[A],[9],[K],[T],[8],[T],[5],[9],[7],[5],[J],[6],[Q],[A],[K],[2],[5],[K],[Q],[A],[J],[8],[8],[4],[6],[Q],[Q],[3],[3],[3],[J],[9],[6],[Q],[9],[4],[3],[7],[9],[Q],[T],[A],[8],[8],[A],[9],[8],[5],[9],[J],[K],[5],[2],[Q],[2],[2],[4],[3],[K],[J],[6],[6],[J],[2],[2],[A],[3],[4],[9],[8],[2],[2],[A],[4],[4],[J],[6],[J],[4],[A],[9],[7],[A],[8],[7],[5],[J],[Q],[9],[3],[9],[8],[J],[9],[6],[6],[4],[J],[J],[Q],[7],[5],[3],[5],[A],[4],[K],[7],[2],[6],[4],[K],[A],[K],[A],[2],[J],[9],[T],[Q],[6],[4],[7],[K],[T],[7],[K],[4],[T],[7],[6],[4],[7],[K],[8],[5],[7],[9],[4],[8],[T],[T],[T],[8],[6],[4],[A],[5],[2],[8],[J],[A],[5],[3],[5],[T],[6],[5],[Q],[T],[3],[J],[5],[K],[6],[T],[T],[K],[2],[4],[6],[2],[6],[7],[Q],[8],[Q],[A],[8],[3],[4],[3],[7],[A],[4],[9],[Q],[7],[7],[4],[7],[8],[T],[5],[2],[K],[7],[T],[3],[K],[8],[J],[T],[J],[6],[T],[3],[A],[Q],[4],[5],[5],[8],[T],[J],[8],[A],[3],[8],[9],[6],[6],[K],[K],[7],[Q],[T],[3],[3],[T],[A],[8],[9],[4],[8],[6],
+RunningCount: 1
+TrueCount: 0
+Card Left: 311
+
+Dealer
+[4][8][A][T]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[8][9]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 0
+TrueCount: 0
+Card Left: 305
+
+Dealer
+[3][Q][K]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][T][7]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: -1
+TrueCount: 0
+Card Left: 299
+
+Dealer
+[6][9]
+Total: 15 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[K][6][8]
+Total: 24 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 0
+TrueCount: 0
+Card Left: 294
+
+Dealer
+[A][J]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][8]
+Total: 11 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Blackjack Lose
+
+
+RunningCount: -1
+TrueCount: 0
+Card Left: 290
+
+Dealer
+[8][5][4]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][5]
+Total: 15 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 285
+
+Dealer
+[A][T]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[Q][3]
+Total: 13 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Blackjack Lose
+
+
+RunningCount: -1
+TrueCount: 0
+Card Left: 281
+
+Dealer
+[J][J]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[6][T][8]
+Total: 24 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: -3
+TrueCount: 0
+Card Left: 276
+
+Dealer
+[3][7][K]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[K][T]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player push
+
+
+RunningCount: -5
+TrueCount: 0
+Card Left: 271
+
+Dealer
+[5][8][4]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[2][T][7]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: -3
+TrueCount: 0
+Card Left: 265
+
+Dealer
+[7][9][4]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[7][Q]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: -3
+TrueCount: 0
+Card Left: 260
+
+Dealer
+[7][4][A][Q]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[A][3][3][8]
+Total: 15 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: -3
+TrueCount: 0
+Card Left: 252
+
+Dealer
+[Q][6][2]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[8][7]
+Total: 15 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: -2
+TrueCount: 0
+Card Left: 247
+
+Dealer
+[4][K][T]
+Total: 24 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[6][2][T]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: -2
+TrueCount: 0
+Card Left: 241
+
+Dealer
+[K][J]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[6][5][3]
+Total: 14 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Player double lose
+
+
+RunningCount: -1
+TrueCount: 0
+Card Left: 236
+
+Dealer
+[Q][6][T]
+Total: 26 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][5]
+Total: 15 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: -2
+TrueCount: 0
+Card Left: 231
+
+Dealer
+[3][A][8][2][5]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[5][5][J]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 223
+
+Dealer
+[4][8][T]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[A][6][T]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 0
+TrueCount: 0
+Card Left: 217
+
+Dealer
+[8][9]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][4][7]
+Total: 21 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: 0
+TrueCount: 0
+Card Left: 212
+
+Dealer
+[8][7][6]
+Total: 21 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[5][K][4]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 2
+TrueCount: 0
+Card Left: 206
+
+Dealer
+[T][K]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[7][4][7]
+Total: 18 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Player double lose
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 201
+
+Dealer
+[K][4][6]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][7]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 196
+
+Dealer
+[T][J]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[Q][9]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: -2
+TrueCount: 0
+Card Left: 192
+
+Dealer
+[A][A]
+Total: 12 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[2][K][K]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: -5
+TrueCount: -1
+Card Left: 187
+
+Dealer
+[6][7][A][5]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[4][2][K][4]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: -2
+TrueCount: 0
+Card Left: 179
+
+Dealer
+[5][Q][J]
+Total: 25 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][7][J]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: -3
+TrueCount: 0
+Card Left: 173
+
+Dealer
+[6][9][8]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[4][6][J]
+Total: 20 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Dealer bust double win
+
+
+RunningCount: -1
+TrueCount: 0
+Card Left: 167
+
+Dealer
+[3][Q][J]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[9][9]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: -2
+TrueCount: 0
+Card Left: 162
+
+Dealer
+[7][A]
+Total: 18 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[5][8][7]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: -2
+TrueCount: 0
+Card Left: 157
+
+Dealer
+[A][J]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[9][4]
+Total: 13 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Blackjack Lose
+
+
+RunningCount: -3
+TrueCount: -1
+Card Left: 153
+
+Dealer
+[J][4][2][2]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[6][4][A]
+Total: 21 Soft: 1 Doubled: 1 Split: 0 Surrendered: 0
+Player double win
+
+
+RunningCount: 0
+TrueCount: 0
+Card Left: 146
+
+Dealer
+[9][3][2][2][J]
+Total: 26 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[8][4][A]
+Total: 13 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 2
+TrueCount: 0
+Card Left: 138
+
+DEVIATION: TC:0 Hard 16 stands vs 10 positive count
+Dealer
+[6][K][3]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[6][J]
+Total: 16 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 3
+TrueCount: 1
+Card Left: 133
+
+Dealer
+[2][Q]
+Total: 12 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[4][2][2][5][K]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 6
+TrueCount: 2
+Card Left: 126
+
+Dealer
+[9][8]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[J][5][9]
+Total: 24 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 6
+TrueCount: 2
+Card Left: 121
+
+Dealer
+[8][A]
+Total: 19 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[A][8]
+Total: 19 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player push
+
+
+RunningCount: 4
+TrueCount: 1
+Card Left: 117
+
+Dealer
+[Q][7]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][9]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: 2
+TrueCount: 0
+Card Left: 113
+
+Dealer
+[4][Q][9]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][9][6]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 4
+TrueCount: 1
+Card Left: 107
+
+Dealer
+[3][3][Q][Q]
+Total: 26 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[J][3]
+Total: 13 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 4
+TrueCount: 2
+Card Left: 101
+
+Dealer
+[4][8]
+Total: 12 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[6][8][J]
+Total: 24 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 5
+TrueCount: 2
+Card Left: 96
+
+Dealer
+[Q][5][2]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[A][K]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Blackjack Win
+
+
+RunningCount: 4
+TrueCount: 2
+Card Left: 91
+
+Dealer
+[A][6][J]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[K][Q]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 86
+
+Dealer
+[7][5][T]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[5][9]
+Total: 14 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 2
+TrueCount: 1
+Card Left: 81
+
+Dealer
+[T][9]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[8][K]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+Shuffle!
+[J],[J],[2],[2],[A],[J],[5],[A],[K],[4],[6],[T],[7],[5],[4],[A],[7],[5],[A],[A],[3],[T],[5],[2],[2],[J],[Q],[6],[6],[6],[K],[9],[9],[8],[A],[6],[A],[6],[6],[J],[2],[T],[2],[8],[3],[5],[Q],[2],[K],[3],[2],[4],[4],[K],[J],[Q],[6],[3],[9],[5],[3],[K],[5],[Q],[5],[3],[J],[K],[7],[Q],[K],[K],[A],[Q],[J],[4],[6],[A],[7],[K],[K],[J],[K],[2],[T],[T],[8],[5],[2],[T],[4],[7],[T],[8],[8],[8],[3],[2],[8],[5],[3],[4],[J],[2],[6],[K],[9],[7],[Q],[3],[6],[K],[3],[Q],[9],[9],[4],[4],[J],[T],[T],[9],[4],[7],[4],[K],[Q],[8],[8],[5],[3],[T],[9],[4],[T],[8],[K],[5],[2],[2],[6],[J],[4],[8],[K],[K],[2],[2],[Q],[8],[2],[8],[3],[T],[6],[4],[A],[6],[Q],[K],[3],[7],[5],[8],[9],[A],[J],[Q],[8],[7],[5],[3],[A],[7],[T],[5],[7],[T],[T],[Q],[6],[T],[4],[4],[T],[9],[7],[9],[T],[6],[5],[9],[Q],[5],[5],[J],[4],[9],[4],[T],[Q],[J],[A],[9],[A],[8],[T],[J],[9],[Q],[8],[8],[J],[A],[3],[7],[8],[J],[5],[Q],[4],[9],[2],[7],[A],[6],[7],[6],[7],[2],[Q],[A],[Q],[9],[9],[3],[2],[K],[T],[3],[A],[J],[9],[J],[T],[J],[A],[4],[3],[A],[4],[5],[8],[3],[7],[7],[J],[3],[8],[4],[3],[6],[9],[7],[A],[9],[9],[T],[A],[7],[5],[A],[2],[2],[5],[3],[6],[K],[4],[6],[7],[5],[3],[8],[8],[8],[Q],[K],[Q],[6],[K],[K],[7],[J],[K],[3],[9],[7],[A],[2],[Q],[4],[2],[Q],[6],[T],[J],[Q],[6],[7],[9],[5],
+RunningCount: 1
+TrueCount: 0
+Card Left: 311
+
+Dealer
+[7][Q]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[9][6][J]
+Total: 25 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 0
+TrueCount: 0
+Card Left: 306
+
+Dealer
+[6][2][4][Q]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][Q]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 0
+TrueCount: 0
+Card Left: 300
+
+Dealer
+[A][9]
+Total: 20 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[2][7][3][K]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 0
+TrueCount: 0
+Card Left: 294
+
+Dealer
+[7][K]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[J][K]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: -3
+TrueCount: 0
+Card Left: 290
+
+Dealer
+[Q][Q]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[6][K][8]
+Total: 24 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: -5
+TrueCount: 0
+Card Left: 285
+
+Dealer
+[8][5][6]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[8][3][7]
+Total: 18 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Player double lose
+
+
+RunningCount: -2
+TrueCount: 0
+Card Left: 279
+
+Dealer
+[K][3][2][2]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[4][6][5]
+Total: 15 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Player double lose
+
+
+RunningCount: 3
+TrueCount: 0
+Card Left: 272
+
+Dealer
+[5][A][9][9]
+Total: 24 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[A][7][T]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 265
+
+Dealer
+[7][6][3][4]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[A][9]
+Total: 20 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player push
+
+
+RunningCount: 3
+TrueCount: 0
+Card Left: 259
+
+Dealer
+[3][7][7]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[8][J]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: 3
+TrueCount: 0
+Card Left: 254
+
+Dealer
+[8][4][3][4]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][5][A]
+Total: 19 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player push
+
+
+RunningCount: 7
+TrueCount: 1
+Card Left: 247
+
+Dealer
+[J][J]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[A][T]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Blackjack Win
+
+
+RunningCount: 3
+TrueCount: 0
+Card Left: 243
+
+Dealer
+[J][3][T]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[9][A]
+Total: 20 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 238
+
+Dealer
+[2][9]
+Total: 11 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[K][3][9]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 2
+TrueCount: 0
+Card Left: 233
+
+Dealer
+[A][2][7]
+Total: 20 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[Q][Q]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player push
+
+
+RunningCount: 0
+TrueCount: 0
+Card Left: 228
+
+Dealer
+[7][A]
+Total: 18 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[6][6][7]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 223
+
+Dealer
+[9][Q]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[2][4][5][J]
+Total: 21 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: 2
+TrueCount: 0
+Card Left: 217
+
+Dealer
+[7][A]
+Total: 18 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[8][3][J]
+Total: 21 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Player double win
+
+
+RunningCount: 1
+TrueCount: 0
+Card Left: 212
+
+Dealer
+[8][9]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[8][Q]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: 0
+TrueCount: 0
+Card Left: 208
+
+Dealer
+[T][A]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[J][8]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Blackjack Lose
+
+
+RunningCount: -3
+TrueCount: 0
+Card Left: 204
+
+Dealer
+[A][Q]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[9][J]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Blackjack Lose
+
+
+RunningCount: -6
+TrueCount: -1
+Card Left: 200
+
+Dealer
+[4][4][J]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][9]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: -6
+TrueCount: -1
+Card Left: 195
+
+Dealer
+[5][9][6]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[5][Q][5]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player push
+
+
+RunningCount: -3
+TrueCount: 0
+Card Left: 189
+
+Dealer
+[9][9]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][7]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: -4
+TrueCount: -1
+Card Left: 185
+
+Dealer
+[4][T][Q]
+Total: 24 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][4][6]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: -4
+TrueCount: -1
+Card Left: 179
+
+Dealer
+[T][5][T]
+Total: 25 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][7]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: -6
+TrueCount: -1
+Card Left: 174
+
+Dealer
+[A][5][8][Q]
+Total: 24 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[7][3][7]
+Total: 17 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Dealer bust double win
+
+
+RunningCount: -6
+TrueCount: -1
+Card Left: 167
+
+Dealer
+[A][8]
+Total: 19 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[J][9]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player push
+
+
+RunningCount: -8
+TrueCount: -2
+Card Left: 163
+
+Dealer
+[7][K]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[5][3][Q]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: -8
+TrueCount: -2
+Card Left: 158
+
+Dealer
+[A][6][3]
+Total: 20 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[6][4][T]
+Total: 20 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Player push
+
+
+RunningCount: -6
+TrueCount: -2
+Card Left: 152
+
+Dealer
+[2][Q][8]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[8][2][K]
+Total: 20 Soft: 0 Doubled: 0 Split: 1 Surrendered: 0
+Player push
+Player
+[8][2][K]
+Total: 20 Soft: 0 Doubled: 0 Split: 1 Surrendered: 0
+Player push
+
+
+RunningCount: -6
+TrueCount: -2
+Card Left: 143
+
+Dealer
+[J][2][5]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[4][6][2]
+Total: 12 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Player double lose
+
+
+RunningCount: -2
+TrueCount: 0
+Card Left: 137
+
+Dealer
+[8][4][9]
+Total: 21 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[K][T]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: -3
+TrueCount: -1
+Card Left: 132
+
+Dealer
+[3][8]
+Total: 11 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][5][8]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: -2
+TrueCount: 0
+Card Left: 127
+
+Dealer
+[K][7]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[Q][4][4]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player win
+
+
+RunningCount: -2
+TrueCount: 0
+Card Left: 122
+
+Dealer
+[T][J]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[9][T]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: -5
+TrueCount: -1
+Card Left: 118
+
+Dealer
+[4][9]
+Total: 13 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[4][9][Q]
+Total: 23 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: -4
+TrueCount: -1
+Card Left: 113
+
+Dealer
+[K][3][7]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[3][6][Q]
+Total: 19 Soft: 0 Doubled: 1 Split: 0 Surrendered: 0
+Player double lose
+
+
+RunningCount: -3
+TrueCount: -1
+Card Left: 107
+
+Dealer
+[K][2][J]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[9][6]
+Total: 15 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: -3
+TrueCount: -1
+Card Left: 102
+
+Dealer
+[3][8]
+Total: 11 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[4][5][2][3][8]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 2
+TrueCount: 1
+Card Left: 95
+
+Dealer
+[8][7][4]
+Total: 19 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[8][T]
+Total: 18 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player lose
+
+
+RunningCount: 2
+TrueCount: 1
+Card Left: 90
+
+Dealer
+[2][8]
+Total: 10 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][5][T]
+Total: 25 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player bust
+
+
+RunningCount: 2
+TrueCount: 1
+Card Left: 85
+
+Dealer
+[2][J][K]
+Total: 22 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[T][K]
+Total: 20 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Dealer bust win
+
+
+RunningCount: -1
+TrueCount: 0
+Card Left: 80
+
+Dealer
+[7][6][4]
+Total: 17 Soft: 0 Doubled: 0 Split: 0 Surrendered: 0
+Player
+[K][A]
+Total: 21 Soft: 1 Doubled: 0 Split: 0 Surrendered: 0
+Blackjack Win
+
+
+Working... [                                                  ] 0%Working... [==================================================] 100%
+
+count,doublelose,lose,surrender,insurancelose,insurancewin,push,win,blackjack,doublewin,roundsplayed
+-7,0,0,0,0,0,0,0,0,0,0,
+-6,0,0,0,0,0,0,0,0,0,0,
+-5,0,0,0,0,0,0,0,0,0,0,
+-4,0,0,0,0,0,0,0,0,0,0,
+-3,0,0,0,0,0,0,0,0,0,0,
+-2,1,0,0,0,0,3,1,0,0,4,
+-1,1,3,0,0,0,2,5,0,2,13,
+0,5,34,0,0,0,4,32,2,2,78,
+1,1,12,0,0,0,1,11,2,1,28,
+2,0,4,0,0,0,2,1,1,0,8,
+3,0,0,0,0,0,0,0,0,0,0,
+4,0,0,0,0,0,0,0,0,0,0,
+5,0,0,0,0,0,0,0,0,0,0,
+6,0,0,0,0,0,0,0,0,0,0,
+7,0,0,0,0,0,0,0,0,0,0,
+
+
