@@ -2,8 +2,8 @@
 #include <string>
 namespace config{
     static const bool debug = false;
-    static const int numThreads = 3;
-    static const int numShoes = 100000;
+    static const long numThreads = 4;
+    static const long numShoes = 10000;
 };
 void debugPrint(std::string string);
 
