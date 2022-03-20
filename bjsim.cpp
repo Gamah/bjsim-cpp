@@ -5,6 +5,7 @@
 #include <random>
 #include <mutex>
 #include <thread>
+#include <fstream>
 #include "include/game.h"
 
 
@@ -59,7 +60,7 @@ int main(){
                         std::cout << " ";
                     }
                 }
-                std::cout << "] " << percentProgress << "%" << "    " << shoesPlayed[4] << std::flush;
+                std::cout << "] " << percentProgress << "%" << std::flush;
             }
         }
         //i'm lazy, this works...
@@ -75,7 +76,17 @@ int main(){
         }
     }
 
-    finalPlayer.printResults();
+    std::ofstream outfile;
+    outfile.open("out.csv");
+    outfile << "count,doublelose,lose,surrender,insurancelose,insurancewin,push,win,blackjack,doublewin,roundsplayed";
+        for(int x = -7; x <= 7;x++){
+            outfile << "\r\n" << x << ",";
+            for(int y = 0; y < 10; y++){
+                outfile << finalPlayer.handResults[x+7][y] << ",";
+            }
+        }
+    outfile << std::endl;
+    outfile.close();
 
     return 0;
 }

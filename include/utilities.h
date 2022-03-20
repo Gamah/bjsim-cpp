@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
 namespace config{
-    static const bool debug = false;
-    static const long numThreads = 4;
-    static const long numShoes = 10000;
+    static const bool debug = true;
+    static const long numThreads = 1;
+    static const long numShoes = 3;
 };
 void debugPrint(std::string string);
 

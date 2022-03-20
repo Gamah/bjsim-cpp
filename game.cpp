@@ -47,7 +47,8 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
             int upCard = 0;
             debugPrint("RunningCount: " + std::to_string(shoe.runningCount));
             debugPrint("TrueCount: " + std::to_string(shoe.trueCount()));
-            debugPrint("Card Left: " + std::to_string(shoe.cards.size()) + "\r\n");
+            debugPrint("Cards Dealt: " + std::to_string(312 - shoe.cards.size()));
+            debugPrint("Cards Left: " + std::to_string(shoe.cards.size()) + "\r\n");
 
             //deal 2 cards to everyone
             for(int x = 0;x<2;x++){
