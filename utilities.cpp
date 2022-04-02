@@ -13,7 +13,7 @@ void debugPrint(std::string string){
 void config::doSetup(){
     std::ifstream cfgFile("config.json");
     nlohmann::json cfg;
-    cfg << cfgFile;
+    cfgFile >> cfg;
     config::rules::H17 = cfg["Rules"]["H17"];
     config::rules::DAS = cfg["Rules"]["DAS"];
     config::rules::RSA = cfg["Rules"]["RSA"];
