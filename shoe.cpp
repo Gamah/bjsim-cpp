@@ -54,7 +54,7 @@ int shoe::trueCount(){
 
 void shoe::shuffleCards(std::mt19937& rengine){
     cards.clear();
-    for(int x = 0; x < 52*6; x ++){
+    for(int x = 0; x < 52*config::rules::numDecks; x ++){
         cards.push_back(x);
     }   
     

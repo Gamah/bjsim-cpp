@@ -1,21 +1,22 @@
 {
-    "Config": {
-      "numThreads": 4,
-      "numShoes": 100000,
-      "debug": false
-    },
-    "Rules": {
-      "H17": true,
-      "DAS": true,
-      "RSA": true,
-      "Surrender": false,
-      "maxSplit": 4,
-      "deckPen": 52
-    },
-    "Players": [
-      {
-        "Name": "Bob",
-        "Strategy": "Deviations"
-      }
-    ]
-  }
+  "Config": {
+    "numThreads": 4,
+    "numShoes": 100000,
+    "debug": false
+  },
+  "Rules": {
+    "H17": true,
+    "DAS": true,
+    "RSA": true,
+    "Surrender": false,
+    "maxSplit": 4,
+    "numDecks" : 2,
+    "deckPen": 52
+  },
+  "Players": [
+    {
+      "Name": "Bob",
+      "Strategy": "Deviations"
+    }
+  ]
+}

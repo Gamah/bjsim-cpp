@@ -16,6 +16,7 @@ namespace config{
         inline static bool RSA;
         inline static bool Surrender;
         inline static int maxSplit;
+        inline static int numDecks;
         inline static int deckPen;
     };
     

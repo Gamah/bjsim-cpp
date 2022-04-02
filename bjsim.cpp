@@ -30,7 +30,7 @@ int main(){
     }
     if(config::settings::numThreads == 1 && config::settings::debug){
         for(std::thread& t : threads){
-        t.join();
+            t.join();
         }    
     }else{
         for(std::thread& t : threads){
