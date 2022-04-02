@@ -7,7 +7,7 @@
 
 
 //implement strategy functions
-decisions strategies::dealer(hand hand){
+decisions strategies::dealer(hand& hand){
     if(hand.total < 17 || (hand.total == 17 && hand.isSoft && config::rules::H17)){
         return decisions::HIT;
     }else{

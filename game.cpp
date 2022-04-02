@@ -16,7 +16,8 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
     
     std::vector<player> players;
     for(int x = 0;x<config::settings::numPlayers;x++){
-        players.push_back();
+        player newPlayer;
+        players.push_back(newPlayer);
     }
 
     //TODO: break this out of main so it can be threaded

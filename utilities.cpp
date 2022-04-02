@@ -18,7 +18,7 @@ void config::doSetup(){
     config::settings::debug = cfg["Config"]["debug"];
     config::settings::numThreads = cfg["Config"]["numThreads"];
     config::settings::numShoes = cfg["Config"]["numShoes"];
-    config::settings::numPlayers = cfg["Config"]["players"].size();
+    config::settings::numPlayers = cfg["Players"].size();
 
     config::rules::H17 = cfg["Rules"]["H17"];
     config::rules::DAS = cfg["Rules"]["DAS"];
