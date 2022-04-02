@@ -8,7 +8,7 @@
 
 //implement strategy functions
 decisions strategies::dealer(hand hand){
-    if(hand.total < 17 || (hand.total == 17 && hand.isSoft && rules::H17)){
+    if(hand.total < 17 || (hand.total == 17 && hand.isSoft && config::rules::H17)){
         return decisions::HIT;
     }else{
         return decisions::STAND;
@@ -33,7 +33,7 @@ decisions strategies::playerBasic(hand& hand,int upCard){
                 switch(upCard){
                     case 2:
                     case 3:
-                        if(rules::DAS){
+                        if(config::rules::DAS){
                             return decisions::SPLIT;
                         }
                         break;
@@ -59,7 +59,7 @@ decisions strategies::playerBasic(hand& hand,int upCard){
                 switch(upCard){
                     case 5:
                     case 6:
-                        if(rules::DAS){
+                        if(config::rules::DAS){
                             return decisions::SPLIT;
                         }
                         break;
@@ -68,7 +68,7 @@ decisions strategies::playerBasic(hand& hand,int upCard){
             case 6:
                 switch(upCard){
                     case 2:
-                        if(rules::DAS){
+                        if(config::rules::DAS){
                             return decisions::SPLIT;;
                         }
                         break;
@@ -442,7 +442,7 @@ decisions strategies::playerDeviations(hand& hand, int upCard,  int trueCount, i
         if(hand.canSurrender){
             
             //17 always surrenders against a dealer Ace in an H17 game.
-            if(rules::H17 && hand.total == 17 && upCard == 1 && hand.canSurrender){
+            if(config::rules::H17 && hand.total == 17 && upCard == 1 && hand.canSurrender){
                 debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 17 always surrenders vs Ace in H17");
                 return decisions::SURRENDER;
             }
@@ -458,7 +458,7 @@ decisions strategies::playerDeviations(hand& hand, int upCard,  int trueCount, i
                     debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 16 vs 9 hits TC -1 and less");
                     return decisions::HIT;
                 }
-                if(rules::H17 && (upCard == 10 || upCard == 1) && hand.canSurrender){
+                if(config::rules::H17 && (upCard == 10 || upCard == 1) && hand.canSurrender){
                     debugPrint("DEVIATION: TC:" + std::to_string(trueCount) + " 16 always surrender vs 10 and ace in H17");
                     return decisions::SURRENDER;
                 }

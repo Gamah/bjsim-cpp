@@ -1,21 +1,31 @@
 #pragma once
 #include <string>
+#include <iostream>
+#include "json.hpp"
+
 namespace config{
-    static const bool debug = true;
-    static const long numThreads = 1;
-    static const long numShoes = 3;
+    struct settings{
+        inline static bool debug;
+        inline static long numThreads;
+        inline static long numShoes;
+    };
+
+    struct rules{
+        inline static bool H17;
+        inline static bool DAS;
+        inline static bool RSA;
+        inline static bool Surrender;
+        inline static int maxSplit;
+        inline static int deckPen;
+    };
+    
+    void doSetup();
 };
+
 void debugPrint(std::string string);
 
 enum class decisions{HIT, STAND, DOUBLE, SPLIT, SURRENDER};
-namespace rules{
-    static const bool H17 = true;
-    static const bool DAS = true;
-    static const bool RSA = false;
-    static const bool Surrender = false;
-    static const int maxSplit = 4;
-    static const int deckPen = 78;
-};
+
 namespace handResults{
     static const int doublelose = 0;
     static const int lose = 1;

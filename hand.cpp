@@ -25,7 +25,7 @@ void hand::addCard(int cardIndex){
     //add the card to the list of cards
     int cardValue = card::value(cardIndex);
     topCard = cardIndex;
-    if(config::debug){
+    if(config::settings::debug){
         cards.push_back(cardIndex);
     }
     numCards++;
@@ -42,10 +42,10 @@ void hand::addCard(int cardIndex){
     }
     //if this is the 2nd card, we need to check for pairs
     if (numCards == 2){
-        if(!isSplit || rules::DAS){
+        if(!isSplit || config::rules::DAS){
             canDouble = true;
         }
-        if(!isSplit && rules::Surrender){
+        if(!isSplit && config::rules::Surrender){
             canSurrender = true;
         }else{
             canSurrender = false;

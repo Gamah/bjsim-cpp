@@ -19,12 +19,12 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
     players.push_back(player());
 
     //TODO: break this out of main so it can be threaded
-    for(int x = 0;x<config::numShoes;x++){
+    for(int x = 0;x<config::settings::numShoes;x++){
 
         shoe.shuffleCards(rengine);
         debugPrint("Shuffle!");
 
-        if(config::debug){
+        if(config::settings::debug){
             for(int & c :shoe.cards){
                 std::cout << card::print(c) << ",";
             }
@@ -35,7 +35,7 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
 
 
         //start a round of bj
-        while(shoe.cards.size() >= rules::deckPen){
+        while(shoe.cards.size() >= config::rules::deckPen){
             for(player& p : players){
                 hand newHand;
                 newHand.discard();
@@ -89,7 +89,7 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
                             //don't play split aces
                             if(h.canSplit == -1){
                                 //unless it's a pair of aces and resplitting is allowed and max hands is not hit
-                                if(card::value(h.topCard) == 1 && rules::RSA && p.hands.size() + 1 <= rules::maxSplit){
+                                if(card::value(h.topCard) == 1 && config::rules::RSA && p.hands.size() + 1 <= config::rules::maxSplit){
                                     h.canSplit = 1;
                                     decision = decisions::SPLIT;
                                 }else{
@@ -109,7 +109,7 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
                                         newhand.discard();
                                         int topCard = h.topCard;
                                         //pull card off the top if debugging is on
-                                        if(config::debug){
+                                        if(config::settings::debug){
                                             h.cards.pop_back();
                                         }                  
                                         h.numCards--;
@@ -130,7 +130,7 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
                                         //deal to the new hand
                                         newhand.addCard(shoe.getCard());
                                         //if the hands are aces or player has 4 hands (lengh of hands + new hand not yet added) then they can't resplit
-                                        if(p.hands.size() + 1 == rules::maxSplit){
+                                        if(p.hands.size() + 1 == config::rules::maxSplit){
                                             h.canSplit = 0;
                                             newhand.canSplit = 0;
                                         }
@@ -138,7 +138,7 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
                                         if(card::value(topCard) == 1){
                                             h.canSplit = -1;
                                             newhand.canSplit = -1;
-                                            if(card::value(h.topCard) == 1 && rules::RSA && p.hands.size() + 1 <= rules::maxSplit){
+                                            if(card::value(h.topCard) == 1 && config::rules::RSA && p.hands.size() + 1 <= config::rules::maxSplit){
                                                 decision = decisions::SPLIT;
                                             }else{
                                                 decision = decisions::STAND;
@@ -199,13 +199,13 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
 
             //Determine outcome of hands...
             debugPrint("Dealer");
-            if(config::debug){
+            if(config::settings::debug){
                 dealer.print();
             }
             for(player& p : players){
                 for(hand& h : p.hands){
                     debugPrint("Player");
-                    if(config::debug){
+                    if(config::settings::debug){
                         h.print();
                     }
                     //if the hand was insured, it's either a push or we take the insurance bet.
@@ -305,7 +305,7 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
             for(player& p : players){
                 p.clearHands();
             }
-            if(config::debug){
+            if(config::settings::debug){
                 std::cout << "\r\n\r\n";
             }
 
