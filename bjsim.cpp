@@ -13,7 +13,6 @@
 int main(){
     config::doSetup();
 
-    std::cout << config::rules::deckPen << std::endl;
     std::vector<std::thread> threads;
     std::mutex processResults;
     std::vector<player> playersPlayed;
