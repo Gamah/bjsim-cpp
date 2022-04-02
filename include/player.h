@@ -7,7 +7,8 @@ class player{
     public:
         std::vector<hand> hands;
         //+/-7 true count totals for Losses, Pushes, Surrenders(lost insurance), Wins, and BlackJacks
-        unsigned int handResults[15][10];
+        long handResults[15][10];
+
     
         void addHand(hand& hand);
         void print();
