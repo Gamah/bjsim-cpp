@@ -8,6 +8,7 @@
 #include <fstream>
 #include "include/game.h"
 #include "include/utilities.h"
+#include "include/json.hpp"
 
 
 int main(){
@@ -22,6 +23,10 @@ int main(){
 
     for(int x = 0;x<config::settings::numThreads;x++){
         shoesPlayed.push_back(0);
+    }
+
+    for(int x = 0;x<config::settings::numPlayers;x++){
+        playersPlayed.push_back();
     }
 
     for(int x=0;x<config::settings::numThreads;x++){
@@ -69,14 +74,6 @@ int main(){
         std::cout << "\rWorking... [==================================================] 100%" << std::endl << std::endl;
     }
     
-    //combine results from players
-    for(player& p : playersPlayed){
-        for(int x=0;x<15;x++){
-            for(int y=0;y<10;y++){
-                finalPlayer.handResults[x][y] += p.handResults[x][y];
-            }
-        }
-    }
 
     std::ofstream outfile;
     outfile.open("out.csv");

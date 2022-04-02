@@ -15,8 +15,9 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
     hand dealer;    
     
     std::vector<player> players;
-    //TODO: implement mulitple players...
-    players.push_back(player());
+    for(int x = 0;x<config::settings::numPlayers;x++){
+        players.push_back();
+    }
 
     //TODO: break this out of main so it can be threaded
     for(int x = 0;x<config::settings::numShoes;x++){
@@ -313,8 +314,13 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
         }
     }   
         processResults.lock();
-        for(player& p : players){
-            playersPlayed.push_back(p);
+        //[P]layers, [C]ount, [R]esult
+        for(int p = 0;p<players.size();p++){
+            for(int c = 0;c<15;c++){
+                for(int r = 0;r<10;r++){
+                    playersPlayed[p].handResults[c][r] += players[p].handResults[c][r];
+                }
+            }
         }
         processResults.unlock();
         return;

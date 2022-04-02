@@ -14,6 +14,12 @@ void config::doSetup(){
     std::ifstream cfgFile("config.json");
     nlohmann::json cfg;
     cfgFile >> cfg;
+
+    config::settings::debug = cfg["Config"]["debug"];
+    config::settings::numThreads = cfg["Config"]["numThreads"];
+    config::settings::numShoes = cfg["Config"]["numShoes"];
+    config::settings::numPlayers = cfg["Config"]["players"].size();
+
     config::rules::H17 = cfg["Rules"]["H17"];
     config::rules::DAS = cfg["Rules"]["DAS"];
     config::rules::RSA = cfg["Rules"]["RSA"];
@@ -21,8 +27,4 @@ void config::doSetup(){
     config::rules::maxSplit = cfg["Rules"]["maxSplit"];
     config::rules::numDecks = cfg["Rules"]["numDecks"];
     config::rules::deckPen = cfg["Rules"]["deckPen"];
-
-    config::settings::debug = cfg["Config"]["debug"];
-    config::settings::numThreads = cfg["Config"]["numThreads"];
-    config::settings::numShoes = cfg["Config"]["numShoes"];
 }

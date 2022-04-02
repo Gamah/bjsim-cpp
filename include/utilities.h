@@ -8,6 +8,7 @@ namespace config{
         inline static bool debug;
         inline static long numThreads;
         inline static long numShoes;
+        inline static int numPlayers;
     };
 
     struct rules{
