@@ -1,12 +1,11 @@
 #include <iostream>
+#include <string>
 #include "include/player.h"
 #include "include/utilities.h"
 //implement player funcitons
-void player::addHand(hand& hand){
-    hands.push_back(hand);
-}
 
-player::player(){  
+player::player(std::string name){  
+    player::name = name;
     //initialize array... is this necessary?
     for(int x = 0;x < 15; x++){
         for(int y = 0; y < 10; y++){
@@ -14,6 +13,11 @@ player::player(){
         }
     }
 }
+
+void player::addHand(hand& hand){
+    hands.push_back(hand);
+}
+
 void player::print(){
     for(hand h : hands){
         h.print();

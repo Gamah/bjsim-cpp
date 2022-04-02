@@ -16,23 +16,13 @@ int main(){
 
     std::vector<std::thread> threads;
     std::mutex processResults;
-    std::vector<player> playersPlayed;
+    std::vector<player> playersPlayed = config::getPlayers();
 
-    player finalPlayer;
     std::vector<long> shoesPlayed;
 
     for(int x = 0;x<config::settings::numThreads;x++){
         shoesPlayed.push_back(0);
     }
-
-    std::cout << config::settings::numPlayers << std::endl;
-
-    for(int x = 0;x<config::settings::numPlayers;x++){
-        player newPlayer;
-        playersPlayed.push_back(newPlayer);
-    }
-
-    std::cout << playersPlayed.size() << std::endl;
 
     for(int x=0;x<config::settings::numThreads;x++){
         std::mt19937 newRengine(time(nullptr) + x);
@@ -79,10 +69,10 @@ int main(){
         std::cout << "\rWorking... [==================================================] 100%" << std::endl << std::endl;
     }
     
-
     std::ofstream outfile;
     outfile.open("out.csv");
     for(player& p : playersPlayed){
+        outfile << p.name << std::endl;
         outfile << "count,doublelose,lose,surrender,insurancelose,insurancewin,push,win,blackjack,doublewin,roundsplayed";
             for(int x = -7; x <= 7;x++){
                 outfile << "\r\n" << x << ",";

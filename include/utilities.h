@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <vector>
 #include "json.hpp"
+#include "player.h"
 
 namespace config{
     struct settings{
@@ -22,6 +24,7 @@ namespace config{
     };
     
     void doSetup();
+    std::vector<player> getPlayers();
 };
 
 void debugPrint(std::string string);
@@ -39,4 +42,18 @@ namespace handResults{
     static const int blackjack = 7;
     static const int doublewin = 8;
     static const int roudsplayed = 9;
+
+    inline std::string handType[] = {
+        "doublelose",
+        "lose",
+        "surrender",
+        "insurancelose",
+        "insurancewin",
+        "push",
+        "win",
+        "blackjack",
+        "doublewin",
+        "roudsplayed"
+    };
+    
 }

@@ -1,7 +1,7 @@
 {
   "Config": {
-    "numThreads": 4,
-    "numShoes": 100000,
+    "numThreads": 1,
+    "numShoes": 1000,
     "debug": false
   },
   "Rules": {
@@ -10,12 +10,18 @@
     "RSA": true,
     "Surrender": false,
     "maxSplit": 4,
-    "numDecks" : 2,
+    "numDecks" : 6,
     "deckPen": 52
   },
   "Players": [
     {
       "Name": "Bob",
+      "Strategy": "Deviations"
+    },{
+      "Name": "Alice",
+      "Strategy": "Deviations"
+    },{
+      "Name": "Jon",
       "Strategy": "Deviations"
     }
   ]

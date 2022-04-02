@@ -14,11 +14,8 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
     decisions decision;
     hand dealer;    
     
-    std::vector<player> players;
-    for(int x = 0;x<config::settings::numPlayers;x++){
-        player newPlayer;
-        players.push_back(newPlayer);
-    }
+    std::vector<player> players = playersPlayed;
+    
 
     //TODO: break this out of main so it can be threaded
     for(int x = 0;x<config::settings::numShoes;x++){
