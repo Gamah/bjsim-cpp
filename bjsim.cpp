@@ -69,19 +69,19 @@ int main(){
         std::cout << "\rWorking... [==================================================] 100%" << std::endl << std::endl;
     }
     
+    nlohmann::json outjson;
     std::ofstream outfile;
-    outfile.open("out.csv");
+    
     for(player& p : playersPlayed){
-        outfile << p.name << std::endl;
-        outfile << "count,doublelose,lose,surrender,insurancelose,insurancewin,push,win,blackjack,doublewin,roundsplayed";
-            for(int x = -7; x <= 7;x++){
-                outfile << "\r\n" << x << ",";
-                for(int y = 0; y < 10; y++){
-                    outfile << p.handResults[x+7][y] << ",";
-                }
+        for(int x = -7; x <= 7;x++){
+            for(int y = 0; y < 10; y++){
+                outjson[p.name] [handResults::handType[y]] [std::to_string(x)] = p.handResults[x+7][y];
             }
-        outfile << std::endl;
+        }
     }
+    
+    outfile.open("out.json");
+    outfile << outjson;
     outfile.close();
 
     return 0;
