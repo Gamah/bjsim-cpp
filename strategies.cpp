@@ -7,6 +7,22 @@
 
 
 //implement strategy functions
+decisions strategies::play(hand& hand, int& upcard, shoe& shoe, int strategy){
+    switch(strategy){
+        case 0:
+            return dealer(hand);
+            break;
+        case 1:
+            return playerBasic(hand,upcard);
+            break;
+        case 2:
+            return playerDeviations(hand,upcard,shoe.trueCount(), shoe.runningCount);
+            break;
+    }
+
+    throw std::invalid_argument("Invalid strategy passed to play function");
+}
+
 decisions strategies::dealer(hand& hand){
     if(hand.total < 17 || (hand.total == 17 && hand.isSoft && config::rules::H17)){
         return decisions::HIT;

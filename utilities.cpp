@@ -37,7 +37,7 @@ std::vector<player> config::getPlayers(){
     std::vector<player> players;
 
     for(auto it = cfg["Players"].begin(); it != cfg["Players"].end(); ++it){
-        player newPlayer(it.value()["Name"]);
+        player newPlayer(it.value()["Name"],it.value()["Strategy"]);
         players.push_back(newPlayer);
     }
 

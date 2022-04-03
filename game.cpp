@@ -82,8 +82,7 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
                 //player turns
                 for(player& p : players){
                     for(hand& h : p.hands){            
-                        decision = strategy.playerDeviations(h,upCard,shoe.trueCount(),shoe.runningCount);
-                        //decision = strategy.playerBasic(h,upCard);
+                        decision = strategy.play(h,upCard,shoe,p.strategy);
                         while(decision != decisions::STAND){
                             //don't play split aces
                             if(h.canSplit == -1){
@@ -98,8 +97,7 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
                                 switch(decision){
                                     case decisions::HIT : {
                                         h.addCard(shoe.getCard());
-                                        decision = strategy.playerDeviations(h,upCard,shoe.trueCount(),shoe.runningCount);
-                                        //decision = strategy.playerBasic(h,upCard);
+                                        decision = strategy.play(h,upCard,shoe,p.strategy);
                                         break;
                                     }
                                     case decisions::SPLIT : {
@@ -143,8 +141,7 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
                                                 decision = decisions::STAND;
                                             }
                                         }else{
-                                            decision = strategy.playerDeviations(h,upCard,shoe.trueCount(),shoe.runningCount);
-                                            //decision = strategy.playerBasic(h,upCard);
+                                            decision = strategy.play(h,upCard,shoe,p.strategy);
                                         }
                                         //add to player's hands
                                         p.addHand(newhand);

@@ -75,7 +75,7 @@ int main(){
     for(player& p : playersPlayed){
         for(int x = -7; x <= 7;x++){
             for(int y = 0; y < 10; y++){
-                outjson[p.name] [handResults::handType[y]] [std::to_string(x)] = p.handResults[x+7][y];
+                outjson[p.name][std::to_string(x)][handResults::handType[y]] = p.handResults[x+7][y];
             }
         }
     }
