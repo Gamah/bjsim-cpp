@@ -16,13 +16,13 @@
   "Players": [
     {
       "Name": "Bob",
-      "Strategy": "Deviations"
+      "Strategy": 0
     },{
       "Name": "Alice",
-      "Strategy": "Deviations"
+      "Strategy": 1
     },{
       "Name": "Jon",
-      "Strategy": "Deviations"
+      "Strategy": 2
     }
   ]
 }
