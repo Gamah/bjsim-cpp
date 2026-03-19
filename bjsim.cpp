@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <random>
+#include <chrono>
 #include <mutex>
 #include <thread>
 #include <fstream>
@@ -26,7 +26,8 @@ int main(){
     }
 
     for(int x=0;x<config::settings::numThreads;x++){
-        xoshiro256pp newRengine(time(nullptr) + x);
+        uint64_t seed = (uint64_t)std::chrono::high_resolution_clock::now().time_since_epoch().count() + x;
+        xoshiro256pp newRengine(seed);
         threads.push_back(std::thread(game::runGame,newRengine,std::ref(shoesPlayed[x]),std::ref(processResults),std::ref(playersPlayed)));
     }
     if(config::settings::numThreads == 1 && config::settings::debug){
