@@ -6,8 +6,9 @@
 #include "shoe.h"
 #include "card.h"
 #include "game.h"
+#include "xoshiro.h"
 #include <mutex>
 
 namespace game{
-    void runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processResults, std::vector<player>& playersPlayed);
+    void runGame(xoshiro256pp rengine, long& shoesPlayed, std::mutex& processResults, std::vector<player>& playersPlayed);
 };

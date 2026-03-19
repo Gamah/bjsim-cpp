@@ -1,3 +1,4 @@
+#include "include/xoshiro.h"
 #include "include/strategies.h"
 #include "include/utilities.h"
 #include "include/hand.h"
@@ -7,7 +8,7 @@
 #include "include/game.h"
 #include <mutex>
 
-void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processResults, std::vector<player>& playersPlayed) {
+void game::runGame(xoshiro256pp rengine, long& shoesPlayed, std::mutex& processResults, std::vector<player>& playersPlayed) {
     //initialize sgame
     shoe shoe;
     strategies strategy;
@@ -39,15 +40,17 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
                 hand newHand;
                 newHand.discard();
                 //imagine the bets are set out here, this is the TC the hand will belong to in the final out.
-                newHand.trueCount = shoe.trueCount();
+                newHand.trueCount = (int)shoe.trueCount();
                 p.addResult(newHand.trueCount,handResults::roudsplayed);
                 p.addHand(newHand);
             }
             int upCard = 0;
-            debugPrint("RunningCount: " + std::to_string(shoe.runningCount));
-            debugPrint("TrueCount: " + std::to_string(shoe.trueCount()));
-            debugPrint("Cards Dealt: " + std::to_string(312 - shoe.cards.size()));
-            debugPrint("Cards Left: " + std::to_string(shoe.cards.size()) + "\r\n");
+            if(config::settings::debug){
+                debugPrint("RunningCount: " + std::to_string(shoe.runningCount));
+                debugPrint("TrueCount: " + std::to_string(shoe.trueCount()));
+                debugPrint("Cards Dealt: " + std::to_string(312 - shoe.cards.size()));
+                debugPrint("Cards Left: " + std::to_string(shoe.cards.size()) + "\r\n");
+            }
 
             //deal 2 cards to everyone
             for(int x = 0;x<2;x++){
@@ -105,10 +108,6 @@ void game::runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processR
                                         hand newhand;
                                         newhand.discard();
                                         int topCard = h.topCard;
-                                        //pull card off the top if debugging is on
-                                        if(config::settings::debug){
-                                            h.cards.pop_back();
-                                        }                  
                                         h.numCards--;
                                         h.isPair = 0;
                                         //mark hands slpit

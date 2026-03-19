@@ -1,4 +1,6 @@
 bjsim
+bjsim_prof
+bjsim_opt
 .vscode/
 tests/tests
 test.txt

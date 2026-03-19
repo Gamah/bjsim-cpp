@@ -4,13 +4,6 @@
 #include <iostream>
 #include <vector>
 #include "include/json.hpp"
-void debugPrint(std::string string){
-    if(config::settings::debug){
-        std::cout << string << std::endl;
-    }
-    return;
-}
-
 void config::doSetup(){
     std::ifstream cfgFile("config.json");
     nlohmann::json cfg;

@@ -2,10 +2,6 @@
 #include "include/utilities.h"
 #include <iostream>
 //implement card functions
-int card::value(int cardIndex){
-    return values[cardIndex%13];   
-}
-
 std::string card::face(int cardIndex){
     return faces[cardIndex % 13];
 }

@@ -7,6 +7,7 @@
 #include <thread>
 #include <fstream>
 #include "include/game.h"
+#include "include/xoshiro.h"
 #include "include/utilities.h"
 #include "include/json.hpp"
 
@@ -25,7 +26,7 @@ int main(){
     }
 
     for(int x=0;x<config::settings::numThreads;x++){
-        std::mt19937 newRengine(time(nullptr) + x);
+        xoshiro256pp newRengine(time(nullptr) + x);
         threads.push_back(std::thread(game::runGame,newRengine,std::ref(shoesPlayed[x]),std::ref(processResults),std::ref(playersPlayed)));
     }
     if(config::settings::numThreads == 1 && config::settings::debug){
