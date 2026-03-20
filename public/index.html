@@ -156,6 +156,31 @@
             </div>
         </div>
 
+        <!-- Playing Strategy -->
+        <div class="section open">
+            <div class="section-header">Playing Strategy <span class="chevron">›</span></div>
+            <div class="section-body">
+                <div class="field">
+                    <label>Strategy</label>
+                    <div class="btn-group" data-group="strategy">
+                        <button data-value="0">Dealer</button>
+                        <button data-value="1">Basic</button>
+                        <button data-value="2" class="active">Deviations</button>
+                    </div>
+                </div>
+                <div id="deviation-container">
+                    <div class="dev-header">
+                        <span class="label-sub">I18 Deviations</span>
+                        <div style="display:flex;gap:6px">
+                            <button id="dev-all-btn" class="btn-sm">All</button>
+                            <button id="dev-none-btn" class="btn-sm">None</button>
+                        </div>
+                    </div>
+                    <div id="deviation-list"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Session Analysis -->
         <div class="section open">
             <div class="section-header">Session Analysis <span class="chevron">›</span></div>
@@ -206,8 +231,11 @@
                 <div class="progress-bar-track">
                     <div class="progress-bar-fill" id="progress-bar-fill"></div>
                 </div>
-                <div id="worker-bars"></div>
-                <div class="progress-stats" id="progress-stats">Starting…</div>
+                <div class="progress-stats" id="progress-eta">Starting…</div>
+                <details id="worker-detail" open>
+                    <summary class="worker-detail-summary">Workers</summary>
+                    <div id="worker-tiles"></div>
+                </details>
             </div>
 
             <!-- Summary cards -->

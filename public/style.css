@@ -350,9 +350,81 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 .progress-stats { color: var(--text-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 .progress-bar-track { height: 6px; background: var(--border); border-radius: 6px; overflow: hidden; }
 .progress-bar-fill  { height: 100%; background: var(--accent); border-radius: 6px; transition: width .3s; width: 0%; }
-#worker-bars { display: flex; gap: 3px; }
-.worker-bar      { flex: 1; height: 3px; background: var(--border); border-radius: 3px; overflow: hidden; }
-.worker-bar-fill { height: 100%; background: var(--green); border-radius: 3px; transition: width .25s; width: 0%; }
+
+/* Worker tiles */
+#worker-detail { margin-top: 4px; }
+.worker-detail-summary {
+    font-size: 11px;
+    color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
+    padding: 2px 0;
+    list-style: none;
+    transition: color .15s;
+}
+.worker-detail-summary::-webkit-details-marker { display: none; }
+.worker-detail-summary::before { content: '› '; }
+#worker-detail[open] .worker-detail-summary::before { content: '⌄ '; }
+.worker-detail-summary:hover { color: var(--text); }
+#worker-tiles {
+    display: grid;
+    gap: 6px;
+    margin-top: 8px;
+}
+.worker-tile {
+    background: var(--bg);
+    border: 1px solid var(--border-sub);
+    border-radius: var(--radius);
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.worker-tile-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+}
+.worker-tile-label { font-weight: 600; }
+.worker-tile-track { height: 3px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.worker-tile-fill  { height: 100%; background: var(--green); border-radius: 3px; transition: width .25s; width: 0%; }
+
+/* ── Playing strategy / deviation section ── */
+.dev-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    margin-top: 4px;
+}
+.dev-group-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 10px 0 4px;
+}
+.dev-group-label:first-child { margin-top: 0; }
+.dev-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--text);
+    cursor: pointer;
+    padding: 2px 0;
+    line-height: 1.4;
+}
+.dev-item input[type="checkbox"] {
+    accent-color: var(--accent);
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
 
 /* ── Summary cards ── */
 #summary-cards {

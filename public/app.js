@@ -20,6 +20,46 @@ const PAYOFFS = {
     insurancelose:-0.5,
 };
 
+// ── Illustrious 18 deviation definitions ──────────────────────────────────────
+// bit: matches dev:: namespace in utilities.h (bit position 0-27)
+const DEVIATIONS = [
+    { group: 'Pair Splits' },
+    { bit: 0,  label: 'Split 10s vs 4  (TC ≥ 6)' },
+    { bit: 1,  label: 'Split 10s vs 5  (TC ≥ 5)' },
+    { bit: 2,  label: 'Split 10s vs 6  (TC ≥ 4)' },
+    { group: 'Soft Totals' },
+    { bit: 3,  label: 'Double soft 19 vs 4  (TC ≥ 3)' },
+    { bit: 4,  label: 'Double soft 19 vs 5  (TC ≥ 1)' },
+    { bit: 5,  label: 'Stand soft 19 vs 6  (neg count)' },
+    { bit: 6,  label: 'Double soft 17 vs 2  (TC ≥ 1)' },
+    { group: 'Hard 16' },
+    { bit: 7,  label: 'Stand 16 vs 9  (TC ≥ 4)' },
+    { bit: 8,  label: 'Stand 16 vs 10  (pos count)' },
+    { bit: 9,  label: 'Stand 16 vs A  (TC ≥ 3)' },
+    { group: 'Hard 15' },
+    { bit: 10, label: 'Stand 15 vs 10  (TC ≥ 4)' },
+    { bit: 11, label: 'Stand 15 vs A  (TC ≥ 5)' },
+    { group: 'Hard 12–13' },
+    { bit: 12, label: 'Hit 13 vs 2  (TC ≤ −1)' },
+    { bit: 13, label: 'Stand 12 vs 2  (TC ≥ 3)' },
+    { bit: 14, label: 'Stand 12 vs 3  (TC ≥ 2)' },
+    { bit: 15, label: 'Hit 12 vs 4  (neg count)' },
+    { group: 'Hard Doubles' },
+    { bit: 16, label: 'Double 10 vs 10  (TC ≥ 4)' },
+    { bit: 17, label: 'Double 10 vs A  (TC ≥ 3)' },
+    { bit: 18, label: 'Double 9 vs 2  (TC ≥ 1)' },
+    { bit: 19, label: 'Double 9 vs 7  (TC ≥ 3)' },
+    { bit: 20, label: 'Double 8 vs 6  (TC ≥ 2)' },
+    { group: 'Surrender Deviations' },
+    { bit: 21, label: 'Surrender 17 vs A  (H17 games)' },
+    { bit: 22, label: 'Surrender 16 vs 8  (TC ≥ 4)' },
+    { bit: 23, label: 'Hit 16 vs 9  (TC ≤ −1)' },
+    { bit: 24, label: 'Surrender 16 vs 10/A  (H17 games)' },
+    { bit: 25, label: 'Surrender 15 vs 9  (TC ≥ 2)' },
+    { bit: 26, label: 'Hit 15 vs 10  (neg count)' },
+    { bit: 27, label: 'Surrender 15 vs A  (TC ≤ −1)' },
+];
+
 // ── Simulation state ──────────────────────────────────────────────────────────
 let workers        = [];
 let workerResults  = [];
@@ -27,8 +67,9 @@ let workerProgress = [];
 let workerTotal    = [];
 let simStartTime   = 0;
 let simRunning     = false;
-let hasRanSim      = false;  // true once first sim completes or results are loaded
-let resimTimer     = null;   // debounce handle for auto-resim
+let hasRanSim      = false;
+let resimTimer     = null;
+let progressInterval = null;
 
 // ── Chart handles ─────────────────────────────────────────────────────────────
 let chartEV        = null;
@@ -45,6 +86,13 @@ function fmtShoes(n) {
     if (n >= 1e6) return (n / 1e6).toFixed(0) + 'M shoes';
     if (n >= 1e3) return (n / 1e3).toFixed(0) + 'K shoes';
     return n + ' shoes';
+}
+
+function fmtTime(s) {
+    if (!isFinite(s) || s > 7200) return '>2h';
+    if (s > 3600) return Math.floor(s/3600) + 'h ' + Math.floor((s%3600)/60) + 'm';
+    const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+    return m > 0 ? `${m}m ${sec}s` : `${sec}s`;
 }
 
 // ── Collapsible sections ──────────────────────────────────────────────────────
@@ -106,7 +154,6 @@ $('rph').addEventListener('input', () => {
 $('bankroll').addEventListener('input', scheduleRedraw);
 
 // ── BJ65 toggle ───────────────────────────────────────────────────────────────
-// BJ65 only affects the JS-side EV calculation, not the simulation — instant recalc only
 $('bj65').addEventListener('change', scheduleRedraw);
 
 // ── Rule inputs that require re-simulation ────────────────────────────────────
@@ -122,7 +169,6 @@ $('rsa').addEventListener('change', triggerAutoResim);
 $('other-players').addEventListener('input', triggerAutoResim);
 $('pen-slider').addEventListener('input', () => { updatePenLabel(); triggerAutoResim(); });
 
-// Deck count and button-group rules: wire after DOMContentLoaded (groups already init above)
 document.querySelectorAll('[data-group="decks"] button').forEach(b =>
     b.addEventListener('click', () => { updatePenSlider(); triggerAutoResim(); })
 );
@@ -132,6 +178,55 @@ document.querySelectorAll('[data-group="surrender"] button').forEach(b =>
 document.querySelectorAll('[data-group="maxsplit"] button').forEach(b =>
     b.addEventListener('click', triggerAutoResim)
 );
+document.querySelectorAll('[data-group="strategy"] button').forEach(b =>
+    b.addEventListener('click', () => {
+        const isDevs = getSelected('strategy') === '2';
+        $('deviation-container').style.display = isDevs ? '' : 'none';
+        triggerAutoResim();
+    })
+);
+
+// ── Deviation section ─────────────────────────────────────────────────────────
+function computeDeviationMask() {
+    let mask = 0;
+    document.querySelectorAll('.dev-check').forEach(cb => {
+        if (cb.checked) mask |= (1 << parseInt(cb.dataset.bit));
+    });
+    return mask;
+}
+
+function setAllDeviations(checked) {
+    document.querySelectorAll('.dev-check').forEach(cb => { cb.checked = checked; });
+    triggerAutoResim();
+}
+
+function initDeviationSection() {
+    const list = $('deviation-list');
+    list.innerHTML = '';
+    let currentGroup = null;
+
+    for (const entry of DEVIATIONS) {
+        if (entry.group !== undefined) {
+            const hdr = document.createElement('div');
+            hdr.className = 'dev-group-label';
+            hdr.textContent = entry.group;
+            list.appendChild(hdr);
+            currentGroup = entry.group;
+            continue;
+        }
+        const row = document.createElement('label');
+        row.className = 'dev-item';
+        row.innerHTML = `<input type="checkbox" class="dev-check" data-bit="${entry.bit}" checked> ${entry.label}`;
+        list.appendChild(row);
+    }
+
+    list.querySelectorAll('.dev-check').forEach(cb =>
+        cb.addEventListener('change', triggerAutoResim)
+    );
+
+    $('dev-all-btn').addEventListener('click',  () => setAllDeviations(true));
+    $('dev-none-btn').addEventListener('click', () => setAllDeviations(false));
+}
 
 // ── Betting strategy table ────────────────────────────────────────────────────
 let betRows = [
@@ -236,7 +331,12 @@ $('add-bet-row').addEventListener('click', () => {
 renderBetTable();
 
 // ── Config extraction ─────────────────────────────────────────────────────────
+function getPlayerStrategy() {
+    return parseInt(getSelected('strategy') ?? '2');
+}
+
 function getConfig() {
+    const strategy = getPlayerStrategy();
     return {
         H17:             $('h17').checked,
         DAS:             $('das').checked,
@@ -247,6 +347,8 @@ function getConfig() {
         numDecks:        parseInt(getSelected('decks')),
         deckPen:         Math.round(parseInt($('pen-slider').value) * 13),
         numOtherPlayers: parseInt($('other-players').value) || 0,
+        playerStrategy:  strategy,
+        deviationMask:   strategy === 2 ? computeDeviationMask() : 0,
     };
 }
 
@@ -292,7 +394,7 @@ function calcStats(merged, bj65) {
     for (let i = 0; i < TC_BUCKETS; i++) {
         const freq = freqPerBucket[i];
         if (!freq) continue;
-        const tcVal       = tc(i);
+        const tcVal          = tc(i);
         const { bet, hands } = getBetForTC(tcVal);
         weightedEV  += evPerBucket[i]  * bet * hands * freq;
         weightedVar += varPerBucket[i] * bet * bet   * hands * freq;
@@ -508,19 +610,20 @@ function updateProgress() {
     $('progress-pct').textContent      = (pct * 100).toFixed(0) + '%';
 
     const fmt = n => n >= 1e9 ? (n/1e9).toFixed(1)+'B' : n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(0)+'K' : String(n);
-    $('progress-stats').textContent =
-        `${fmt(doneShoes)} / ${fmt(totalShoes)} shoes  ·  ${fmt(Math.round(rate))}/s  ·  ETA ${fmtTime(remaining)}`;
+    $('progress-eta').textContent = `${fmt(doneShoes)} / ${fmt(totalShoes)} shoes  ·  ${fmt(Math.round(rate))}/s  ·  ETA ${fmtTime(remaining)}`;
 
-    document.querySelectorAll('.worker-bar-fill').forEach((bar, i) => {
-        bar.style.width = workerTotal[i] ? (workerProgress[i] / workerTotal[i] * 100) + '%' : '0%';
+    // Update worker tiles
+    document.querySelectorAll('.worker-tile').forEach((tile, i) => {
+        const p = workerTotal[i] ? workerProgress[i] / workerTotal[i] : 0;
+        tile.querySelector('.worker-tile-fill').style.width = (p * 100).toFixed(1) + '%';
+        tile.querySelector('.worker-tile-count').textContent = fmt(workerProgress[i]);
     });
 }
 
-function fmtTime(s) {
-    if (!isFinite(s) || s > 7200) return '>2h';
-    if (s > 3600) return Math.floor(s/3600) + 'h ' + Math.floor((s%3600)/60) + 'm';
-    const m = Math.floor(s / 60), sec = Math.floor(s % 60);
-    return m > 0 ? `${m}m ${sec}s` : `${sec}s`;
+// 250ms tick: update progress + trigger redraw
+function tick() {
+    updateProgress();
+    scheduleRedraw();
 }
 
 // ── Worker message handling ───────────────────────────────────────────────────
@@ -530,11 +633,9 @@ function handleWorkerMessage(e, workerId) {
     if (type === 'progress') {
         workerProgress[workerId] = shoesRun;
         if (results) workerResults[workerId] = results;
-        updateProgress();
-        scheduleRedraw();
+        // No immediate UI update — the 250ms interval handles it
     } else if (type === 'done') {
         workerProgress[workerId] = workerTotal[workerId];
-        updateProgress();
         checkAllDone();
     } else if (type === 'error') {
         console.error(`Worker ${workerId}:`, e.data.message);
@@ -547,6 +648,9 @@ function checkAllDone() {
 }
 
 function finishSim() {
+    clearInterval(progressInterval);
+    progressInterval = null;
+
     simRunning = false;
     hasRanSim  = true;
     workers.forEach(w => w.terminate());
@@ -557,10 +661,15 @@ function finishSim() {
     $('cancel-btn').style.display = 'none';
     $('progress-bar-fill').style.width = '100%';
     $('progress-pct').textContent      = '100%';
-    $('progress-stats').textContent    = `Complete — ${((Date.now()-simStartTime)/1000).toFixed(1)}s`;
+    $('progress-eta').textContent      = `Complete — ${((Date.now()-simStartTime)/1000).toFixed(1)}s`;
+
+    // Final redraw with complete data
+    document.querySelectorAll('.worker-tile').forEach((tile, i) => {
+        tile.querySelector('.worker-tile-fill').style.width = '100%';
+    });
 
     scheduleRedraw();
-    refreshProfileList();  // update shoe count in profiles
+    refreshProfileList();
 }
 
 // ── Run / Cancel ──────────────────────────────────────────────────────────────
@@ -571,9 +680,33 @@ $('cancel-btn').addEventListener('click', () => {
     finishSim();
 });
 
+function buildWorkerGrid(numWorkers) {
+    const tilesEl = $('worker-tiles');
+    tilesEl.innerHTML = '';
+
+    const cols = numWorkers === 1 ? 1 : Math.ceil(numWorkers / 2);
+    tilesEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+    for (let i = 0; i < numWorkers; i++) {
+        const tile = document.createElement('div');
+        tile.className = 'worker-tile';
+        tile.innerHTML = `
+            <div class="worker-tile-header">
+                <span class="worker-tile-label">W${i + 1}</span>
+                <span class="worker-tile-count">0</span>
+            </div>
+            <div class="worker-tile-track">
+                <div class="worker-tile-fill"></div>
+            </div>
+        `;
+        tilesEl.appendChild(tile);
+    }
+}
+
 function startSim() {
-    // Cancel any currently running sim before starting a new one
     if (simRunning) {
+        clearInterval(progressInterval);
+        progressInterval = null;
         workers.forEach(w => w.terminate());
         workers    = [];
         simRunning = false;
@@ -594,14 +727,11 @@ function startSim() {
     const extra = numShoes % numWorkers;
     for (let i = 0; i < numWorkers; i++) workerTotal.push(base + (i < extra ? 1 : 0));
 
-    const wbarsEl = $('worker-bars');
-    wbarsEl.innerHTML = '';
-    for (let i = 0; i < numWorkers; i++)
-        wbarsEl.innerHTML += `<div class="worker-bar"><div class="worker-bar-fill"></div></div>`;
+    buildWorkerGrid(numWorkers);
 
     $('progress-bar-fill').style.width = '0%';
     $('progress-pct').textContent      = '0%';
-    $('progress-stats').textContent    = 'Starting workers…';
+    $('progress-eta').textContent      = 'Starting workers…';
     $('progress-panel').style.display  = 'flex';
     $('results-panel').style.display   = 'flex';
     $('placeholder').style.display     = 'none';
@@ -621,6 +751,9 @@ function startSim() {
         w.postMessage({ type: 'start', config, numShoes: workerTotal[i], batchSize, workerId: id });
         workers.push(w);
     }
+
+    // 250ms progress tick — saves CPU vs per-message DOM updates
+    progressInterval = setInterval(tick, 250);
 }
 
 // ── Profiles (localStorage) ───────────────────────────────────────────────────
@@ -640,20 +773,22 @@ function currentTotalShoes() {
 
 function captureSettings() {
     return {
-        decks:        parseInt(getSelected('decks')),
-        penQ:         parseInt($('pen-slider').value),
-        h17:          $('h17').checked,
-        bj65:         $('bj65').checked,
-        das:          $('das').checked,
-        rsa:          $('rsa').checked,
-        surrender:    parseInt(getSelected('surrender')),
-        maxsplit:     parseInt(getSelected('maxsplit')),
-        otherPlayers: parseInt($('other-players').value) || 0,
-        shoes:        parseInt(getSelected('shoes')),
-        threads:      parseInt($('thread-slider').value),
-        rph:          parseInt($('rph').value),
-        bankroll:     parseFloat($('bankroll').value) || 0,
-        betRows:      JSON.parse(JSON.stringify(betRows)),
+        decks:          parseInt(getSelected('decks')),
+        penQ:           parseInt($('pen-slider').value),
+        h17:            $('h17').checked,
+        bj65:           $('bj65').checked,
+        das:            $('das').checked,
+        rsa:            $('rsa').checked,
+        surrender:      parseInt(getSelected('surrender')),
+        maxsplit:       parseInt(getSelected('maxsplit')),
+        otherPlayers:   parseInt($('other-players').value) || 0,
+        shoes:          parseInt(getSelected('shoes')),
+        threads:        parseInt($('thread-slider').value),
+        rph:            parseInt($('rph').value),
+        bankroll:       parseFloat($('bankroll').value) || 0,
+        betRows:        JSON.parse(JSON.stringify(betRows)),
+        playerStrategy: getPlayerStrategy(),
+        deviationMask:  computeDeviationMask(),
     };
 }
 
@@ -680,6 +815,17 @@ function applySettings(s) {
 
     betRows = JSON.parse(JSON.stringify(s.betRows));
     renderBetTable();
+
+    if (s.playerStrategy !== undefined) {
+        setSelected('strategy', s.playerStrategy);
+        const isDevs = s.playerStrategy === 2;
+        $('deviation-container').style.display = isDevs ? '' : 'none';
+    }
+    if (s.deviationMask !== undefined) {
+        document.querySelectorAll('.dev-check').forEach(cb => {
+            cb.checked = !!(s.deviationMask & (1 << parseInt(cb.dataset.bit)));
+        });
+    }
 }
 
 function refreshProfileList() {
@@ -737,11 +883,11 @@ $('profile-load-btn').addEventListener('click', () => {
 
         $('progress-bar-fill').style.width = '100%';
         $('progress-pct').textContent      = '100%';
-        $('progress-stats').textContent    = `Loaded — ${fmtShoes(profile.totalShoes)}`;
+        $('progress-eta').textContent      = `Loaded — ${fmtShoes(profile.totalShoes)}`;
         $('progress-panel').style.display  = 'flex';
         $('results-panel').style.display   = 'flex';
         $('placeholder').style.display     = 'none';
-        $('worker-bars').innerHTML         = '';
+        $('worker-tiles').innerHTML        = '';
         scheduleRedraw();
     }
 });
@@ -768,4 +914,5 @@ $('export-btn').addEventListener('click', () => {
 // ── Init ──────────────────────────────────────────────────────────────────────
 updatePenSlider();
 initCharts();
+initDeviationSection();
 refreshProfileList();

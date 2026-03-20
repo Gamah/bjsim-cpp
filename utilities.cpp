@@ -23,13 +23,19 @@ void config::doSetup(){
     config::rules::numDecks        = cfg["Rules"]["numDecks"];
     config::rules::deckPen         = cfg["Rules"]["deckPen"];
     config::rules::numOtherPlayers = cfg["Rules"]["numOtherPlayers"];
+    if(cfg["Rules"].contains("playerStrategy")){
+        config::rules::playerStrategy = cfg["Rules"]["playerStrategy"];
+    }
+    if(cfg["Rules"].contains("deviationMask")){
+        config::rules::deviationMask = cfg["Rules"]["deviationMask"];
+    }
 }
 
-// Returns one real player (strategy 2) plus numOtherPlayers dummy players (strategy 0).
+// Returns one real player plus numOtherPlayers dummy players (strategy 0).
 // Dummy players exist only to consume cards from the shoe, matching real table conditions.
 std::vector<player> config::getPlayers(){
     std::vector<player> players;
-    players.emplace_back("Player", 2);
+    players.emplace_back("Player", config::rules::playerStrategy);
     for(int i = 0; i < config::rules::numOtherPlayers; i++){
         players.emplace_back("Dummy" + std::to_string(i), 0);
     }

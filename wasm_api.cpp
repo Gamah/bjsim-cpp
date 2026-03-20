@@ -24,6 +24,8 @@ static void applyConfig(const nlohmann::json& cfg){
     config::rules::numDecks        = cfg.value("numDecks", 6);
     config::rules::deckPen         = cfg.value("deckPen", 52);
     config::rules::numOtherPlayers = cfg.value("numOtherPlayers", 0);
+    config::rules::playerStrategy  = cfg.value("playerStrategy", 2);
+    config::rules::deviationMask   = cfg.value("deviationMask", (uint32_t)dev::ALL);
 }
 
 extern "C" {
@@ -41,7 +43,7 @@ void bjsim_configure(const char* json_config){
 
     // Build player list: one tracked player + N dummy players to consume cards
     g_players.clear();
-    g_players.emplace_back("Player", 2);
+    g_players.emplace_back("Player", config::rules::playerStrategy);
     for(int i = 0; i < config::rules::numOtherPlayers; i++){
         g_players.emplace_back("Dummy" + std::to_string(i), 0);
     }
@@ -51,7 +53,7 @@ void bjsim_configure(const char* json_config){
 EMSCRIPTEN_KEEPALIVE
 void bjsim_reset(){
     g_players.clear();
-    g_players.emplace_back("Player", 2);
+    g_players.emplace_back("Player", config::rules::playerStrategy);
     for(int i = 0; i < config::rules::numOtherPlayers; i++){
         g_players.emplace_back("Dummy" + std::to_string(i), 0);
     }
