@@ -6,7 +6,8 @@ const RESULT_TYPES = ['doublelose','lose','surrender','insurancelose','insurance
                       'push','win','blackjack','doublewin','roudsplayed'];
 const TC_BUCKETS   = 65;   // -8.0 to +8.0 in 0.25 steps
 const TC_OFFSET    = 32;   // index 32 = TC 0.0
-const LS_KEY       = 'bjsim_profiles';
+const LS_GAMES   = 'bjsim_games';    // game definitions (rules, strategy, bet spread)
+const LS_RESULTS = 'bjsim_results';  // simulation results keyed by gameId
 
 const PAYOFFS = {
     win:           1.0,
@@ -203,17 +204,9 @@ function setAllDeviations(checked) {
 function initDeviationSection() {
     const list = $('deviation-list');
     list.innerHTML = '';
-    let currentGroup = null;
 
     for (const entry of DEVIATIONS) {
-        if (entry.group !== undefined) {
-            const hdr = document.createElement('div');
-            hdr.className = 'dev-group-label';
-            hdr.textContent = entry.group;
-            list.appendChild(hdr);
-            currentGroup = entry.group;
-            continue;
-        }
+        if (entry.group !== undefined) continue;
         const row = document.createElement('label');
         row.className = 'dev-item';
         row.innerHTML = `<input type="checkbox" class="dev-check" data-bit="${entry.bit}" checked> ${entry.label}`;
@@ -669,7 +662,7 @@ function finishSim() {
     });
 
     scheduleRedraw();
-    refreshProfileList();
+    refreshGameList();
 }
 
 // ── Run / Cancel ──────────────────────────────────────────────────────────────
@@ -756,23 +749,71 @@ function startSim() {
     progressInterval = setInterval(tick, 250);
 }
 
-// ── Profiles (localStorage) ───────────────────────────────────────────────────
-function loadProfiles() {
-    try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; }
-    catch { return []; }
-}
+// ── Game storage API ──────────────────────────────────────────────────────────
+// Schema mirrors a future SQL backend:
+//   games   table: id, name, created_at, settings (JSONB)
+//   results table: id, game_id (FK), computed_at, total_shoes, data (JSONB)
+//
+// To move server-side, replace each method body with fetch() calls to your REST API.
+// Callers use the same async/await-ready interface either way.
 
-function saveProfiles(profiles) {
-    localStorage.setItem(LS_KEY, JSON.stringify(profiles));
-}
+const gameApi = {
+    // ── Games ──────────────────────────────────────────────────────────────────
+    listGames() {
+        try { return JSON.parse(localStorage.getItem(LS_GAMES)) || []; }
+        catch { return []; }
+    },
 
-function currentTotalShoes() {
-    const doneShoes = workerProgress.reduce((a, b) => a + b, 0);
-    return doneShoes > 0 ? doneShoes : null;
-}
+    saveGame(game) {
+        const games = this.listGames().filter(g => g.id !== game.id);
+        games.unshift(game);
+        localStorage.setItem(LS_GAMES, JSON.stringify(games));
+    },
+
+    deleteGame(id) {
+        const games = this.listGames().filter(g => g.id !== id);
+        localStorage.setItem(LS_GAMES, JSON.stringify(games));
+        this.deleteResults(id);   // cascade
+    },
+
+    // ── Results ────────────────────────────────────────────────────────────────
+    // One result record per game (latest wins). A SQL backend would keep history;
+    // localStorage keeps only the most recent to stay lean.
+    getResults(gameId) {
+        try {
+            const all = JSON.parse(localStorage.getItem(LS_RESULTS)) || [];
+            return all.find(r => r.gameId === gameId) || null;
+        } catch { return null; }
+    },
+
+    saveResults(result) {
+        let all;
+        try { all = JSON.parse(localStorage.getItem(LS_RESULTS)) || []; }
+        catch { all = []; }
+        // Upsert: replace existing record for this gameId
+        all = all.filter(r => r.gameId !== result.gameId);
+        all.unshift(result);
+        localStorage.setItem(LS_RESULTS, JSON.stringify(all));
+    },
+
+    deleteResults(gameId) {
+        try {
+            const all = (JSON.parse(localStorage.getItem(LS_RESULTS)) || [])
+                .filter(r => r.gameId !== gameId);
+            localStorage.setItem(LS_RESULTS, JSON.stringify(all));
+        } catch {}
+    },
+};
+
+// ── Game settings capture / apply ─────────────────────────────────────────────
+// "settings" covers everything that defines how a game is played and analyzed —
+// table rules, playing strategy, bet spread, and session parameters.
+// Simulation logistics (numShoes, threads) are stored separately as they reflect
+// how the simulation was run, not the game definition itself.
 
 function captureSettings() {
     return {
+        // Table rules
         decks:          parseInt(getSelected('decks')),
         penQ:           parseInt($('pen-slider').value),
         h17:            $('h17').checked,
@@ -782,13 +823,18 @@ function captureSettings() {
         surrender:      parseInt(getSelected('surrender')),
         maxsplit:       parseInt(getSelected('maxsplit')),
         otherPlayers:   parseInt($('other-players').value) || 0,
-        shoes:          parseInt(getSelected('shoes')),
-        threads:        parseInt($('thread-slider').value),
-        rph:            parseInt($('rph').value),
-        bankroll:       parseFloat($('bankroll').value) || 0,
-        betRows:        JSON.parse(JSON.stringify(betRows)),
+        // Playing strategy
         playerStrategy: getPlayerStrategy(),
         deviationMask:  computeDeviationMask(),
+        // Bet spread
+        betRows:        JSON.parse(JSON.stringify(betRows)),
+        // Session analysis
+        rph:            parseInt($('rph').value),
+        bankroll:       parseFloat($('bankroll').value) || 0,
+        // Simulation preferences (stored with settings for convenience; not
+        // part of the game definition proper — a server could omit these)
+        shoes:          parseInt(getSelected('shoes')),
+        threads:        parseInt($('thread-slider').value),
     };
 }
 
@@ -818,8 +864,7 @@ function applySettings(s) {
 
     if (s.playerStrategy !== undefined) {
         setSelected('strategy', s.playerStrategy);
-        const isDevs = s.playerStrategy === 2;
-        $('deviation-container').style.display = isDevs ? '' : 'none';
+        $('deviation-container').style.display = s.playerStrategy === 2 ? '' : 'none';
     }
     if (s.deviationMask !== undefined) {
         document.querySelectorAll('.dev-check').forEach(cb => {
@@ -828,62 +873,74 @@ function applySettings(s) {
     }
 }
 
-function refreshProfileList() {
-    const profiles = loadProfiles();
-    const sel      = $('profile-select');
-    const current  = sel.value;
+// ── Game list UI ──────────────────────────────────────────────────────────────
+function refreshGameList() {
+    const games = gameApi.listGames();
+    const sel   = $('game-select');
+    const cur   = sel.value;
 
-    sel.innerHTML = '<option value="">— select a profile —</option>';
-    profiles.forEach(p => {
-        const opt   = document.createElement('option');
-        opt.value   = p.id;
-        const shoes = p.totalShoes ? fmtShoes(p.totalShoes) : 'no results';
-        opt.textContent = `${p.name}  (${shoes})`;
+    sel.innerHTML = '<option value="">— select a game —</option>';
+    games.forEach(g => {
+        const res  = gameApi.getResults(g.id);
+        const info = res ? fmtShoes(res.totalShoes) : 'no results';
+        const opt  = document.createElement('option');
+        opt.value       = g.id;
+        opt.textContent = `${g.name}  (${info})`;
         sel.appendChild(opt);
     });
-    if (current) sel.value = current;
+    if (cur) sel.value = cur;
 }
 
-$('profile-save-btn').addEventListener('click', () => {
-    const name = $('profile-name').value.trim() || 'Untitled';
-    const merged = mergeResults();
-    const total  = currentTotalShoes();
+function currentTotalShoes() {
+    const done = workerProgress.reduce((a, b) => a + b, 0);
+    return done > 0 ? done : null;
+}
 
-    const profile = {
-        id:         crypto.randomUUID(),
+$('game-save-btn').addEventListener('click', () => {
+    const name = $('game-name').value.trim() || 'Untitled';
+
+    const game = {
+        id:        crypto.randomUUID(),
         name,
-        savedAt:    new Date().toISOString(),
-        settings:   captureSettings(),
-        results:    total ? merged : null,
-        totalShoes: total,
+        createdAt: new Date().toISOString(),
+        settings:  captureSettings(),
     };
+    gameApi.saveGame(game);
 
-    const profiles = loadProfiles();
-    profiles.unshift(profile);
-    saveProfiles(profiles);
-    refreshProfileList();
-    $('profile-select').value = profile.id;
-    $('profile-name').value   = '';
+    const total = currentTotalShoes();
+    if (total) {
+        gameApi.saveResults({
+            id:          crypto.randomUUID(),
+            gameId:      game.id,
+            computedAt:  new Date().toISOString(),
+            totalShoes:  total,
+            data:        mergeResults(),
+        });
+    }
+
+    refreshGameList();
+    $('game-select').value = game.id;
+    $('game-name').value   = '';
 });
 
-$('profile-load-btn').addEventListener('click', () => {
-    const id       = $('profile-select').value;
+$('game-load-btn').addEventListener('click', () => {
+    const id   = $('game-select').value;
     if (!id) return;
-    const profiles = loadProfiles();
-    const profile  = profiles.find(p => p.id === id);
-    if (!profile) return;
+    const game = gameApi.listGames().find(g => g.id === id);
+    if (!game) return;
 
-    applySettings(profile.settings);
+    applySettings(game.settings);
 
-    if (profile.results && profile.totalShoes) {
-        workerResults  = [profile.results];
-        workerTotal    = [profile.totalShoes];
-        workerProgress = [profile.totalShoes];
+    const res = gameApi.getResults(id);
+    if (res) {
+        workerResults  = [res.data];
+        workerTotal    = [res.totalShoes];
+        workerProgress = [res.totalShoes];
         hasRanSim      = true;
 
         $('progress-bar-fill').style.width = '100%';
         $('progress-pct').textContent      = '100%';
-        $('progress-eta').textContent      = `Loaded — ${fmtShoes(profile.totalShoes)}`;
+        $('progress-eta').textContent      = `Loaded — ${fmtShoes(res.totalShoes)}`;
         $('progress-panel').style.display  = 'flex';
         $('results-panel').style.display   = 'flex';
         $('placeholder').style.display     = 'none';
@@ -892,18 +949,18 @@ $('profile-load-btn').addEventListener('click', () => {
     }
 });
 
-$('profile-delete-btn').addEventListener('click', () => {
-    const id = $('profile-select').value;
+$('game-delete-btn').addEventListener('click', () => {
+    const id = $('game-select').value;
     if (!id) return;
-    if (!confirm('Delete this profile?')) return;
-    saveProfiles(loadProfiles().filter(p => p.id !== id));
-    refreshProfileList();
+    if (!confirm('Delete this game?')) return;
+    gameApi.deleteGame(id);
+    refreshGameList();
 });
 
 // ── Export ────────────────────────────────────────────────────────────────────
 $('export-btn').addEventListener('click', () => {
     const blob = {
-        meta:    { config: getConfig(), betStrategy: betRows, generatedAt: new Date().toISOString(), version: 1 },
+        game:    { settings: captureSettings(), generatedAt: new Date().toISOString(), version: 1 },
         results: mergeResults(),
     };
     const url = URL.createObjectURL(new Blob([JSON.stringify(blob, null, 2)], { type: 'application/json' }));
@@ -915,4 +972,4 @@ $('export-btn').addEventListener('click', () => {
 updatePenSlider();
 initCharts();
 initDeviationSection();
-refreshProfileList();
+refreshGameList();

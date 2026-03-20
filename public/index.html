@@ -22,18 +22,18 @@
     <!-- ── Sidebar ── -->
     <aside id="sidebar">
 
-        <!-- Saved Profiles -->
+        <!-- Saved Games -->
         <div class="section open">
-            <div class="section-header">Saved Profiles <span class="chevron">›</span></div>
+            <div class="section-header">Saved Games <span class="chevron">›</span></div>
             <div class="section-body">
-                <select id="profile-select" style="width:100%"></select>
+                <select id="game-select" style="width:100%"></select>
                 <div style="display:flex;gap:6px;margin-top:6px">
-                    <button id="profile-load-btn"   class="btn-sm">Load</button>
-                    <button id="profile-delete-btn" class="btn-sm btn-danger">Delete</button>
+                    <button id="game-load-btn"   class="btn-sm">Load</button>
+                    <button id="game-delete-btn" class="btn-sm btn-danger">Delete</button>
                 </div>
                 <div style="display:flex;gap:6px;margin-top:10px">
-                    <input type="text" id="profile-name" placeholder="Profile name…" style="flex:1">
-                    <button id="profile-save-btn" class="btn-sm btn-accent">Save</button>
+                    <input type="text" id="game-name" placeholder="Game name…" style="flex:1">
+                    <button id="game-save-btn" class="btn-sm btn-accent">Save</button>
                 </div>
             </div>
         </div>
@@ -169,14 +169,11 @@
                     </div>
                 </div>
                 <div id="deviation-container">
-                    <div class="dev-header">
-                        <span class="label-sub">I18 Deviations</span>
-                        <div style="display:flex;gap:6px">
-                            <button id="dev-all-btn" class="btn-sm">All</button>
-                            <button id="dev-none-btn" class="btn-sm">None</button>
-                        </div>
-                    </div>
                     <div id="deviation-list"></div>
+                    <div style="display:flex;gap:6px;margin-top:10px">
+                        <button id="dev-all-btn" class="btn-sm">All</button>
+                        <button id="dev-none-btn" class="btn-sm">None</button>
+                    </div>
                 </div>
             </div>
         </div>
