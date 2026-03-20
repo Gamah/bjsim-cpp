@@ -417,7 +417,21 @@ function calcSessionStats(stats) {
         nZeroHours = nZeroRounds / rph;
     }
 
-    return { evPerHour, ror, rph, nZeroHours };
+    // Hours-to-broke range: solve (|EV_hr|·t ± √(Var_hr·t)) = bankroll for t.
+    // Substituting x = √t gives a quadratic. Pessimistic (−1 SD) busts sooner;
+    // optimistic (+1 SD) busts later.
+    let brokePessimistic = null, brokeOptimistic = null;
+    if (bankroll > 0 && stats.weightedEV < 0 && stats.weightedVar > 0) {
+        const mu  = Math.abs(evPerHour);                        // |EV| per hour
+        const sig = Math.sqrt(stats.weightedVar * rph);         // 1 SD per hour
+        const disc = Math.sqrt(sig * sig + 4 * mu * bankroll);
+        const xPess = (-sig + disc) / (2 * mu);
+        const xOpt  = ( sig + disc) / (2 * mu);
+        brokePessimistic = xPess * xPess;
+        brokeOptimistic  = xOpt  * xOpt;
+    }
+
+    return { evPerHour, ror, rph, nZeroHours, brokePessimistic, brokeOptimistic };
 }
 
 function calcFlatEdge(stats) {
@@ -586,8 +600,8 @@ function updateSummary(stats, session) {
         nzSub.style.display = 'none';
     } else {
         nzLabelEl.textContent = 'Hours to Broke';
-        if (bankroll > 0 && evHr < 0) {
-            nzEl.textContent = (bankroll / Math.abs(evHr)).toFixed(0) + ' hrs';
+        if (session.brokePessimistic !== null) {
+            nzEl.textContent = session.brokePessimistic.toFixed(0) + ' – ' + session.brokeOptimistic.toFixed(0) + ' hrs';
             nzEl.className   = 'value val-neutral';
             nzSub.style.display = 'none';
         } else {
