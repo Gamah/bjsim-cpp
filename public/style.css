@@ -45,8 +45,7 @@ header {
     border-bottom: 1px solid var(--border);
     background: var(--surface);
 }
-header h1      { font-size: 16px; font-weight: 600; letter-spacing: .5px; }
-header .tagline { color: var(--text-muted); font-size: 12px; }
+header h1 { font-size: 16px; font-weight: 600; letter-spacing: .5px; }
 
 .btn-header {
     background: none;

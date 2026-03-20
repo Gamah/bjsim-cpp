@@ -976,16 +976,6 @@ $('game-delete-btn').addEventListener('click', () => {
     refreshGameList();
 });
 
-// ── Export ────────────────────────────────────────────────────────────────────
-$('export-btn').addEventListener('click', () => {
-    const blob = {
-        game:    { settings: captureSettings(), generatedAt: new Date().toISOString(), version: 1 },
-        results: mergeResults(),
-    };
-    const url = URL.createObjectURL(new Blob([JSON.stringify(blob, null, 2)], { type: 'application/json' }));
-    Object.assign(document.createElement('a'), { href: url, download: 'bjsim-results.json' }).click();
-    URL.revokeObjectURL(url);
-});
 
 // ── About modal ───────────────────────────────────────────────────────────────
 $('about-btn').addEventListener('click', () => { $('about-overlay').style.display = 'flex'; });
