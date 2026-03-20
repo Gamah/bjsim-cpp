@@ -14,15 +14,29 @@
     <header>
         <h1>BJSIM</h1>
         <span class="tagline">Blackjack Monte Carlo Simulator</span>
-        <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-            <button id="export-btn" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:5px 12px;border-radius:var(--radius);cursor:pointer;font-size:12px">
-                Export JSON
-            </button>
+        <div style="margin-left:auto">
+            <button id="export-btn" class="btn-header">Export JSON</button>
         </div>
     </header>
 
     <!-- ── Sidebar ── -->
     <aside id="sidebar">
+
+        <!-- Saved Profiles -->
+        <div class="section open">
+            <div class="section-header">Saved Profiles <span class="chevron">›</span></div>
+            <div class="section-body">
+                <select id="profile-select" style="width:100%"></select>
+                <div style="display:flex;gap:6px;margin-top:6px">
+                    <button id="profile-load-btn"   class="btn-sm">Load</button>
+                    <button id="profile-delete-btn" class="btn-sm btn-danger">Delete</button>
+                </div>
+                <div style="display:flex;gap:6px;margin-top:10px">
+                    <input type="text" id="profile-name" placeholder="Profile name…" style="flex:1">
+                    <button id="profile-save-btn" class="btn-sm btn-accent">Save</button>
+                </div>
+            </div>
+        </div>
 
         <!-- Table Rules -->
         <div class="section open">
@@ -46,39 +60,27 @@
                         <input type="range" id="pen-slider" min="0" max="12" step="1" value="4">
                         <span class="range-val" id="pen-val">1.00 decks</span>
                     </div>
-                    <span style="font-size:11px;color:var(--text-muted)">Decks behind cut card (0 = play through full shoe)</span>
+                    <span class="hint-text">Decks behind cut card — 0 plays through the full shoe</span>
                 </div>
 
                 <div class="toggle-row">
                     <label>Dealer hits soft 17 (H17)</label>
-                    <label class="toggle">
-                        <input type="checkbox" id="h17" checked>
-                        <span class="slider"></span>
-                    </label>
+                    <label class="toggle"><input type="checkbox" id="h17" checked><span class="slider"></span></label>
                 </div>
 
                 <div class="toggle-row">
-                    <label>Blackjack pays 6:5 <span style="color:var(--text-muted);font-size:11px">(default 3:2)</span></label>
-                    <label class="toggle">
-                        <input type="checkbox" id="bj65">
-                        <span class="slider"></span>
-                    </label>
+                    <label>Blackjack pays 6:5 <span class="label-sub">(default 3:2)</span></label>
+                    <label class="toggle"><input type="checkbox" id="bj65"><span class="slider"></span></label>
                 </div>
 
                 <div class="toggle-row">
                     <label>Double after split (DAS)</label>
-                    <label class="toggle">
-                        <input type="checkbox" id="das" checked>
-                        <span class="slider"></span>
-                    </label>
+                    <label class="toggle"><input type="checkbox" id="das" checked><span class="slider"></span></label>
                 </div>
 
                 <div class="toggle-row">
                     <label>Resplit aces (RSA)</label>
-                    <label class="toggle">
-                        <input type="checkbox" id="rsa" checked>
-                        <span class="slider"></span>
-                    </label>
+                    <label class="toggle"><input type="checkbox" id="rsa" checked><span class="slider"></span></label>
                 </div>
 
                 <div class="field">
@@ -101,7 +103,7 @@
 
                 <div class="field">
                     <label>Other players at table</label>
-                    <input type="number" id="other-players" value="0" min="0" max="6" style="width:80px">
+                    <input type="number" id="other-players" value="0" min="0" max="6" style="width:72px">
                 </div>
 
             </div>
@@ -115,11 +117,11 @@
                 <div class="field">
                     <label>Shoes to simulate</label>
                     <div class="btn-group" data-group="shoes">
-                        <button data-value="10000">10K</button>
-                        <button data-value="50000">50K</button>
-                        <button data-value="100000" class="active">100K</button>
-                        <button data-value="500000">500K</button>
-                        <button data-value="1000000">1M</button>
+                        <button data-value="1000000"    class="active">1M</button>
+                        <button data-value="50000000"  >50M</button>
+                        <button data-value="100000000" >100M</button>
+                        <button data-value="500000000" >500M</button>
+                        <button data-value="1000000000">1B</button>
                     </div>
                 </div>
 
@@ -138,16 +140,13 @@
         <div class="section open">
             <div class="section-header">Betting Strategy <span class="chevron">›</span></div>
             <div class="section-body">
-                <p style="font-size:12px;color:var(--text-muted);line-height:1.5">
-                    Set your bet size and number of hands at each true count threshold.
-                    The first row applies below all thresholds.
-                </p>
+                <p class="hint-text">Set bet size and simultaneous hands at each true count threshold. Results update instantly without re-simulating.</p>
                 <table id="bet-table">
                     <thead>
                         <tr>
                             <th>TC ≥</th>
                             <th>Hands</th>
-                            <th>Bet ($)</th>
+                            <th>Bet</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -164,18 +163,21 @@
 
                 <div class="field">
                     <label>Rounds per hour</label>
-                    <input type="number" id="rph" value="80" min="10" max="400">
+                    <div class="range-row">
+                        <input type="range" id="rph" min="10" max="300" step="5" value="80">
+                        <span class="range-val" id="rph-val">80</span>
+                    </div>
                 </div>
 
                 <div class="field">
-                    <label>Starting bankroll ($) <span style="color:var(--text-muted);font-size:11px">— enables Risk of Ruin</span></label>
+                    <label>Starting bankroll ($) <span class="label-sub">enables Risk of Ruin</span></label>
                     <input type="number" id="bankroll" value="" min="0" placeholder="e.g. 5000">
                 </div>
 
             </div>
         </div>
 
-        <!-- Run button always visible at bottom -->
+        <!-- Run button -->
         <div id="run-section">
             <button id="run-btn">Run Simulation</button>
             <button id="cancel-btn">Cancel</button>
@@ -186,20 +188,19 @@
     <!-- ── Main results panel ── -->
     <main id="main">
 
-        <!-- Placeholder before first run -->
         <div id="placeholder" class="placeholder">
             <div class="icon">♠</div>
-            <p>Configure your table rules and betting strategy, then run the simulation.<br>
+            <p>Configure your table rules and betting strategy, then run the simulation.
                Results update in real time as shoes are processed.</p>
+            <p style="font-size:12px;margin-top:8px">Changing rules after a simulation will automatically re-run.</p>
         </div>
 
-        <!-- Results (hidden until first run) -->
-        <div id="results-panel" style="display:none;display:flex;flex-direction:column;gap:20px">
+        <div id="results-panel" style="display:none;flex-direction:column;gap:20px">
 
             <!-- Progress -->
-            <div id="progress-panel">
+            <div id="progress-panel" style="display:none">
                 <div class="progress-header">
-                    <span>Simulating…</span>
+                    <span id="progress-label">Simulating…</span>
                     <span id="progress-pct" style="font-variant-numeric:tabular-nums">0%</span>
                 </div>
                 <div class="progress-bar-track">
@@ -237,15 +238,11 @@
             <div class="chart-row">
                 <div class="chart-panel">
                     <h3>EV by True Count</h3>
-                    <div style="height:220px">
-                        <canvas id="chart-ev"></canvas>
-                    </div>
+                    <div style="height:220px"><canvas id="chart-ev"></canvas></div>
                 </div>
                 <div class="chart-panel">
                     <h3>Round Frequency by True Count</h3>
-                    <div style="height:220px">
-                        <canvas id="chart-freq"></canvas>
-                    </div>
+                    <div style="height:220px"><canvas id="chart-freq"></canvas></div>
                 </div>
             </div>
 
@@ -266,7 +263,6 @@
 
 </div>
 
-<!-- Chart.js from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <script src="app.js"></script>
 </body>
