@@ -1,14 +1,13 @@
 #include <iostream>
 #include <string>
+#include <cmath>
 #include "include/player.h"
 #include "include/utilities.h"
-//implement player funcitons
 
-player::player(std::string name, int strategy){  
+player::player(std::string name, int strategy){
     player::name = name;
     player::strategy = strategy;
-    //initialize array... is this necessary?
-    for(int x = 0;x < 15; x++){
+    for(int x = 0; x < 65; x++){
         for(int y = 0; y < 10; y++){
             handResults[x][y] = 0;
         }
@@ -25,31 +24,28 @@ void player::print(){
     }
 }
 
-void  player::clearHands(){
+void player::clearHands(){
     hands.clear();
     hands.reserve(config::rules::maxSplit);
 }
 
-void player::addResult(int trueCount, int handResult){
-    //clamp truecount to no more than 7 in either direction
-    if(trueCount < -7){
-        trueCount = -7;
-    }
-    if(trueCount > 7){
-        trueCount = 7;
-    }
-    //+7 to offset so that the 7 elements below are negative tc and 7 elements above are positive tc
-    handResults[trueCount+7][handResult]++;
+// Quarter-TC bucketing: index = floor(tc * 4) + 32, clamped to [0, 64]
+// Index 0 = TC -8.0, index 32 = TC 0.0, index 64 = TC +8.0
+void player::addResult(float trueCount, int handResult){
+    int idx = (int)std::floor(trueCount * 4.0f) + 32;
+    if(idx < 0) idx = 0;
+    if(idx > 64) idx = 64;
+    handResults[idx][handResult]++;
 }
 
 void player::printResults(){
-    std::cout << "count,doublelose,lose,surrender,insurancelose,insurancewin,push,win,blackjack,doublewin,roundsplayed";
-            for(int x = -7; x <= 7;x++){
-                std::cout << "\r\n" << x << ",";
-                for(int y = 0; y < 10; y++){
-                    std::cout << handResults[x+7][y] << ",";
-                }
-            }
-            std::cout << "\r\n\r\n" << std::endl;
-            
+    std::cout << "tc,doublelose,lose,surrender,insurancelose,insurancewin,push,win,blackjack,doublewin,roundsplayed";
+    for(int x = 0; x < 65; x++){
+        float tc = (x - 32) / 4.0f;
+        std::cout << "\r\n" << tc << ",";
+        for(int y = 0; y < 10; y++){
+            std::cout << handResults[x][y] << ",";
+        }
+    }
+    std::cout << "\r\n\r\n" << std::endl;
 }

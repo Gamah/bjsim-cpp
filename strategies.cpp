@@ -300,7 +300,7 @@ decisions strategies::playerBasic(hand& hand,int upCard){
     
 }
 
-decisions strategies::playerDeviations(hand& hand, int upCard,  int trueCount, int runningCount){
+decisions strategies::playerDeviations(hand& hand, int upCard, float trueCount, int runningCount){
     
     //Pair Splitting
     //A pair of tens splits vs. 4 at a true count of 6 and above.

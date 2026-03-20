@@ -8,13 +8,13 @@ class player{
         std::string name;
         int strategy;
         std::vector<hand> hands;
-        //+/-7 true count totals for Losses, Pushes, Surrenders(lost insurance), Wins, and BlackJacks
-        long handResults[15][10];
-        
+        // 65 quarter-TC buckets (-8.0 to +8.0 in 0.25 steps) x 10 result types
+        long handResults[65][10];
+
         player(std::string name, int strategy);
         void addHand(hand& hand);
         void print();
         void clearHands();
-        void addResult(int trueCount, int handResult);
+        void addResult(float trueCount, int handResult);
         void printResults();
 };

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack Simulator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+    <header>
+        <h1>BJSIM</h1>
+        <span class="tagline">Blackjack Monte Carlo Simulator</span>
+        <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+            <button id="export-btn" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:5px 12px;border-radius:var(--radius);cursor:pointer;font-size:12px">
+                Export JSON
+            </button>
+        </div>
+    </header>
+
+    <!-- ── Sidebar ── -->
+    <aside id="sidebar">
+
+        <!-- Table Rules -->
+        <div class="section open">
+            <div class="section-header">Table Rules <span class="chevron">›</span></div>
+            <div class="section-body">
+
+                <div class="field">
+                    <label>Number of Decks</label>
+                    <div class="btn-group" data-group="decks">
+                        <button data-value="1">1</button>
+                        <button data-value="2">2</button>
+                        <button data-value="4">4</button>
+                        <button data-value="6" class="active">6</button>
+                        <button data-value="8">8</button>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Deck Penetration (cut card)</label>
+                    <div class="range-row">
+                        <input type="range" id="pen-slider" min="0" max="12" step="1" value="4">
+                        <span class="range-val" id="pen-val">1.00 decks</span>
+                    </div>
+                    <span style="font-size:11px;color:var(--text-muted)">Decks behind cut card (0 = play through full shoe)</span>
+                </div>
+
+                <div class="toggle-row">
+                    <label>Dealer hits soft 17 (H17)</label>
+                    <label class="toggle">
+                        <input type="checkbox" id="h17" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-row">
+                    <label>Blackjack pays 6:5 <span style="color:var(--text-muted);font-size:11px">(default 3:2)</span></label>
+                    <label class="toggle">
+                        <input type="checkbox" id="bj65">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-row">
+                    <label>Double after split (DAS)</label>
+                    <label class="toggle">
+                        <input type="checkbox" id="das" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-row">
+                    <label>Resplit aces (RSA)</label>
+                    <label class="toggle">
+                        <input type="checkbox" id="rsa" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="field">
+                    <label>Surrender</label>
+                    <div class="btn-group" data-group="surrender">
+                        <button data-value="0">None</button>
+                        <button data-value="1" class="active">Late</button>
+                        <button data-value="2">Early</button>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Max splits per hand</label>
+                    <div class="btn-group" data-group="maxsplit">
+                        <button data-value="2">2</button>
+                        <button data-value="3">3</button>
+                        <button data-value="4" class="active">4</button>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Other players at table</label>
+                    <input type="number" id="other-players" value="0" min="0" max="6" style="width:80px">
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Simulation Settings -->
+        <div class="section open">
+            <div class="section-header">Simulation <span class="chevron">›</span></div>
+            <div class="section-body">
+
+                <div class="field">
+                    <label>Shoes to simulate</label>
+                    <div class="btn-group" data-group="shoes">
+                        <button data-value="10000">10K</button>
+                        <button data-value="50000">50K</button>
+                        <button data-value="100000" class="active">100K</button>
+                        <button data-value="500000">500K</button>
+                        <button data-value="1000000">1M</button>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>CPU threads</label>
+                    <div class="range-row">
+                        <input type="range" id="thread-slider" min="1" max="16" value="3">
+                        <span class="range-val" id="thread-val">3</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Betting Strategy -->
+        <div class="section open">
+            <div class="section-header">Betting Strategy <span class="chevron">›</span></div>
+            <div class="section-body">
+                <p style="font-size:12px;color:var(--text-muted);line-height:1.5">
+                    Set your bet size and number of hands at each true count threshold.
+                    The first row applies below all thresholds.
+                </p>
+                <table id="bet-table">
+                    <thead>
+                        <tr>
+                            <th>TC ≥</th>
+                            <th>Hands</th>
+                            <th>Bet ($)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="bet-rows"></tbody>
+                </table>
+                <button id="add-bet-row">+ Add threshold</button>
+            </div>
+        </div>
+
+        <!-- Session Analysis -->
+        <div class="section open">
+            <div class="section-header">Session Analysis <span class="chevron">›</span></div>
+            <div class="section-body">
+
+                <div class="field">
+                    <label>Rounds per hour</label>
+                    <input type="number" id="rph" value="80" min="10" max="400">
+                </div>
+
+                <div class="field">
+                    <label>Starting bankroll ($) <span style="color:var(--text-muted);font-size:11px">— enables Risk of Ruin</span></label>
+                    <input type="number" id="bankroll" value="" min="0" placeholder="e.g. 5000">
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Run button always visible at bottom -->
+        <div id="run-section">
+            <button id="run-btn">Run Simulation</button>
+            <button id="cancel-btn">Cancel</button>
+        </div>
+
+    </aside>
+
+    <!-- ── Main results panel ── -->
+    <main id="main">
+
+        <!-- Placeholder before first run -->
+        <div id="placeholder" class="placeholder">
+            <div class="icon">♠</div>
+            <p>Configure your table rules and betting strategy, then run the simulation.<br>
+               Results update in real time as shoes are processed.</p>
+        </div>
+
+        <!-- Results (hidden until first run) -->
+        <div id="results-panel" style="display:none;display:flex;flex-direction:column;gap:20px">
+
+            <!-- Progress -->
+            <div id="progress-panel">
+                <div class="progress-header">
+                    <span>Simulating…</span>
+                    <span id="progress-pct" style="font-variant-numeric:tabular-nums">0%</span>
+                </div>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                </div>
+                <div id="worker-bars"></div>
+                <div class="progress-stats" id="progress-stats">Starting…</div>
+            </div>
+
+            <!-- Summary cards -->
+            <div id="summary-cards">
+                <div class="stat-card">
+                    <div class="label">EV / Hour</div>
+                    <div class="value val-neutral" id="ev-per-hour">—</div>
+                    <div class="sub">at your bet spread &amp; pace</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">House Edge</div>
+                    <div class="value val-neutral" id="house-edge">—</div>
+                    <div class="sub">unweighted, flat bet</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Risk of Ruin</div>
+                    <div class="value val-neutral" id="ror">—</div>
+                    <div class="sub">set bankroll to enable</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Hours to Broke</div>
+                    <div class="value val-neutral" id="hours-to-broke">—</div>
+                    <div class="sub">expected (negative EV only)</div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="chart-row">
+                <div class="chart-panel">
+                    <h3>EV by True Count</h3>
+                    <div style="height:220px">
+                        <canvas id="chart-ev"></canvas>
+                    </div>
+                </div>
+                <div class="chart-panel">
+                    <h3>Round Frequency by True Count</h3>
+                    <div style="height:220px">
+                        <canvas id="chart-freq"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Outcome table (collapsible) -->
+            <details id="outcome-panel">
+                <summary>Outcome Breakdown by True Count</summary>
+                <div class="outcome-scroll">
+                    <table id="outcome-table">
+                        <thead id="outcome-thead"></thead>
+                        <tbody id="outcome-tbody"></tbody>
+                    </table>
+                </div>
+            </details>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- Chart.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

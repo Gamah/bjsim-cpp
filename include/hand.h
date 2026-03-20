@@ -15,7 +15,7 @@ class hand{
         int canSplit = 1;
         bool canDouble = false;
         bool canSurrender = false;
-        int trueCount = 0;
+        float trueCount = 0.0f;
         int numCards = 0;
 
         inline void discard(){
@@ -49,7 +49,7 @@ class hand{
                 if(!isSplit || config::rules::DAS){
                     canDouble = true;
                 }
-                if(!isSplit && config::rules::Surrender){
+                if(!isSplit && config::rules::Surrender > 0){
                     canSurrender = true;
                 }else{
                     canSurrender = false;
