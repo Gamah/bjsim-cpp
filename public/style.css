@@ -413,7 +413,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 /* ── Summary cards ── */
 #summary-cards {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 12px;
 }
 .stat-card {
@@ -564,6 +564,6 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
     }
     #sidebar { max-height: none; overflow: visible; }
     #main    { overflow: visible; }
-    #summary-cards { grid-template-columns: 1fr 1fr; }
+    #summary-cards { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
     .chart-row     { grid-template-columns: 1fr; }
 }

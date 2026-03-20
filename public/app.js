@@ -408,7 +408,16 @@ function calcSessionStats(stats) {
             ? 1.0
             : Math.min(1.0, Math.exp(-2 * bankroll * stats.weightedEV / stats.weightedVar));
     }
-    return { evPerHour, ror, rph };
+
+    // N-0: rounds needed for EV to exceed one standard deviation of results,
+    // i.e. Var / EV² rounds, converted to hours. Only meaningful with positive EV.
+    let nZeroHours = null;
+    if (stats.weightedEV > 0 && stats.weightedVar > 0) {
+        const nZeroRounds = stats.weightedVar / (stats.weightedEV ** 2);
+        nZeroHours = nZeroRounds / rph;
+    }
+
+    return { evPerHour, ror, rph, nZeroHours };
 }
 
 function calcFlatEdge(stats) {
@@ -562,6 +571,16 @@ function updateSummary(stats, session) {
     }
 
     const bankroll = parseFloat($('bankroll').value) || 0;
+
+    const nzEl = $('n-zero');
+    if (session.nZeroHours !== null) {
+        nzEl.textContent = session.nZeroHours.toFixed(0) + ' hrs';
+        nzEl.className   = 'value val-neutral';
+    } else {
+        nzEl.textContent = evHr <= 0 ? 'N/A' : '—';
+        nzEl.className   = 'value val-neutral';
+    }
+
     const hblEl    = $('hours-to-broke');
     if (bankroll > 0 && evHr < 0) {
         hblEl.textContent = (bankroll / Math.abs(evHr)).toFixed(0) + ' hrs';
