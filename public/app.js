@@ -968,6 +968,12 @@ $('export-btn').addEventListener('click', () => {
     URL.revokeObjectURL(url);
 });
 
+// ── About modal ───────────────────────────────────────────────────────────────
+$('about-btn').addEventListener('click', () => { $('about-overlay').style.display = 'flex'; });
+$('about-close').addEventListener('click', () => { $('about-overlay').style.display = 'none'; });
+$('about-overlay').addEventListener('click', e => { if (e.target === $('about-overlay')) $('about-overlay').style.display = 'none'; });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') $('about-overlay').style.display = 'none'; });
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 updatePenSlider();
 initCharts();

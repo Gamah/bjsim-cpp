@@ -479,6 +479,75 @@ input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer;
 #outcome-table tr:last-child td { border-bottom: none; }
 #outcome-table tr:hover td { background: rgba(255,255,255,.025); }
 
+/* ── Coffee button ── */
+.btn-coffee {
+    text-decoration: none;
+    color: var(--text-muted);
+    border-color: var(--border);
+}
+.btn-coffee:hover { border-color: var(--yellow); color: var(--yellow); }
+
+/* ── About modal ── */
+#about-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+#about-modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    max-width: 480px;
+    width: calc(100% - 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+#about-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#about-header h2 { font-size: 18px; font-weight: 700; letter-spacing: .5px; }
+#about-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: color .15s;
+}
+#about-close:hover { color: var(--text); }
+#about-modal p { font-size: 14px; line-height: 1.6; color: var(--text-muted); }
+#about-modal p a { color: var(--accent); text-decoration: none; }
+#about-modal p a:hover { text-decoration: underline; }
+.about-license { font-size: 13px !important; }
+#about-footer {
+    margin-top: 4px;
+    display: flex;
+    justify-content: center;
+}
+.btn-coffee-lg {
+    display: inline-block;
+    padding: 9px 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: border-color .15s, color .15s;
+}
+.btn-coffee-lg:hover { border-color: var(--yellow); color: var(--yellow); }
+
 /* ── Scrollbar ── */
 ::-webkit-scrollbar       { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
