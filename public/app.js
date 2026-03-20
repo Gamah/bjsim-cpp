@@ -561,7 +561,10 @@ function updateSummary(stats, session) {
     edgeEl.textContent = (edge >= 0 ? '+' : '') + edge.toFixed(3) + '%';
     edgeEl.className   = 'value ' + (edge >= 0 ? 'val-pos' : 'val-neg');
 
-    const rorEl = $('ror');
+    const bankroll = parseFloat($('bankroll').value) || 0;
+
+    const rorEl  = $('ror');
+    const rorSub = $('ror-sub');
     if (session.ror !== null) {
         rorEl.textContent = (session.ror * 100).toFixed(1) + '%';
         rorEl.className   = 'value ' + (session.ror > 0.5 ? 'val-neg' : session.ror > 0.2 ? 'val-warn' : 'val-pos');
@@ -569,28 +572,29 @@ function updateSummary(stats, session) {
         rorEl.textContent = '—';
         rorEl.className   = 'value val-neutral';
     }
+    rorSub.style.display = bankroll > 0 ? 'none' : '';
 
-    const bankroll = parseFloat($('bankroll').value) || 0;
-
-    const nzEl = $('n-zero');
-    if (session.nZeroHours !== null) {
-        nzEl.textContent = session.nZeroHours.toFixed(0) + ' hrs';
+    const nzLabelEl = $('n-zero-label');
+    const nzEl      = $('n-zero');
+    const nzSub     = $('n-zero-sub');
+    if (evHr > 0) {
+        nzLabelEl.textContent = 'N-0';
+        nzEl.textContent = session.nZeroHours !== null
+            ? session.nZeroHours.toFixed(0) + ' hrs'
+            : '—';
         nzEl.className   = 'value val-neutral';
+        nzSub.style.display = 'none';
     } else {
-        nzEl.textContent = evHr <= 0 ? 'N/A' : '—';
-        nzEl.className   = 'value val-neutral';
-    }
-
-    const hblEl    = $('hours-to-broke');
-    if (bankroll > 0 && evHr < 0) {
-        hblEl.textContent = (bankroll / Math.abs(evHr)).toFixed(0) + ' hrs';
-        hblEl.className   = 'value val-neutral';
-    } else if (bankroll > 0 && evHr > 0) {
-        hblEl.textContent = 'Positive EV';
-        hblEl.className   = 'value val-pos';
-    } else {
-        hblEl.textContent = '—';
-        hblEl.className   = 'value val-neutral';
+        nzLabelEl.textContent = 'Hours to Broke';
+        if (bankroll > 0 && evHr < 0) {
+            nzEl.textContent = (bankroll / Math.abs(evHr)).toFixed(0) + ' hrs';
+            nzEl.className   = 'value val-neutral';
+            nzSub.style.display = 'none';
+        } else {
+            nzEl.textContent = '—';
+            nzEl.className   = 'value val-neutral';
+            nzSub.style.display = evHr < 0 ? '' : 'none';
+        }
     }
 }
 
