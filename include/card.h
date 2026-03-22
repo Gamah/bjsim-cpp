@@ -6,7 +6,7 @@ namespace card{
     static const std::string faces[13] = {"A","2","3","4","5","6","7","8","9","T","J","Q","K"};
     static const std::string decks[8] = {"1","2","3","4","5","6","7","8"};
 
-    int value(int cardIndex);
+    inline int value(int cardIndex){ return values[cardIndex % 13]; }
     std::string face(int cardIndex);
     std::string suit(int cardIndex);
     std::string deck(int cardIndex);

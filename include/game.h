@@ -6,8 +6,12 @@
 #include "shoe.h"
 #include "card.h"
 #include "game.h"
+#include "xoshiro.h"
 #include <mutex>
 
 namespace game{
-    void runGame(std::mt19937 rengine, long& shoesPlayed, std::mutex& processResults, std::vector<player>& playersPlayed);
+    // Native multi-threaded entry point
+    void runGame(xoshiro256pp rengine, long& shoesPlayed, std::mutex& processResults, std::vector<player>& playersPlayed);
+    // WASM / single-threaded entry point: runs numShoes shoes, accumulates directly into players
+    void runBatch(xoshiro256pp rengine, int numShoes, std::vector<player>& players);
 };

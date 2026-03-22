@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack Simulator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+    <header>
+        <h1>Gamah's Blackjack Calculator</h1>
+        <div style="display:flex;gap:8px;align-items:center;margin-left:16px">
+            <a href="https://buymeacoffee.com/Gamah" target="_blank" rel="noopener" class="btn-header btn-coffee">☕ Buy me a coffee</a>
+            <button id="about-btn" class="btn-header">About</button>
+        </div>
+    </header>
+
+    <!-- ── Sidebar ── -->
+    <aside id="sidebar">
+
+        <!-- Saved Games -->
+        <div class="section open">
+            <div class="section-header">Saved Games <span class="chevron">›</span></div>
+            <div class="section-body">
+                <select id="game-select" style="width:100%"></select>
+                <div style="display:flex;gap:6px;margin-top:6px">
+                    <button id="game-load-btn"   class="btn-sm">Load</button>
+                    <button id="game-delete-btn" class="btn-sm btn-danger">Delete</button>
+                </div>
+                <div style="display:flex;gap:6px;margin-top:10px">
+                    <input type="text" id="game-name" placeholder="Game name…" style="flex:1">
+                    <button id="game-save-btn" class="btn-sm btn-accent">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Rules -->
+        <div class="section open">
+            <div class="section-header">Table Rules <span class="chevron">›</span></div>
+            <div class="section-body">
+
+                <div class="field">
+                    <label>Number of Decks</label>
+                    <div class="btn-group" data-group="decks">
+                        <button data-value="1">1</button>
+                        <button data-value="2">2</button>
+                        <button data-value="4">4</button>
+                        <button data-value="6" class="active">6</button>
+                        <button data-value="8">8</button>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Deck Penetration (cut card)</label>
+                    <div class="range-row">
+                        <input type="range" id="pen-slider" min="0" max="12" step="1" value="4">
+                        <span class="range-val" id="pen-val">1.00 decks</span>
+                    </div>
+                    <span class="hint-text">Decks behind cut card — 0 plays through the full shoe</span>
+                </div>
+
+                <div class="toggle-row">
+                    <label>Dealer hits soft 17 (H17)</label>
+                    <label class="toggle"><input type="checkbox" id="h17" checked><span class="slider"></span></label>
+                </div>
+
+                <div class="toggle-row">
+                    <label>Blackjack pays 6:5 <span class="label-sub">(default 3:2)</span></label>
+                    <label class="toggle"><input type="checkbox" id="bj65"><span class="slider"></span></label>
+                </div>
+
+                <div class="toggle-row">
+                    <label>Double after split (DAS)</label>
+                    <label class="toggle"><input type="checkbox" id="das" checked><span class="slider"></span></label>
+                </div>
+
+                <div class="toggle-row">
+                    <label>Resplit aces (RSA)</label>
+                    <label class="toggle"><input type="checkbox" id="rsa" checked><span class="slider"></span></label>
+                </div>
+
+                <div class="field">
+                    <label>Surrender</label>
+                    <div class="btn-group" data-group="surrender">
+                        <button data-value="0">None</button>
+                        <button data-value="1" class="active">Late</button>
+                        <button data-value="2">Early</button>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Max splits per hand</label>
+                    <div class="btn-group" data-group="maxsplit">
+                        <button data-value="2">2</button>
+                        <button data-value="3">3</button>
+                        <button data-value="4" class="active">4</button>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Other players at table</label>
+                    <input type="number" id="other-players" value="0" min="0" max="6" style="width:72px">
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Simulation Settings -->
+        <div class="section open">
+            <div class="section-header">Simulation <span class="chevron">›</span></div>
+            <div class="section-body">
+
+                <div class="field">
+                    <label>Shoes to simulate</label>
+                    <div class="btn-group" data-group="shoes">
+                        <button data-value="1000000"    class="active">1M</button>
+                        <button data-value="50000000"  >50M</button>
+                        <button data-value="100000000" >100M</button>
+                        <button data-value="500000000" >500M</button>
+                        <button data-value="1000000000">1B</button>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>CPU threads</label>
+                    <div class="range-row">
+                        <input type="range" id="thread-slider" min="1" max="16" value="3">
+                        <span class="range-val" id="thread-val">3</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Betting Strategy -->
+        <div class="section open">
+            <div class="section-header">Betting Strategy <span class="chevron">›</span></div>
+            <div class="section-body">
+                <p class="hint-text">Set bet size and simultaneous hands at each true count threshold. Results update instantly without re-simulating.</p>
+                <table id="bet-table">
+                    <thead>
+                        <tr>
+                            <th>TC ≥</th>
+                            <th>Hands</th>
+                            <th>Bet</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="bet-rows"></tbody>
+                </table>
+                <button id="add-bet-row">+ Add threshold</button>
+            </div>
+        </div>
+
+        <!-- Playing Strategy -->
+        <div class="section open">
+            <div class="section-header">Playing Strategy <span class="chevron">›</span></div>
+            <div class="section-body">
+                <div class="field">
+                    <label>Strategy</label>
+                    <div class="btn-group" data-group="strategy">
+                        <button data-value="0">Dealer</button>
+                        <button data-value="1">Basic</button>
+                        <button data-value="2" class="active">Deviations</button>
+                    </div>
+                </div>
+                <div id="deviation-container">
+                    <div id="deviation-list"></div>
+                    <div style="display:flex;gap:6px;margin-top:10px">
+                        <button id="dev-all-btn" class="btn-sm">All</button>
+                        <button id="dev-none-btn" class="btn-sm">None</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Session Analysis -->
+        <div class="section open">
+            <div class="section-header">Session Analysis <span class="chevron">›</span></div>
+            <div class="section-body">
+
+                <div class="field">
+                    <label>Rounds per hour</label>
+                    <div class="range-row">
+                        <input type="range" id="rph" min="10" max="300" step="5" value="80">
+                        <span class="range-val" id="rph-val">80</span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Starting bankroll ($) <span class="label-sub">enables Risk of Ruin</span></label>
+                    <input type="number" id="bankroll" value="" min="0" placeholder="e.g. 5000">
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Run button -->
+        <div id="run-section">
+            <button id="run-btn">Run Simulation</button>
+            <button id="cancel-btn">Cancel</button>
+        </div>
+
+    </aside>
+
+    <!-- ── Main results panel ── -->
+    <main id="main">
+
+        <div id="placeholder" class="placeholder">
+            <div class="icon">♠</div>
+            <p>Configure your table rules and betting strategy, then run the simulation.
+               Results update in real time as shoes are processed.</p>
+            <p style="font-size:12px;margin-top:8px">Changing rules after a simulation will automatically re-run.</p>
+        </div>
+
+        <div id="results-panel" style="display:none;flex-direction:column;gap:20px">
+
+            <!-- Progress -->
+            <div id="progress-panel" style="display:none">
+                <div class="progress-header">
+                    <span id="progress-label">Simulating…</span>
+                    <span id="progress-pct" style="font-variant-numeric:tabular-nums">0%</span>
+                </div>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                </div>
+                <div class="progress-stats" id="progress-eta">Starting…</div>
+                <details id="worker-detail" open>
+                    <summary class="worker-detail-summary">Workers</summary>
+                    <div id="worker-tiles"></div>
+                </details>
+            </div>
+
+            <!-- Summary cards -->
+            <div id="summary-cards">
+                <div class="stat-card">
+                    <div class="label">EV / Hour</div>
+                    <div class="value val-neutral" id="ev-per-hour">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">House Edge</div>
+                    <div class="value val-neutral" id="house-edge">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Risk of Ruin</div>
+                    <div class="value val-neutral" id="ror">—</div>
+                    <div class="sub" id="ror-sub">set bankroll to enable</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label" id="n-zero-label">N-0</div>
+                    <div class="value val-neutral" id="n-zero">—</div>
+                    <div class="sub" id="n-zero-sub" style="display:none">set bankroll to enable</div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="chart-row">
+                <div class="chart-panel">
+                    <h3>EV by True Count</h3>
+                    <div style="height:220px"><canvas id="chart-ev"></canvas></div>
+                </div>
+                <div class="chart-panel">
+                    <h3>Round Frequency by True Count</h3>
+                    <div style="height:220px"><canvas id="chart-freq"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Outcome table (collapsible) -->
+            <details id="outcome-panel">
+                <summary>Outcome Breakdown by True Count</summary>
+                <div class="outcome-scroll">
+                    <table id="outcome-table">
+                        <thead id="outcome-thead"></thead>
+                        <tbody id="outcome-tbody"></tbody>
+                    </table>
+                </div>
+            </details>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- About modal lives outside #app so it isn't clipped by overflow:hidden -->
+<div id="about-overlay" style="display:none">
+    <div id="about-modal">
+        <div id="about-header">
+            <h2>Gamah's Blackjack Calculator</h2>
+            <button id="about-close" title="Close">×</button>
+        </div>
+        <p>A multi-threaded blackjack EV simulator/calculator. Runs entirely in your browser — no data ever leaves your machine. I wrote the C++ code for this several years ago but hate web/frontend stuff so I vibe coded a few optimizations and made AI make it usable to non-nerdy people...</p>
+        <p>The C++ simulation engine and web UI were vibe-coded with Claude. The core counting math, strategy tables, and Illustrious 18 deviations are the real deal.</p>
+        <p>
+            Open source on GitHub:
+            <a href="https://github.com/Gamah/bjsim-cpp" target="_blank" rel="noopener">github.com/Gamah/bjsim-cpp</a>
+        </p>
+        <p class="about-license">
+            Released under the <strong>GamahCode License v1.2</strong> — you're free to use, study, modify, and redistribute it (modified or not),
+            as long as you pass along the same license. No warranty, no attribution <b>ALLOWED</b>.
+        </p>
+        <div id="about-footer">
+            <a href="https://buymeacoffee.com/Gamah" target="_blank" rel="noopener" class="btn-coffee-lg">☕ Buy me a coffee</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
